@@ -1,0 +1,503 @@
+// JSON格式化工具脚本
+
+// 全局状态
+let currentTab = 'format';
+
+// 工具函数
+function showError(message) {
+  const errorText = document.getElementById('error-text');
+  const errorMessage = document.getElementById('error-message');
+  const successMessage = document.getElementById('success-message');
+  
+  if (errorText && errorMessage && successMessage) {
+    errorText.textContent = message;
+    errorMessage.classList.remove('hidden');
+    successMessage.classList.add('hidden');
+  }
+}
+
+function showSuccess(message) {
+  const successText = document.getElementById('success-text');
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+  
+  if (successText && successMessage && errorMessage) {
+    successText.textContent = message;
+    successMessage.classList.remove('hidden');
+    errorMessage.classList.add('hidden');
+  }
+}
+
+function hideMessages() {
+  const errorMessage = document.getElementById('error-message');
+  const successMessage = document.getElementById('success-message');
+  
+  if (errorMessage && successMessage) {
+    errorMessage.classList.add('hidden');
+    successMessage.classList.add('hidden');
+  }
+}
+
+function updateInputStatus() {
+  const inputTextarea = document.getElementById('input-json');
+  const inputStatus = document.getElementById('input-status');
+  
+  if (inputTextarea && inputStatus) {
+    const text = inputTextarea.value;
+    const lines = text.split('\n').length;
+    const chars = text.length;
+    inputStatus.textContent = `${lines} 行, ${chars} 字符`;
+  }
+}
+
+function updateOutputStatus() {
+  const outputTextarea = document.getElementById('output-json');
+  const outputStatus = document.getElementById('output-status');
+  
+  if (outputTextarea && outputStatus) {
+    const text = outputTextarea.value;
+    const lines = text.split('\n').length;
+    const chars = text.length;
+    outputStatus.textContent = `${lines} 行, ${chars} 字符`;
+  }
+}
+
+// JSON 处理函数
+function formatJson() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (!inputTextarea || !outputTextarea) return;
+  
+  try {
+    const input = inputTextarea.value.trim();
+    if (!input) {
+      throw new Error('请输入JSON数据');
+    }
+    
+    const parsed = JSON.parse(input);
+    const formatted = JSON.stringify(parsed, null, 2);
+    outputTextarea.value = formatted;
+    updateOutputStatus();
+    showSuccess('JSON格式化成功！');
+  } catch (error) {
+    showError(`JSON格式化失败：${error.message}`);
+  }
+}
+
+function compressJson() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (!inputTextarea || !outputTextarea) return;
+  
+  try {
+    const input = inputTextarea.value.trim();
+    if (!input) {
+      throw new Error('请输入JSON数据');
+    }
+    
+    const parsed = JSON.parse(input);
+    const compressed = JSON.stringify(parsed);
+    outputTextarea.value = compressed;
+    updateOutputStatus();
+    showSuccess('JSON压缩成功！');
+  } catch (error) {
+    showError(`JSON压缩失败：${error.message}`);
+  }
+}
+
+function unescapeJson() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (!inputTextarea || !outputTextarea) return;
+  
+  try {
+    const input = inputTextarea.value.trim();
+    if (!input) {
+      throw new Error('请输入需要去转义的数据');
+    }
+    
+    // 处理常见的转义字符
+    let unescaped = input
+      .replace(/\\\\/g, '\\')
+      .replace(/\\"/g, '"')
+      .replace(/\\'/g, "'")
+      .replace(/\\n/g, '\n')
+      .replace(/\\r/g, '\r')
+      .replace(/\\t/g, '\t')
+      .replace(/\\b/g, '\b')
+      .replace(/\\f/g, '\f');
+    
+    outputTextarea.value = unescaped;
+    updateOutputStatus();
+    showSuccess('去转义成功！');
+  } catch (error) {
+    showError(`去转义失败：${error.message}`);
+  }
+}
+
+function validateJson() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (!inputTextarea || !outputTextarea) return;
+  
+  try {
+    const input = inputTextarea.value.trim();
+    if (!input) {
+      outputTextarea.value = '请输入JSON数据进行验证';
+      return;
+    }
+    
+    const parsed = JSON.parse(input);
+    const info = {
+      valid: true,
+      type: Array.isArray(parsed) ? 'Array' : typeof parsed,
+      keys: typeof parsed === 'object' && parsed !== null ? Object.keys(parsed).length : 0,
+      size: JSON.stringify(parsed).length
+    };
+    
+    outputTextarea.value = `✅ JSON验证通过！
+
+类型: ${info.type}
+${info.type === 'object' ? `属性数量: ${info.keys}` : ''}
+${info.type === 'Array' ? `数组长度: ${parsed.length}` : ''}
+数据大小: ${info.size} 字符
+
+格式化预览:
+${JSON.stringify(parsed, null, 2)}`;
+    
+    updateOutputStatus();
+    showSuccess('JSON验证通过！');
+  } catch (error) {
+    outputTextarea.value = `❌ JSON验证失败
+
+错误信息: ${error.message}
+
+常见问题：
+1. 检查是否有多余的逗号
+2. 检查引号是否配对
+3. 检查括号是否配对
+4. 检查属性名是否用双引号包围`;
+    
+    updateOutputStatus();
+    showError(`JSON验证失败：${error.message}`);
+  }
+}
+
+// 转换功能（基础版本，不依赖外部库）
+function convertToYaml() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (!inputTextarea || !outputTextarea) return;
+  
+  try {
+    const input = inputTextarea.value.trim();
+    if (!input) {
+      throw new Error('请输入JSON数据');
+    }
+    
+    const parsed = JSON.parse(input);
+    // 简单的YAML转换（基础版本）
+    const yamlString = JSON.stringify(parsed, null, 2)
+      .replace(/"/g, '')
+      .replace(/,$/gm, '')
+      .replace(/^\s*[\{\[]/gm, '')
+      .replace(/^\s*[\}\]]/gm, '');
+    
+    outputTextarea.value = yamlString;
+    updateOutputStatus();
+    showSuccess('转换为YAML成功！');
+  } catch (error) {
+    showError(`转换为YAML失败：${error.message}`);
+  }
+}
+
+function convertToXml() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (!inputTextarea || !outputTextarea) return;
+  
+  try {
+    const input = inputTextarea.value.trim();
+    if (!input) {
+      throw new Error('请输入JSON数据');
+    }
+    
+    const parsed = JSON.parse(input);
+    
+    // 简单的XML转换
+    function jsonToXml(obj, rootName = 'root') {
+      if (typeof obj !== 'object' || obj === null) {
+        return `<${rootName}>${obj}</${rootName}>`;
+      }
+      
+      let xml = `<${rootName}>`;
+      for (const [key, value] of Object.entries(obj)) {
+        if (typeof value === 'object' && value !== null) {
+          xml += jsonToXml(value, key);
+        } else {
+          xml += `<${key}>${value}</${key}>`;
+        }
+      }
+      xml += `</${rootName}>`;
+      return xml;
+    }
+    
+    const xmlString = '<?xml version="1.0" encoding="UTF-8"?>\n' + jsonToXml(parsed);
+    outputTextarea.value = xmlString;
+    updateOutputStatus();
+    showSuccess('转换为XML成功！');
+  } catch (error) {
+    showError(`转换为XML失败：${error.message}`);
+  }
+}
+
+function convertToCsv() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (!inputTextarea || !outputTextarea) return;
+  
+  try {
+    const input = inputTextarea.value.trim();
+    if (!input) {
+      throw new Error('请输入JSON数据');
+    }
+    
+    const parsed = JSON.parse(input);
+    
+    // 确保是数组格式
+    let dataArray = Array.isArray(parsed) ? parsed : [parsed];
+    
+    if (dataArray.length === 0) {
+      throw new Error('数据为空');
+    }
+    
+    // 获取所有字段
+    const headers = new Set();
+    dataArray.forEach(item => {
+      if (typeof item === 'object' && item !== null) {
+        Object.keys(item).forEach(key => headers.add(key));
+      }
+    });
+    
+    const headerArray = Array.from(headers);
+    
+    // 生成CSV
+    let csv = headerArray.join(',') + '\n';
+    dataArray.forEach(item => {
+      const row = headerArray.map(header => {
+        const value = item[header];
+        if (value === undefined || value === null) return '';
+        return typeof value === 'string' ? `"${value}"` : value;
+      });
+      csv += row.join(',') + '\n';
+    });
+    
+    outputTextarea.value = csv;
+    updateOutputStatus();
+    showSuccess('转换为CSV成功！');
+  } catch (error) {
+    showError(`转换为CSV失败：${error.message}`);
+  }
+}
+
+// 文件操作
+function importFile() {
+  const fileInput = document.getElementById('file-input');
+  if (fileInput) {
+    fileInput.click();
+  }
+}
+
+function exportFile() {
+  const outputTextarea = document.getElementById('output-json');
+  if (!outputTextarea) return;
+  
+  const content = outputTextarea.value;
+  if (!content) {
+    showError('没有内容可以导出');
+    return;
+  }
+  
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `json-formatter-result-${Date.now()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showSuccess('文件导出成功！');
+}
+
+function copyToClipboard() {
+  const outputTextarea = document.getElementById('output-json');
+  if (!outputTextarea) return;
+  
+  const content = outputTextarea.value;
+  if (!content) {
+    showError('没有内容可以复制');
+    return;
+  }
+  
+  navigator.clipboard.writeText(content).then(() => {
+    showSuccess('已复制到剪贴板！');
+  }).catch(() => {
+    showError('复制失败，请手动复制');
+  });
+}
+
+function clearAll() {
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  
+  if (inputTextarea && outputTextarea) {
+    inputTextarea.value = '';
+    outputTextarea.value = '';
+    updateInputStatus();
+    updateOutputStatus();
+    hideMessages();
+  }
+}
+
+// 标签页切换
+function switchTab(tabName) {
+  currentTab = tabName;
+  
+  // 更新标签页样式
+  document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  const activeTab = document.getElementById(`${tabName}-tab`);
+  if (activeTab) {
+    activeTab.classList.add('active');
+  }
+  
+  // 显示/隐藏转换选项
+  const convertOptions = document.getElementById('convert-options');
+  if (convertOptions) {
+    if (tabName === 'convert') {
+      convertOptions.classList.remove('hidden');
+    } else {
+      convertOptions.classList.add('hidden');
+    }
+  }
+  
+  // 自动处理
+  processInput();
+}
+
+function processInput() {
+  hideMessages();
+  
+  switch (currentTab) {
+    case 'format':
+      formatJson();
+      break;
+    case 'compress':
+      compressJson();
+      break;
+    case 'unescape':
+      unescapeJson();
+      break;
+    case 'validate':
+      validateJson();
+      break;
+    case 'convert':
+      // 转换需要手动点击按钮
+      break;
+  }
+}
+
+// 初始化函数
+function initJsonFormatter() {
+  // 标签页点击事件
+  document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target && target.dataset && target.dataset.tab) {
+        switchTab(target.dataset.tab);
+      }
+    });
+  });
+
+  // 输入变化监听
+  const inputTextarea = document.getElementById('input-json');
+  if (inputTextarea) {
+    inputTextarea.addEventListener('input', () => {
+      updateInputStatus();
+      if (currentTab !== 'convert') {
+        processInput();
+      }
+    });
+  }
+
+  // 按钮事件
+  const clearBtn = document.getElementById('clear-btn');
+  const copyBtn = document.getElementById('copy-btn');
+  const importBtn = document.getElementById('import-btn');
+  const exportBtn = document.getElementById('export-btn');
+  
+  if (clearBtn) clearBtn.addEventListener('click', clearAll);
+  if (copyBtn) copyBtn.addEventListener('click', copyToClipboard);
+  if (importBtn) importBtn.addEventListener('click', importFile);
+  if (exportBtn) exportBtn.addEventListener('click', exportFile);
+
+  // 转换按钮
+  document.querySelectorAll('.convert-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target && target.dataset && target.dataset.format) {
+        const format = target.dataset.format;
+        switch (format) {
+          case 'yaml':
+            convertToYaml();
+            break;
+          case 'xml':
+            convertToXml();
+            break;
+          case 'csv':
+            convertToCsv();
+            break;
+        }
+      }
+    });
+  });
+
+  // 文件输入
+  const fileInput = document.getElementById('file-input');
+  if (fileInput) {
+    fileInput.addEventListener('change', (e) => {
+      const target = e.target;
+      if (target && target.files && target.files[0]) {
+        const file = target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result;
+          const inputTextarea = document.getElementById('input-json');
+          if (result && inputTextarea) {
+            inputTextarea.value = result.toString();
+            updateInputStatus();
+            processInput();
+          }
+        };
+        reader.readAsText(file);
+      }
+    });
+  }
+
+  // 初始化状态
+  updateInputStatus();
+  updateOutputStatus();
+}
+
+// 页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', initJsonFormatter);
