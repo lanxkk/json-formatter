@@ -1,0 +1,184 @@
+---
+// JSON格式化主组件
+---
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- 功能选项卡 -->
+  <div class="mb-6">
+    <div class="border-b border-gray-200 dark:border-gray-700">
+      <nav class="-mb-px flex space-x-8">
+        <button
+          id="format-tab"
+          class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+          data-tab="format"
+        >
+          格式化
+        </button>
+        <button
+          id="compress-tab"
+          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+          data-tab="compress"
+        >
+          压缩
+        </button>
+        <button
+          id="unescape-tab"
+          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+          data-tab="unescape"
+        >
+          去转义
+        </button>
+        <button
+          id="validate-tab"
+          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+          data-tab="validate"
+        >
+          验证
+        </button>
+        <button
+          id="convert-tab"
+          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
+          data-tab="convert"
+        >
+          转换
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 工具栏 -->
+  <div class="mb-4 flex flex-wrap gap-2">
+    <button
+      id="clear-btn"
+      class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+    >
+      清空
+    </button>
+    <button
+      id="copy-btn"
+      class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+    >
+      复制结果
+    </button>
+    <input
+      type="file"
+      id="file-input"
+      accept=".json,.txt"
+      class="hidden"
+    />
+    <button
+      id="import-btn"
+      class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+    >
+      导入文件
+    </button>
+    <button
+      id="export-btn"
+      class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors"
+    >
+      导出文件
+    </button>
+  </div>
+
+  <!-- 主要工作区域 -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- 输入区域 -->
+    <div class="space-y-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输入</h2>
+        <span id="input-status" class="text-sm text-gray-500 dark:text-gray-400"></span>
+      </div>
+      <textarea
+        id="input-json"
+        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        placeholder="在这里输入JSON数据..."
+      ></textarea>
+    </div>
+
+    <!-- 输出区域 -->
+    <div class="space-y-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输出</h2>
+        <span id="output-status" class="text-sm text-gray-500 dark:text-gray-400"></span>
+      </div>
+      <textarea
+        id="output-json"
+        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm resize-none"
+        readonly
+        placeholder="处理结果将在这里显示..."
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- 转换选项（仅在转换标签页显示） -->
+  <div id="convert-options" class="mt-6 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">转换选项</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button
+          id="to-yaml-btn"
+          class="convert-btn px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
+          data-format="yaml"
+        >
+          转为 YAML
+        </button>
+        <button
+          id="to-xml-btn"
+          class="convert-btn px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+          data-format="xml"
+        >
+          转为 XML
+        </button>
+        <button
+          id="to-csv-btn"
+          class="convert-btn px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+          data-format="csv"
+        >
+          转为 CSV
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 错误提示 -->
+  <div id="error-message" class="mt-4 hidden">
+    <div class="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-lg p-4">
+      <div class="flex">
+        <svg class="w-5 h-5 text-red-400 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+        </svg>
+        <div>
+          <h3 class="text-sm font-medium text-red-800 dark:text-red-200">错误</h3>
+          <p id="error-text" class="mt-1 text-sm text-red-700 dark:text-red-300"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成功提示 -->
+  <div id="success-message" class="mt-4 hidden">
+    <div class="bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 rounded-lg p-4">
+      <div class="flex">
+        <svg class="w-5 h-5 text-green-400 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <div>
+          <h3 class="text-sm font-medium text-green-800 dark:text-green-200">成功</h3>
+          <p id="success-text" class="mt-1 text-sm text-green-700 dark:text-green-300"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tab-button {
+    @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600;
+  }
+  
+  .tab-button.active {
+    @apply border-primary-500 text-primary-600 dark:text-primary-400 dark:border-primary-400;
+  }
+</style>
+
+<script src="/src/scripts/json-formatter.js"></script> 
