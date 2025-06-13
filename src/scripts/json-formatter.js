@@ -41,55 +41,16 @@ function normalizeSingleQuotes(input) {
   }
   
   try {
-    // 将单引号字符串转换为双引号字符串
-    // 需要小心处理转义字符和嵌套引号
-    let normalized = input;
-    let result = '';
-    let i = 0;
+    // 使用更简洁和可靠的正则表达式方法
+    // 匹配单引号字符串，但要确保不在双引号内
+    let result = input;
     
-    while (i < normalized.length) {
-      const char = normalized[i];
-      
-      if (char === "'" && (i === 0 || normalized[i-1] !== '\\')) {
-        // 找到单引号字符串的开始
-        let j = i + 1;
-        let singleQuotedString = '';
-        let escaped = false;
-        
-        while (j < normalized.length) {
-          const nextChar = normalized[j];
-          
-          if (escaped) {
-            singleQuotedString += nextChar;
-            escaped = false;
-          } else if (nextChar === '\\') {
-            singleQuotedString += nextChar;
-            escaped = true;
-          } else if (nextChar === "'") {
-            // 找到单引号字符串的结束
-            break;
-          } else {
-            singleQuotedString += nextChar;
-          }
-          j++;
-        }
-        
-        if (j < normalized.length && normalized[j] === "'") {
-          // 成功匹配到完整的单引号字符串
-          // 处理内容中的双引号，需要转义
-          const escapedContent = singleQuotedString.replace(/"/g, '\\"');
-          result += `"${escapedContent}"`;
-          i = j + 1;
-        } else {
-          // 没有找到配对的单引号，保持原样
-          result += char;
-          i++;
-        }
-      } else {
-        result += char;
-        i++;
-      }
-    }
+    // 匹配单引号包围的字符串，处理转义字符
+    result = result.replace(/'((?:[^'\\]|\\.)*)'/g, (match, content) => {
+      // 将内容中的双引号转义
+      const escapedContent = content.replace(/"/g, '\\"');
+      return `"${escapedContent}"`;
+    });
     
     return result;
   } catch (error) {
@@ -98,11 +59,57 @@ function normalizeSingleQuotes(input) {
   }
 }
 
+// 处理尾随逗号
+function normalizeTrailingCommas(input) {
+  const allowTrailingCommas = document.getElementById('allow-trailing-commas')?.checked;
+  
+  if (!allowTrailingCommas) {
+    return input;
+  }
+  
+  try {
+    // 使用更简洁的正则表达式方法处理尾随逗号
+    // 这个方法先移除字符串内容，然后处理尾随逗号，最后恢复字符串
+    
+    // 先保存所有字符串内容
+    const strings = [];
+    let stringIndex = 0;
+    
+    // 替换所有字符串为占位符
+    let withoutStrings = input.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, (match) => {
+      strings.push(match);
+      return `__STRING_${stringIndex++}__`;
+    });
+    
+    // 处理单引号字符串（如果已经处理过单引号的话，这里就不会有单引号字符串了）
+    withoutStrings = withoutStrings.replace(/'([^'\\]*(\\.[^'\\]*)*)'/g, (match) => {
+      strings.push(match);
+      return `__STRING_${stringIndex++}__`;
+    });
+    
+    // 移除对象和数组中的尾随逗号
+    // 匹配：逗号 + 可能的空白字符 + 对象或数组结束符
+    withoutStrings = withoutStrings.replace(/,(\s*[}\]])/g, '$1');
+    
+    // 恢复字符串内容
+    stringIndex = 0;
+    const result = withoutStrings.replace(/__STRING_\d+__/g, () => {
+      return strings[stringIndex++] || '';
+    });
+    
+    return result;
+  } catch (error) {
+    console.warn('尾随逗号规范化失败，使用原始输入：', error);
+    return input;
+  }
+}
+
 // 综合的输入规范化函数
 function normalizeInput(input) {
   try {
-    // 先处理单引号，再处理不带引号的键名
+    // 处理顺序：尾随逗号 -> 单引号 -> 不带引号的键名
     let normalized = input;
+    normalized = normalizeTrailingCommas(normalized);
     normalized = normalizeSingleQuotes(normalized);
     normalized = normalizeKeys(normalized);
     return normalized;
@@ -297,7 +304,8 @@ ${JSON.stringify(parsed, null, 2)}`;
 3. 检查括号是否配对
 4. 检查属性名是否用双引号包围
 5. 如果使用了不带引号的键名，请勾选"允许不带引号的键名"选项
-6. 如果使用了单引号字符串，请勾选"允许使用单引号"选项`;
+6. 如果使用了单引号字符串，请勾选"允许使用单引号"选项
+7. 如果最后一项后面有逗号，请勾选"允许最后一项后面有逗号"选项`;
     
     updateOutputStatus();
     showError(`JSON验证失败：${error.message}`);
@@ -576,6 +584,15 @@ function initJsonFormatter() {
   const allowSingleQuotesCheckbox = document.getElementById('allow-single-quotes');
   if (allowSingleQuotesCheckbox) {
     allowSingleQuotesCheckbox.addEventListener('change', () => {
+      if (currentTab !== 'convert') {
+        processInput();
+      }
+    });
+  }
+
+  const allowTrailingCommasCheckbox = document.getElementById('allow-trailing-commas');
+  if (allowTrailingCommasCheckbox) {
+    allowTrailingCommasCheckbox.addEventListener('change', () => {
       if (currentTab !== 'convert') {
         processInput();
       }
