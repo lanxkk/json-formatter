@@ -3,6 +3,35 @@
 // 全局状态
 let currentTab = 'format';
 
+// 处理不带引号的键名
+function normalizeKeys(input) {
+  const allowUnquotedKeys = document.getElementById('allow-unquoted-keys')?.checked;
+  
+  if (!allowUnquotedKeys) {
+    return input;
+  }
+  
+  try {
+    // 改进的正则表达式，支持更复杂的情况
+    // 匹配模式：在对象开始或逗号后，匹配不带引号的键名
+    let normalized = input;
+    
+    // 处理对象开始后的键名：{ key:
+    normalized = normalized.replace(/(\{\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g, '$1"$2":');
+    
+    // 处理逗号后的键名：, key:
+    normalized = normalized.replace(/(,\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g, '$1"$2":');
+    
+    // 处理换行后的键名（多行格式）
+    normalized = normalized.replace(/(\n\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g, '$1"$2":');
+    
+    return normalized;
+  } catch (error) {
+    console.warn('键名规范化失败，使用原始输入：', error);
+    return input;
+  }
+}
+
 // 工具函数
 function showError(message) {
   const errorText = document.getElementById('error-text');
@@ -75,7 +104,9 @@ function formatJson() {
       throw new Error('请输入JSON数据');
     }
     
-    const parsed = JSON.parse(input);
+    // 处理不带引号的键名
+    const normalizedInput = normalizeKeys(input);
+    const parsed = JSON.parse(normalizedInput);
     const formatted = JSON.stringify(parsed, null, 2);
     outputTextarea.value = formatted;
     updateOutputStatus();
@@ -97,7 +128,9 @@ function compressJson() {
       throw new Error('请输入JSON数据');
     }
     
-    const parsed = JSON.parse(input);
+    // 处理不带引号的键名
+    const normalizedInput = normalizeKeys(input);
+    const parsed = JSON.parse(normalizedInput);
     const compressed = JSON.stringify(parsed);
     outputTextarea.value = compressed;
     updateOutputStatus();
@@ -151,7 +184,9 @@ function validateJson() {
       return;
     }
     
-    const parsed = JSON.parse(input);
+    // 处理不带引号的键名
+    const normalizedInput = normalizeKeys(input);
+    const parsed = JSON.parse(normalizedInput);
     const info = {
       valid: true,
       type: Array.isArray(parsed) ? 'Array' : typeof parsed,
@@ -180,7 +215,8 @@ ${JSON.stringify(parsed, null, 2)}`;
 1. 检查是否有多余的逗号
 2. 检查引号是否配对
 3. 检查括号是否配对
-4. 检查属性名是否用双引号包围`;
+4. 检查属性名是否用双引号包围
+5. 如果使用了不带引号的键名，请勾选"允许不带引号的键名"选项`;
     
     updateOutputStatus();
     showError(`JSON验证失败：${error.message}`);
@@ -200,7 +236,9 @@ function convertToYaml() {
       throw new Error('请输入JSON数据');
     }
     
-    const parsed = JSON.parse(input);
+    // 处理不带引号的键名
+    const normalizedInput = normalizeKeys(input);
+    const parsed = JSON.parse(normalizedInput);
     // 简单的YAML转换（基础版本）
     const yamlString = JSON.stringify(parsed, null, 2)
       .replace(/"/g, '')
@@ -228,7 +266,9 @@ function convertToXml() {
       throw new Error('请输入JSON数据');
     }
     
-    const parsed = JSON.parse(input);
+    // 处理不带引号的键名
+    const normalizedInput = normalizeKeys(input);
+    const parsed = JSON.parse(normalizedInput);
     
     // 简单的XML转换
     function jsonToXml(obj, rootName = 'root') {
@@ -269,7 +309,9 @@ function convertToCsv() {
       throw new Error('请输入JSON数据');
     }
     
-    const parsed = JSON.parse(input);
+    // 处理不带引号的键名
+    const normalizedInput = normalizeKeys(input);
+    const parsed = JSON.parse(normalizedInput);
     
     // 确保是数组格式
     let dataArray = Array.isArray(parsed) ? parsed : [parsed];
@@ -434,6 +476,16 @@ function initJsonFormatter() {
   if (inputTextarea) {
     inputTextarea.addEventListener('input', () => {
       updateInputStatus();
+      if (currentTab !== 'convert') {
+        processInput();
+      }
+    });
+  }
+
+  // 配置选项监听
+  const allowUnquotedKeysCheckbox = document.getElementById('allow-unquoted-keys');
+  if (allowUnquotedKeysCheckbox) {
+    allowUnquotedKeysCheckbox.addEventListener('change', () => {
       if (currentTab !== 'convert') {
         processInput();
       }
