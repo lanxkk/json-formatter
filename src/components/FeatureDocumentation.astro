@@ -1,0 +1,248 @@
+---
+// 产品功能说明文档组件
+---
+
+<section class="feature-documentation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        🚀 强大的JSON处理功能
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        支持多种非标准格式，让JSON处理变得更加灵活和便捷
+      </p>
+    </div>
+
+    <!-- 配置选项说明 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center mb-4">
+          <span class="text-2xl mr-3">🏷️</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">允许不带引号的键名</h3>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          支持类似 JavaScript 对象字面量的格式，无需为键名添加引号。
+        </p>
+        <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
+          <div class="text-gray-500 dark:text-gray-400 mb-1">输入:</div>
+          <div class="text-gray-900 dark:text-white">
+            <span>{'{'}name: "张三", age: 30{'}'}</span>
+          </div>
+          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">输出:</div>
+          <div class="text-gray-900 dark:text-white">
+            <span>{'{"'}name{'"'}: "张三", "age": 30{'}'}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center mb-4">
+          <span class="text-2xl mr-3">❝</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">允许使用单引号</h3>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          自动将单引号字符串转换为标准的双引号格式，智能处理转义字符。
+        </p>
+        <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
+          <div class="text-gray-500 dark:text-gray-400 mb-1">输入:</div>
+          <div class="text-gray-900 dark:text-white">
+            <span>{`{"name": '李四'}`}</span>
+          </div>
+          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">输出:</div>
+          <div class="text-gray-900 dark:text-white">
+            <span>{'{"'}name{'"'}: "李四"{'}'}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center mb-4">
+          <span class="text-2xl mr-3">🔚</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">允许尾随逗号（最后一项后面有逗号）</h3>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          支持尾随逗号（trailing comma），自动清理多余的逗号。
+        </p>
+        <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
+          <div class="text-gray-500 dark:text-gray-400 mb-1">输入:</div>
+          <div class="text-gray-900 dark:text-white">
+            <span>{'{"'}name{'"'}: "王五",{'}'}</span>
+          </div>
+          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">输出:</div>
+          <div class="text-gray-900 dark:text-white">
+            <span>{'{"'}name{'"'}: "王五"{'}'}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 综合示例 -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 rounded-lg p-8 mb-12">
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        🎯 全功能组合示例
+      </h3>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">输入（支持的格式）</h4>
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
+            <pre class="text-gray-900 dark:text-white font-mono"><code>&#123;
+  name: '张三',
+  age: 30,
+  profile: &#123;
+    job: '软件工程师',
+    skills: ['JavaScript', 'Python', 'Go',],
+    experience: &#123;
+      years: 5,
+      companies: ['公司A', '公司B',],
+    &#125;,
+  &#125;,
+  hobbies: ['编程', '阅读', '旅游',],
+  active: true,
+&#125;</code></pre>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">输出（标准JSON）</h4>
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
+            <pre class="text-gray-900 dark:text-white font-mono"><code>&#123;
+  "name": "张三",
+  "age": 30,
+  "profile": &#123;
+    "job": "软件工程师",
+    "skills": ["JavaScript", "Python", "Go"],
+    "experience": &#123;
+      "years": 5,
+      "companies": ["公司A", "公司B"]
+    &#125;
+  &#125;,
+  "hobbies": ["编程", "阅读", "旅游"],
+  "active": true
+&#125;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 使用场景 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="text-center">
+        <div class="bg-green-100 dark:bg-green-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">🛠️</span>
+        </div>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">开发调试</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">直接复制粘贴JavaScript对象代码</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="bg-blue-100 dark:bg-blue-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">⚙️</span>
+        </div>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">配置文件转换</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">将类似JS config的格式转为JSON</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="bg-purple-100 dark:bg-purple-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">🧹</span>
+        </div>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">代码清理</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">移除多余的尾随逗号</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="bg-orange-100 dark:bg-orange-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">📝</span>
+        </div>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">格式统一</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">将混合引号格式统一为标准JSON</p>
+      </div>
+    </div>
+
+    <!-- 技术特点 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-md border border-gray-200 dark:border-gray-700">
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        💡 技术特点
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div class="flex items-start">
+            <span class="text-green-500 text-xl mr-3">✅</span>
+            <div>
+              <h4 class="font-semibold text-gray-900 dark:text-white">智能处理顺序</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">尾随逗号 → 单引号 → 不带引号的键名</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <span class="text-green-500 text-xl mr-3">✅</span>
+            <div>
+              <h4 class="font-semibold text-gray-900 dark:text-white">安全解析</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">避免处理字符串内容中的特殊字符</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <span class="text-green-500 text-xl mr-3">✅</span>
+            <div>
+              <h4 class="font-semibold text-gray-900 dark:text-white">全面集成</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">支持所有功能模块（格式化、压缩、验证、转换）</p>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-start">
+            <span class="text-green-500 text-xl mr-3">✅</span>
+            <div>
+              <h4 class="font-semibold text-gray-900 dark:text-white">实时响应</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">任何复选框状态改变都会自动重新处理</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <span class="text-green-500 text-xl mr-3">✅</span>
+            <div>
+              <h4 class="font-semibold text-gray-900 dark:text-white">完善错误提示</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">包含所有新功能的使用说明</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <span class="text-green-500 text-xl mr-3">✅</span>
+            <div>
+              <h4 class="font-semibold text-gray-900 dark:text-white">向后兼容</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">不影响现有的标准JSON处理</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-documentation {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .dark .feature-documentation {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-top: 1px solid #334155;
+  }
+  
+  pre {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    line-height: 1.5;
+  }
+  
+  code {
+    font-family: inherit;
+  }
+  
+  /* 响应式调整 */
+  @media (max-width: 768px) {
+    .feature-documentation .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    pre {
+      font-size: 0.75rem;
+    }
+  }
+</style> 
