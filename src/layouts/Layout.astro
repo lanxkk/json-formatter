@@ -4,6 +4,9 @@ export interface Props {
 }
 
 const { title } = Astro.props;
+
+// 在开发模式下导入 toolbar
+const isDev = import.meta.env.DEV;
 ---
 
 <!doctype html>
@@ -47,5 +50,8 @@ const { title } = Astro.props;
       // 全局主题切换函数
       window.toggleTheme = toggleTheme;
     </script>
+    
+    <!-- 只在开发模式下加载 Stagewise Toolbar -->
+    {isDev && <script src="/src/scripts/stagewise-init.js" type="module"></script>}
   </body>
 </html> 

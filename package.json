@@ -15,6 +15,7 @@
     "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
-    "@astrojs/node": "^9.2.2"
+    "@astrojs/node": "^9.2.2",
+    "@stagewise/toolbar": "^0.4.7"
   }
 }
