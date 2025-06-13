@@ -32,6 +32,86 @@ function normalizeKeys(input) {
   }
 }
 
+// 处理单引号字符串
+function normalizeSingleQuotes(input) {
+  const allowSingleQuotes = document.getElementById('allow-single-quotes')?.checked;
+  
+  if (!allowSingleQuotes) {
+    return input;
+  }
+  
+  try {
+    // 将单引号字符串转换为双引号字符串
+    // 需要小心处理转义字符和嵌套引号
+    let normalized = input;
+    let result = '';
+    let i = 0;
+    
+    while (i < normalized.length) {
+      const char = normalized[i];
+      
+      if (char === "'" && (i === 0 || normalized[i-1] !== '\\')) {
+        // 找到单引号字符串的开始
+        let j = i + 1;
+        let singleQuotedString = '';
+        let escaped = false;
+        
+        while (j < normalized.length) {
+          const nextChar = normalized[j];
+          
+          if (escaped) {
+            singleQuotedString += nextChar;
+            escaped = false;
+          } else if (nextChar === '\\') {
+            singleQuotedString += nextChar;
+            escaped = true;
+          } else if (nextChar === "'") {
+            // 找到单引号字符串的结束
+            break;
+          } else {
+            singleQuotedString += nextChar;
+          }
+          j++;
+        }
+        
+        if (j < normalized.length && normalized[j] === "'") {
+          // 成功匹配到完整的单引号字符串
+          // 处理内容中的双引号，需要转义
+          const escapedContent = singleQuotedString.replace(/"/g, '\\"');
+          result += `"${escapedContent}"`;
+          i = j + 1;
+        } else {
+          // 没有找到配对的单引号，保持原样
+          result += char;
+          i++;
+        }
+      } else {
+        result += char;
+        i++;
+      }
+    }
+    
+    return result;
+  } catch (error) {
+    console.warn('单引号规范化失败，使用原始输入：', error);
+    return input;
+  }
+}
+
+// 综合的输入规范化函数
+function normalizeInput(input) {
+  try {
+    // 先处理单引号，再处理不带引号的键名
+    let normalized = input;
+    normalized = normalizeSingleQuotes(normalized);
+    normalized = normalizeKeys(normalized);
+    return normalized;
+  } catch (error) {
+    console.warn('输入规范化失败，使用原始输入：', error);
+    return input;
+  }
+}
+
 // 工具函数
 function showError(message) {
   const errorText = document.getElementById('error-text');
@@ -105,7 +185,7 @@ function formatJson() {
     }
     
     // 处理不带引号的键名
-    const normalizedInput = normalizeKeys(input);
+    const normalizedInput = normalizeInput(input);
     const parsed = JSON.parse(normalizedInput);
     const formatted = JSON.stringify(parsed, null, 2);
     outputTextarea.value = formatted;
@@ -129,7 +209,7 @@ function compressJson() {
     }
     
     // 处理不带引号的键名
-    const normalizedInput = normalizeKeys(input);
+    const normalizedInput = normalizeInput(input);
     const parsed = JSON.parse(normalizedInput);
     const compressed = JSON.stringify(parsed);
     outputTextarea.value = compressed;
@@ -185,7 +265,7 @@ function validateJson() {
     }
     
     // 处理不带引号的键名
-    const normalizedInput = normalizeKeys(input);
+    const normalizedInput = normalizeInput(input);
     const parsed = JSON.parse(normalizedInput);
     const info = {
       valid: true,
@@ -216,7 +296,8 @@ ${JSON.stringify(parsed, null, 2)}`;
 2. 检查引号是否配对
 3. 检查括号是否配对
 4. 检查属性名是否用双引号包围
-5. 如果使用了不带引号的键名，请勾选"允许不带引号的键名"选项`;
+5. 如果使用了不带引号的键名，请勾选"允许不带引号的键名"选项
+6. 如果使用了单引号字符串，请勾选"允许使用单引号"选项`;
     
     updateOutputStatus();
     showError(`JSON验证失败：${error.message}`);
@@ -237,7 +318,7 @@ function convertToYaml() {
     }
     
     // 处理不带引号的键名
-    const normalizedInput = normalizeKeys(input);
+    const normalizedInput = normalizeInput(input);
     const parsed = JSON.parse(normalizedInput);
     // 简单的YAML转换（基础版本）
     const yamlString = JSON.stringify(parsed, null, 2)
@@ -267,7 +348,7 @@ function convertToXml() {
     }
     
     // 处理不带引号的键名
-    const normalizedInput = normalizeKeys(input);
+    const normalizedInput = normalizeInput(input);
     const parsed = JSON.parse(normalizedInput);
     
     // 简单的XML转换
@@ -310,7 +391,7 @@ function convertToCsv() {
     }
     
     // 处理不带引号的键名
-    const normalizedInput = normalizeKeys(input);
+    const normalizedInput = normalizeInput(input);
     const parsed = JSON.parse(normalizedInput);
     
     // 确保是数组格式
@@ -486,6 +567,15 @@ function initJsonFormatter() {
   const allowUnquotedKeysCheckbox = document.getElementById('allow-unquoted-keys');
   if (allowUnquotedKeysCheckbox) {
     allowUnquotedKeysCheckbox.addEventListener('change', () => {
+      if (currentTab !== 'convert') {
+        processInput();
+      }
+    });
+  }
+
+  const allowSingleQuotesCheckbox = document.getElementById('allow-single-quotes');
+  if (allowSingleQuotesCheckbox) {
+    allowSingleQuotesCheckbox.addEventListener('change', () => {
       if (currentTab !== 'convert') {
         processInput();
       }
