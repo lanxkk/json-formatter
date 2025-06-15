@@ -1,15 +1,24 @@
 ---
 // 产品功能说明文档组件
+import { t } from '../i18n/translations';
+import type { Language } from '../i18n/index';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'en' } = Astro.props;
+const translate = t(lang);
 ---
 
 <section class="feature-documentation">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="text-center mb-12">
       <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-        🚀 强大的JSON处理功能
+        {translate('features.main.title')}
       </h2>
       <p class="text-lg text-gray-600 dark:text-gray-300">
-        支持多种非标准格式，让JSON处理变得更加灵活和便捷
+        {translate('features.main.description')}
       </p>
     </div>
 
@@ -18,19 +27,19 @@
       <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
         <div class="flex items-center mb-4">
           <span class="text-2xl mr-3">🏷️</span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">允许不带引号的键名</h3>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{translate('features.unquoted.title')}</h3>
         </div>
         <p class="text-gray-600 dark:text-gray-300 mb-4">
-          支持类似 JavaScript 对象字面量的格式，无需为键名添加引号。
+          {translate('features.unquoted.description')}
         </p>
         <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
-          <div class="text-gray-500 dark:text-gray-400 mb-1">输入:</div>
+          <div class="text-gray-500 dark:text-gray-400 mb-1">{translate('ui.input.label')}</div>
           <div class="text-gray-900 dark:text-white">
-            <span>{'{'}name: "张三", age: 30{'}'}</span>
+            <span>{'{'}name: "John", age: 30{'}'}</span>
           </div>
-          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">输出:</div>
+          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">{translate('ui.output.label')}</div>
           <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "张三", "age": 30{'}'}</span>
+            <span>{'{"'}name{'"'}: "John", "age": 30{'}'}</span>
           </div>
         </div>
       </div>
@@ -38,19 +47,19 @@
       <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
         <div class="flex items-center mb-4">
           <span class="text-2xl mr-3">❝</span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">允许使用单引号</h3>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{translate('features.quotes.title')}</h3>
         </div>
         <p class="text-gray-600 dark:text-gray-300 mb-4">
-          自动将单引号字符串转换为标准的双引号格式，智能处理转义字符。
+          {translate('features.quotes.description')}
         </p>
         <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
-          <div class="text-gray-500 dark:text-gray-400 mb-1">输入:</div>
+          <div class="text-gray-500 dark:text-gray-400 mb-1">{translate('ui.input.label')}</div>
           <div class="text-gray-900 dark:text-white">
-            <span>{`{"name": '李四'}`}</span>
+            <span>{`{"name": 'Alice'}`}</span>
           </div>
-          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">输出:</div>
+          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">{translate('ui.output.label')}</div>
           <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "李四"{'}'}</span>
+            <span>{'{"'}name{'"'}: "Alice"{'}'}</span>
           </div>
         </div>
       </div>
@@ -58,19 +67,19 @@
       <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
         <div class="flex items-center mb-4">
           <span class="text-2xl mr-3">🔚</span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">允许尾随逗号（最后一项后面有逗号）</h3>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{translate('features.trailing.title')}</h3>
         </div>
         <p class="text-gray-600 dark:text-gray-300 mb-4">
-          支持尾随逗号（trailing comma），自动清理多余的逗号。
+          {translate('features.trailing.description')}
         </p>
         <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
-          <div class="text-gray-500 dark:text-gray-400 mb-1">输入:</div>
+          <div class="text-gray-500 dark:text-gray-400 mb-1">{translate('ui.input.label')}</div>
           <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "王五",{'}'}</span>
+            <span>{'{"'}name{'"'}: "Bob",{'}'}</span>
           </div>
-          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">输出:</div>
+          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">{translate('ui.output.label')}</div>
           <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "王五"{'}'}</span>
+            <span>{'{"'}name{'"'}: "Bob"{'}'}</span>
           </div>
         </div>
       </div>
@@ -79,43 +88,43 @@
     <!-- 综合示例 -->
     <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 rounded-lg p-8 mb-12">
       <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-        🎯 全功能组合示例
+        {translate('features.example.title')}
       </h3>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">输入（支持的格式）</h4>
+          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{translate('features.example.input')}</h4>
           <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
             <pre class="text-gray-900 dark:text-white font-mono"><code>&#123;
-  name: '张三',
+  name: 'JSON Formatter',
   age: 30,
   profile: &#123;
-    job: '软件工程师',
+    job: 'Developer',
     skills: ['JavaScript', 'Python', 'Go',],
     experience: &#123;
       years: 5,
-      companies: ['公司A', '公司B',],
+      companies: ['A', 'B',],
     &#125;,
   &#125;,
-  hobbies: ['编程', '阅读', '旅游',],
+  hobbies: ['Programming', 'Reading', 'Traveling',],
   active: true,
 &#125;</code></pre>
           </div>
         </div>
         <div>
-          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">输出（标准JSON）</h4>
+          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{translate('features.example.output')}</h4>
           <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
             <pre class="text-gray-900 dark:text-white font-mono"><code>&#123;
-  "name": "张三",
+  "name": "JSON Formatter",
   "age": 30,
   "profile": &#123;
-    "job": "软件工程师",
+    "job": "Developer",
     "skills": ["JavaScript", "Python", "Go"],
     "experience": &#123;
       "years": 5,
-      "companies": ["公司A", "公司B"]
+      "companies": ["A", "B"]
     &#125;
   &#125;,
-  "hobbies": ["编程", "阅读", "旅游"],
+  "hobbies": ["Programming", "Reading", "Traveling"],
   "active": true
 &#125;</code></pre>
           </div>
@@ -129,61 +138,61 @@
         <div class="bg-green-100 dark:bg-green-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
           <span class="text-2xl">🛠️</span>
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">开发调试</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">直接复制粘贴JavaScript对象代码</p>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.debug')}</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.debug.desc')}</p>
       </div>
       
       <div class="text-center">
         <div class="bg-blue-100 dark:bg-blue-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
           <span class="text-2xl">⚙️</span>
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">配置文件转换</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">将类似JS config的格式转为JSON</p>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.config')}</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.config.desc')}</p>
       </div>
       
       <div class="text-center">
         <div class="bg-purple-100 dark:bg-purple-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
           <span class="text-2xl">🧹</span>
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">代码清理</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">移除多余的尾随逗号</p>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.clean')}</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.clean.desc')}</p>
       </div>
       
       <div class="text-center">
         <div class="bg-orange-100 dark:bg-orange-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
           <span class="text-2xl">📝</span>
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">格式统一</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">将混合引号格式统一为标准JSON</p>
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.format')}</h4>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.format.desc')}</p>
       </div>
     </div>
 
     <!-- 技术特点 -->
     <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-md border border-gray-200 dark:border-gray-700">
       <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-        💡 技术特点
+        {translate('features.tech.title')}
       </h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="space-y-4">
           <div class="flex items-start">
             <span class="text-green-500 text-xl mr-3">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">智能处理顺序</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">尾随逗号 → 单引号 → 不带引号的键名</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.order')}</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.order.desc')}</p>
             </div>
           </div>
           <div class="flex items-start">
             <span class="text-green-500 text-xl mr-3">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">安全解析</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">避免处理字符串内容中的特殊字符</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.safe')}</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.safe.desc')}</p>
             </div>
           </div>
           <div class="flex items-start">
             <span class="text-green-500 text-xl mr-3">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">全面集成</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">支持所有功能模块（格式化、压缩、验证、转换）</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.integration')}</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.integration.desc')}</p>
             </div>
           </div>
         </div>
@@ -191,22 +200,22 @@
           <div class="flex items-start">
             <span class="text-green-500 text-xl mr-3">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">实时响应</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">任何复选框状态改变都会自动重新处理</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.realtime')}</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.realtime.desc')}</p>
             </div>
           </div>
           <div class="flex items-start">
             <span class="text-green-500 text-xl mr-3">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">完善错误提示</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">包含所有新功能的使用说明</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.error')}</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.error.desc')}</p>
             </div>
           </div>
           <div class="flex items-start">
             <span class="text-green-500 text-xl mr-3">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">向后兼容</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">不影响现有的标准JSON处理</p>
+              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.compatible')}</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.compatible.desc')}</p>
             </div>
           </div>
         </div>

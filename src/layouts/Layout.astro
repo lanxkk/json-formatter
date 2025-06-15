@@ -1,22 +1,39 @@
 ---
+import { t } from '../i18n/translations';
+import type { Language } from '../i18n/index';
+
 export interface Props {
-  title: string;
+  title?: string;
+  lang?: Language;
 }
 
-const { title } = Astro.props;
+const { title, lang = 'en' } = Astro.props;
+const currentLang = lang;
+const translate = t(currentLang);
+
+// 如果没有传入title，使用默认的翻译标题
+const pageTitle = title || translate('page.title');
 
 // 在开发模式下导入 toolbar
 const isDev = import.meta.env.DEV;
+
+// 语言到HTML lang属性的映射
+const langMapping = {
+  'zh-cn': 'zh-CN',
+  'zh-tw': 'zh-TW',
+  'en': 'en',
+  'ja': 'ja'
+} as const;
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={langMapping[currentLang]}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="强大的在线JSON格式化工具" />
+    <meta name="description" content={translate('page.description')} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WG4ZKYY1L1"></script>
@@ -48,7 +65,7 @@ const isDev = import.meta.env.DEV;
       initTheme();
       
       // 全局主题切换函数
-      window.toggleTheme = toggleTheme;
+      (window as any).toggleTheme = toggleTheme;
     </script>
     
     <!-- 只在开发模式下加载 Stagewise Toolbar -->

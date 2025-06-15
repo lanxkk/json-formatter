@@ -4,13 +4,15 @@ import Header from '../components/Header.astro';
 import JsonFormatter from '../components/JsonFormatter.astro';
 import AdBanner from '../components/AdBanner.astro';
 import FeatureDocumentation from '../components/FeatureDocumentation.astro';
+
+const lang = 'en';
 ---
 
-<Layout title="JSON 格式化工具 - 在线JSON格式化、压缩、验证、转换">
-  <Header />
+<Layout lang={lang}>
+  <Header lang={lang} />
   <main>
-    <JsonFormatter />
+    <JsonFormatter lang={lang} />
   </main>
   <AdBanner />
-  <FeatureDocumentation />
+  <FeatureDocumentation lang={lang} />
 </Layout> 

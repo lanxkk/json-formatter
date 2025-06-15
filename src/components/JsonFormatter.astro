@@ -1,5 +1,13 @@
 ---
-// JSON格式化主组件
+import { t } from '../i18n/translations';
+import type { Language } from '../i18n/index';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'en' } = Astro.props;
+const translate = t(lang);
 ---
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -12,35 +20,35 @@
           class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
           data-tab="format"
         >
-          格式化
+          {translate('formatter.button.format')}
         </button>
         <button
           id="compress-tab"
           class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
           data-tab="compress"
         >
-          压缩
+          {translate('formatter.button.compress')}
         </button>
         <button
           id="unescape-tab"
           class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
           data-tab="unescape"
         >
-          去转义
+          {translate('ui.unescape')}
         </button>
         <button
           id="validate-tab"
           class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
           data-tab="validate"
         >
-          验证
+          {translate('formatter.button.validate')}
         </button>
         <button
           id="convert-tab"
           class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
           data-tab="convert"
         >
-          转换
+          {translate('ui.convert')}
         </button>
       </nav>
     </div>
@@ -52,13 +60,13 @@
       id="clear-btn"
       class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
     >
-      清空
+      {translate('formatter.button.clear')}
     </button>
     <button
       id="copy-btn"
       class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
     >
-      复制结果
+      {translate('formatter.button.copy')}
     </button>
     <input
       type="file"
@@ -70,13 +78,13 @@
       id="import-btn"
       class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
     >
-      导入文件
+      {translate('ui.import')}
     </button>
     <button
       id="export-btn"
       class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors"
     >
-      导出文件
+      {translate('formatter.button.download')}
     </button>
     
     <!-- 配置选项 -->
@@ -88,7 +96,7 @@
           class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           checked
         />
-        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">允许不带引号的键名</span>
+        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.unquoted')}</span>
       </label>
       
       <label class="flex items-center cursor-pointer">
@@ -98,7 +106,7 @@
           class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           checked
         />
-        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">允许使用单引号</span>
+        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.single.quotes')}</span>
       </label>
       
       <label class="flex items-center cursor-pointer">
@@ -108,7 +116,7 @@
           class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           checked
         />
-        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">允许尾随逗号（最后一项后面有逗号）</span>
+        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.trailing.commas')}</span>
       </label>
     </div>
   </div>
@@ -118,27 +126,27 @@
     <!-- 输入区域 -->
     <div class="space-y-4">
       <div class="flex justify-between items-center">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输入</h2>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{translate('ui.input')}</h2>
         <span id="input-status" class="text-sm text-gray-500 dark:text-gray-400"></span>
       </div>
       <textarea
         id="input-json"
         class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-        placeholder="在这里输入JSON数据..."
+        placeholder={translate('formatter.input.placeholder')}
       ></textarea>
     </div>
 
     <!-- 输出区域 -->
     <div class="space-y-4">
       <div class="flex justify-between items-center">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输出</h2>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{translate('ui.output')}</h2>
         <span id="output-status" class="text-sm text-gray-500 dark:text-gray-400"></span>
       </div>
       <textarea
         id="output-json"
         class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm resize-none"
         readonly
-        placeholder="处理结果将在这里显示..."
+        placeholder={translate('formatter.output.placeholder')}
       ></textarea>
     </div>
   </div>
@@ -146,28 +154,28 @@
   <!-- 转换选项（仅在转换标签页显示） -->
   <div id="convert-options" class="mt-6 hidden">
     <div class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">转换选项</h3>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{translate('ui.convert.options')}</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <button
           id="to-yaml-btn"
           class="convert-btn px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
           data-format="yaml"
         >
-          转为 YAML
+          {translate('ui.convert.yaml')}
         </button>
         <button
           id="to-xml-btn"
           class="convert-btn px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
           data-format="xml"
         >
-          转为 XML
+          {translate('ui.convert.xml')}
         </button>
         <button
           id="to-csv-btn"
           class="convert-btn px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
           data-format="csv"
         >
-          转为 CSV
+          {translate('ui.convert.csv')}
         </button>
       </div>
     </div>
@@ -206,12 +214,437 @@
 
 <style>
   .tab-button {
-    @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600;
+    @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-600;
   }
   
   .tab-button.active {
-    @apply border-primary-500 text-primary-600 dark:text-primary-400 dark:border-primary-400;
+    @apply border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400;
   }
 </style>
 
-<script src="/src/scripts/json-formatter.js"></script> 
+<script>
+  // 基础变量
+  let currentTab = 'format';
+  let inputJson = '';
+  let outputJson = '';
+
+  // DOM 元素
+  const inputTextarea = document.getElementById('input-json') as HTMLTextAreaElement;
+  const outputTextarea = document.getElementById('output-json') as HTMLTextAreaElement;
+  const errorMessage = document.getElementById('error-message') as HTMLElement;
+  const successMessage = document.getElementById('success-message') as HTMLElement;
+  const errorText = document.getElementById('error-text') as HTMLElement;
+  const successText = document.getElementById('success-text') as HTMLElement;
+  const inputStatus = document.getElementById('input-status') as HTMLElement;
+  const outputStatus = document.getElementById('output-status') as HTMLElement;
+  const convertOptions = document.getElementById('convert-options') as HTMLElement;
+
+  // 初始化
+  document.addEventListener('DOMContentLoaded', function() {
+    initializeTabs();
+    initializeButtons();
+    initializeTextarea();
+  });
+
+  // 初始化选项卡
+  function initializeTabs() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const tabName = this.getAttribute('data-tab');
+        switchTab(tabName);
+      });
+    });
+  }
+
+  // 切换选项卡
+  function switchTab(tabName: string) {
+    currentTab = tabName;
+    
+    // 更新选项卡样式
+    document.querySelectorAll('.tab-button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    document.getElementById(`${tabName}-tab`)?.classList.add('active');
+    
+    // 显示/隐藏转换选项
+    if (tabName === 'convert') {
+      convertOptions.classList.remove('hidden');
+    } else {
+      convertOptions.classList.add('hidden');
+    }
+    
+    // 自动处理输入
+    if (inputTextarea.value) {
+      processInput();
+    }
+  }
+
+  // 初始化按钮
+  function initializeButtons() {
+    // 清空按钮
+    document.getElementById('clear-btn')?.addEventListener('click', clearAll);
+    
+    // 复制按钮
+    document.getElementById('copy-btn')?.addEventListener('click', copyResult);
+    
+    // 导入按钮
+    document.getElementById('import-btn')?.addEventListener('click', () => {
+      document.getElementById('file-input')?.click();
+    });
+    
+    // 文件输入
+    document.getElementById('file-input')?.addEventListener('change', handleFileImport);
+    
+    // 导出按钮
+    document.getElementById('export-btn')?.addEventListener('click', exportResult);
+    
+    // 转换按钮
+    document.querySelectorAll('.convert-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const format = this.getAttribute('data-format');
+        convertToFormat(format);
+      });
+    });
+  }
+
+  // 初始化文本区域
+  function initializeTextarea() {
+    inputTextarea.addEventListener('input', function() {
+      inputJson = this.value;
+      updateInputStatus();
+      processInput();
+    });
+  }
+
+  // 处理输入
+  function processInput() {
+    hideMessages();
+    
+    if (!inputJson.trim()) {
+      outputTextarea.value = '';
+      updateOutputStatus();
+      return;
+    }
+    
+    try {
+      switch (currentTab) {
+        case 'format':
+          formatJson();
+          break;
+        case 'compress':
+          compressJson();
+          break;
+        case 'unescape':
+          unescapeJson();
+          break;
+        case 'validate':
+          validateJson();
+          break;
+        case 'convert':
+          // 转换需要用户选择格式
+          break;
+      }
+    } catch (error) {
+      showError(error.message);
+    }
+  }
+
+  // 格式化 JSON
+  function formatJson() {
+    const parsed = parseJsonLeniently(inputJson);
+    outputJson = JSON.stringify(parsed, null, 2);
+    outputTextarea.value = outputJson;
+    updateOutputStatus();
+    showSuccess('JSON 已格式化');
+  }
+
+  // 压缩 JSON
+  function compressJson() {
+    const parsed = parseJsonLeniently(inputJson);
+    outputJson = JSON.stringify(parsed);
+    outputTextarea.value = outputJson;
+    updateOutputStatus();
+    showSuccess('JSON 已压缩');
+  }
+
+  // 去转义 JSON
+  function unescapeJson() {
+    try {
+      // 尝试解析为 JSON 字符串
+      const unescaped = JSON.parse(`"${inputJson}"`);
+      outputJson = unescaped;
+      outputTextarea.value = outputJson;
+      updateOutputStatus();
+      showSuccess('JSON 已去转义');
+    } catch (error) {
+      // 如果不是有效的转义字符串，直接显示
+      outputJson = inputJson;
+      outputTextarea.value = outputJson;
+      updateOutputStatus();
+      showSuccess('内容已处理');
+    }
+  }
+
+  // 验证 JSON
+  function validateJson() {
+    try {
+      parseJsonLeniently(inputJson);
+      outputJson = '✅ JSON 格式正确';
+      outputTextarea.value = outputJson;
+      updateOutputStatus();
+      showSuccess('JSON 验证通过');
+    } catch (error) {
+      outputJson = `❌ JSON 格式错误: ${error.message}`;
+      outputTextarea.value = outputJson;
+      updateOutputStatus();
+      showError(`JSON 验证失败: ${error.message}`);
+    }
+  }
+
+  // 宽松解析 JSON
+  function parseJsonLeniently(jsonString: string) {
+    const allowUnquotedKeys = (document.getElementById('allow-unquoted-keys') as HTMLInputElement).checked;
+    const allowSingleQuotes = (document.getElementById('allow-single-quotes') as HTMLInputElement).checked;
+    const allowTrailingCommas = (document.getElementById('allow-trailing-commas') as HTMLInputElement).checked;
+    
+    let processedJson = jsonString.trim();
+    
+    // 处理单引号
+    if (allowSingleQuotes) {
+      processedJson = processedJson.replace(/'/g, '"');
+    }
+    
+    // 处理不带引号的键名
+    if (allowUnquotedKeys) {
+      processedJson = processedJson.replace(/([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g, '$1"$2":');
+    }
+    
+    // 处理尾随逗号
+    if (allowTrailingCommas) {
+      processedJson = processedJson.replace(/,(\s*[}\]])/g, '$1');
+    }
+    
+    return JSON.parse(processedJson);
+  }
+
+  // 转换为其他格式
+  function convertToFormat(format: string) {
+    try {
+      const parsed = parseJsonLeniently(inputJson);
+      
+      switch (format) {
+        case 'yaml':
+          outputJson = jsonToYaml(parsed);
+          break;
+        case 'xml':
+          outputJson = jsonToXml(parsed);
+          break;
+        case 'csv':
+          outputJson = jsonToCsv(parsed);
+          break;
+        default:
+          throw new Error(`不支持的格式: ${format}`);
+      }
+      
+      outputTextarea.value = outputJson;
+      updateOutputStatus();
+      showSuccess(`已转换为 ${format.toUpperCase()} 格式`);
+    } catch (error) {
+      showError(`转换失败: ${error.message}`);
+    }
+  }
+
+  // JSON 转 YAML（简单实现）
+  function jsonToYaml(obj: any, indent = 0): string {
+    const spaces = '  '.repeat(indent);
+    
+    if (obj === null) return 'null';
+    if (typeof obj === 'string') return `"${obj}"`;
+    if (typeof obj === 'number' || typeof obj === 'boolean') return String(obj);
+    
+    if (Array.isArray(obj)) {
+      if (obj.length === 0) return '[]';
+      return obj.map(item => `${spaces}- ${jsonToYaml(item, indent + 1)}`).join('\n');
+    }
+    
+    if (typeof obj === 'object') {
+      const keys = Object.keys(obj);
+      if (keys.length === 0) return '{}';
+      return keys.map(key => `${spaces}${key}: ${jsonToYaml(obj[key], indent + 1)}`).join('\n');
+    }
+    
+    return String(obj);
+  }
+
+  // JSON 转 XML（简单实现）
+  function jsonToXml(obj: any, rootName = 'root'): string {
+    function objectToXml(obj: any, nodeName: string): string {
+      if (obj === null) return `<${nodeName}></${nodeName}>`;
+      if (typeof obj === 'string') return `<${nodeName}>${escapeXml(obj)}</${nodeName}>`;
+      if (typeof obj === 'number' || typeof obj === 'boolean') return `<${nodeName}>${obj}</${nodeName}>`;
+      
+      if (Array.isArray(obj)) {
+        return obj.map((item, index) => objectToXml(item, `${nodeName}_${index}`)).join('');
+      }
+      
+      if (typeof obj === 'object') {
+        const inner = Object.keys(obj).map(key => objectToXml(obj[key], key)).join('');
+        return `<${nodeName}>${inner}</${nodeName}>`;
+      }
+      
+      return `<${nodeName}>${obj}</${nodeName}>`;
+    }
+    
+    function escapeXml(str: string): string {
+      return str.replace(/[<>&'"]/g, function(char) {
+        switch (char) {
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '&': return '&amp;';
+          case '"': return '&quot;';
+          case "'": return '&#39;';
+          default: return char;
+        }
+      });
+    }
+    
+    return `<?xml version="1.0" encoding="UTF-8"?>\n${objectToXml(obj, rootName)}`;
+  }
+
+  // JSON 转 CSV（简单实现）
+  function jsonToCsv(obj: any): string {
+    if (!Array.isArray(obj)) {
+      throw new Error('CSV 转换只支持数组格式的 JSON');
+    }
+    
+    if (obj.length === 0) return '';
+    
+    // 获取所有键名
+    const keys = new Set<string>();
+    obj.forEach(item => {
+      if (typeof item === 'object' && item !== null) {
+        Object.keys(item).forEach(key => keys.add(key));
+      }
+    });
+    
+    const keyArray = Array.from(keys);
+    
+    // 生成 CSV 头部
+    const header = keyArray.map(key => `"${key}"`).join(',');
+    
+    // 生成 CSV 数据行
+    const rows = obj.map(item => {
+      return keyArray.map(key => {
+        const value = item && typeof item === 'object' ? item[key] : '';
+        return `"${String(value || '').replace(/"/g, '""')}"`;
+      }).join(',');
+    });
+    
+    return [header, ...rows].join('\n');
+  }
+
+  // 清空所有内容
+  function clearAll() {
+    inputTextarea.value = '';
+    outputTextarea.value = '';
+    inputJson = '';
+    outputJson = '';
+    updateInputStatus();
+    updateOutputStatus();
+    hideMessages();
+  }
+
+  // 复制结果
+  async function copyResult() {
+    if (!outputJson) {
+      showError('没有可复制的内容');
+      return;
+    }
+    
+    try {
+      await navigator.clipboard.writeText(outputJson);
+      showSuccess('已复制到剪贴板');
+    } catch (error) {
+      // 降级方案
+      const textArea = document.createElement('textarea');
+      textArea.value = outputJson;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      showSuccess('已复制到剪贴板');
+    }
+  }
+
+  // 处理文件导入
+  function handleFileImport(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const content = e.target?.result as string;
+      inputTextarea.value = content;
+      inputJson = content;
+      updateInputStatus();
+      processInput();
+    };
+    reader.readAsText(file);
+  }
+
+  // 导出结果
+  function exportResult() {
+    if (!outputJson) {
+      showError('没有可导出的内容');
+      return;
+    }
+    
+    const blob = new Blob([outputJson], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `json-result-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showSuccess('文件已导出');
+  }
+
+  // 更新输入状态
+  function updateInputStatus() {
+    const length = inputJson.length;
+    const lines = inputJson.split('\n').length;
+    inputStatus.textContent = `${length} 字符, ${lines} 行`;
+  }
+
+  // 更新输出状态
+  function updateOutputStatus() {
+    const length = outputJson.length;
+    const lines = outputJson.split('\n').length;
+    outputStatus.textContent = `${length} 字符, ${lines} 行`;
+  }
+
+  // 显示错误信息
+  function showError(message: string) {
+    hideMessages();
+    errorText.textContent = message;
+    errorMessage.classList.remove('hidden');
+    setTimeout(hideMessages, 5000);
+  }
+
+  // 显示成功信息
+  function showSuccess(message: string) {
+    hideMessages();
+    successText.textContent = message;
+    successMessage.classList.remove('hidden');
+    setTimeout(hideMessages, 3000);
+  }
+
+  // 隐藏所有消息
+  function hideMessages() {
+    errorMessage.classList.add('hidden');
+    successMessage.classList.add('hidden');
+  }
+</script> 
