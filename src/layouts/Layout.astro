@@ -5,9 +5,10 @@ import type { Language } from '../i18n/index';
 export interface Props {
   title?: string;
   lang?: Language;
+  canonical?: string;
 }
 
-const { title, lang = 'en' } = Astro.props;
+const { title, lang = 'en', canonical } = Astro.props;
 const currentLang = lang;
 const translate = t(currentLang);
 
@@ -33,6 +34,7 @@ const langMapping = {
     <meta name="description" content={translate('page.description')} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {canonical && <link rel="canonical" href={canonical} />}
     <title>{pageTitle}</title>
     
     <!-- Google tag (gtag.js) -->
