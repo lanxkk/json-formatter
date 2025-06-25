@@ -4,7 +4,7 @@ export const translations = {
   'zh-cn': {
     // 页面标题和描述
     'page.title': 'JSON 格式化工具 - 在线JSON格式化、压缩、验证、转换',
-    'page.description': '强大的在线JSON格式化工具',
+    'page.description': '专业的在线JSON格式化工具，支持JSON美化、压缩、验证和多格式转换，智能处理JavaScript对象、单引号、尾随逗号等非标准格式。',
     'site.title': 'JSON 格式化工具',
     
     // 头部导航
@@ -99,7 +99,7 @@ export const translations = {
   'en': {
     // Page title and description
     'page.title': 'JSON Formatter - Online JSON Format, Compress, Validate, Convert',
-    'page.description': 'Powerful online JSON formatting tool',
+    'page.description': 'Online JSON formatter with beautify, compress, validate and multi-format conversion. Smart handling of JavaScript objects, single quotes, trailing commas.',
     'site.title': 'JSON Formatter',
     
     // Header navigation
@@ -194,7 +194,7 @@ export const translations = {
   'ja': {
     // ページタイトルと説明
     'page.title': 'JSONフォーマッター - オンラインJSON整形、圧縮、検証、変換',
-    'page.description': '強力なオンラインJSON整形ツール',
+    'page.description': 'プロフェッショナルなオンラインJSON整形ツール。美化、圧縮、検証、多形式変換をサポート。JavaScriptオブジェクト、シングルクォート、末尾カンマの智能処理とリアルタイムエラー検出機能付き。',
     'site.title': 'JSONフォーマッター',
     
     // ヘッダーナビゲーション
@@ -289,7 +289,7 @@ export const translations = {
   'zh-tw': {
     // 頁面標題和描述
     'page.title': 'JSON 格式化工具 - 線上JSON格式化、壓縮、驗證、轉換',
-    'page.description': '強大的線上JSON格式化工具',
+    'page.description': '專業的線上JSON格式化工具，支援JSON美化、壓縮、驗證和多格式轉換。智慧處理JavaScript物件、單引號、尾隨逗號等非標準格式，提供即時錯誤檢測和一鍵複製功能。',
     'site.title': 'JSON 格式化工具',
     
     // 頭部導航
