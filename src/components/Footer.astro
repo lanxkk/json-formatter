@@ -1,0 +1,42 @@
+---
+import { t } from '../i18n/translations';
+import type { Language } from '../i18n/index';
+
+export interface Props {
+  lang?: Language;
+}
+
+const { lang = 'en' } = Astro.props;
+const translate = t(lang);
+---
+
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+  <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      <!-- Copyright -->
+      <div class="text-gray-600 dark:text-gray-400 text-sm">
+        © 2025 JSON Formatter. All rights reserved. <a 
+        href="https://www.lanxk.com" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm transition-colors duration-200"
+      >
+        www.lanxk.com
+      </a>
+      </div>
+      
+      <!-- Links -->
+      <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6">
+        
+        <a 
+          href="https://cal.com/best-ai-tools/json-formatter?overlayCalendar=true" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm transition-colors duration-200"
+        >
+          Schedule Consultation about JSON Formatter
+        </a>
+      </div>
+    </div>
+  </div>
+</footer> 
