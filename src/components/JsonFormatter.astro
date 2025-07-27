@@ -85,6 +85,26 @@ const translate = t(lang);
       />
       <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.trailing.commas')}</span>
     </label>
+    
+    <label class="flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        id="remove-surrounding-quotes"
+        class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        checked
+      />
+      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.remove.quotes')}</span>
+    </label>
+    
+    <label class="flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        id="auto-unescape"
+        class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        checked
+      />
+      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.auto.unescape')}</span>
+    </label>
   </div>
 
   <!-- 主要工作区域 -->
@@ -315,6 +335,26 @@ const translate = t(lang);
       updateInputStatus();
       processInput();
     });
+    
+    // 监听配置选项变化
+    const configCheckboxes = [
+      'allow-unquoted-keys',
+      'allow-single-quotes', 
+      'allow-trailing-commas',
+      'remove-surrounding-quotes',
+      'auto-unescape'
+    ];
+    
+    configCheckboxes.forEach(id => {
+      const checkbox = document.getElementById(id);
+      if (checkbox) {
+        checkbox.addEventListener('change', function() {
+          if (inputJson.trim()) {
+            processInput();
+          }
+        });
+      }
+    });
   }
 
   // 处理输入
@@ -407,8 +447,35 @@ const translate = t(lang);
     const allowUnquotedKeys = (document.getElementById('allow-unquoted-keys') as HTMLInputElement).checked;
     const allowSingleQuotes = (document.getElementById('allow-single-quotes') as HTMLInputElement).checked;
     const allowTrailingCommas = (document.getElementById('allow-trailing-commas') as HTMLInputElement).checked;
+    const removeSurroundingQuotes = (document.getElementById('remove-surrounding-quotes') as HTMLInputElement).checked;
+    const autoUnescape = (document.getElementById('auto-unescape') as HTMLInputElement).checked;
     
     let processedJson = jsonString.trim();
+    
+    // 步骤1：处理首尾引号删除
+    if (removeSurroundingQuotes) {
+      // 检查是否以引号开头和结尾（单引号或双引号）
+      if ((processedJson.startsWith('"') && processedJson.endsWith('"')) ||
+          (processedJson.startsWith("'") && processedJson.endsWith("'"))) {
+        // 删除首尾引号
+        processedJson = processedJson.slice(1, -1);
+      }
+    }
+    
+    // 步骤2：独立的自动去转义处理
+    if (autoUnescape && processedJson.includes('\\"')) {
+      try {
+        // 尝试作为 JSON 字符串解析（这会自动处理转义）
+        processedJson = JSON.parse('"' + processedJson + '"');
+      } catch (e) {
+        // 如果解析失败，尝试简单的字符串替换
+        try {
+          processedJson = processedJson.replace(/\\"/g, '"').replace(/\\'/g, "'");
+        } catch (replaceError) {
+          // 如果都失败了，保持原样
+        }
+      }
+    }
     
     // 处理单引号
     if (allowSingleQuotes) {

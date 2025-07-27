@@ -57,6 +57,8 @@ export const translations = {
     'ui.option.unquoted': '允许不带引号的键名',
     'ui.option.single.quotes': '允许使用单引号',
     'ui.option.trailing.commas': '允许尾随逗号（最后一项后面有逗号）',
+    'ui.option.remove.quotes': '自动删除首尾引号',
+    'ui.option.auto.unescape': '自动去转义',
     
     // 功能文档
     'features.main.title': '强大的JSON处理功能',
@@ -152,6 +154,8 @@ export const translations = {
     'ui.option.unquoted': 'Allow unquoted keys',
     'ui.option.single.quotes': 'Allow single quotes',
     'ui.option.trailing.commas': 'Allow trailing commas',
+    'ui.option.remove.quotes': 'Auto remove surrounding quotes',
+    'ui.option.auto.unescape': 'Auto unescape',
     
     // Features documentation
     'features.main.title': 'Powerful JSON Processing',
@@ -247,6 +251,8 @@ export const translations = {
     'ui.option.unquoted': 'クォートなしキーを許可',
     'ui.option.single.quotes': 'シングルクォートを許可',
     'ui.option.trailing.commas': '末尾カンマを許可',
+    'ui.option.remove.quotes': '前後の引用符を自動削除',
+    'ui.option.auto.unescape': '自動エスケープ解除',
     
     // 機能ドキュメント
     'features.main.title': '強力なJSON処理機能',
@@ -342,6 +348,8 @@ export const translations = {
     'ui.option.unquoted': '允許不帶引號的鍵名',
     'ui.option.single.quotes': '允許使用單引號',
     'ui.option.trailing.commas': '允許尾隨逗號',
+    'ui.option.remove.quotes': '自動刪除首尾引號',
+    'ui.option.auto.unescape': '自動去轉義',
     
     // 功能文件
     'features.main.title': '強大的JSON處理功能',
