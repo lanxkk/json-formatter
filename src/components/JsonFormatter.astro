@@ -146,6 +146,12 @@ const translate = t(lang);
       {translate('formatter.button.clear')}
     </button>
     <button
+      id="paste-btn"
+      class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
+    >
+      {translate('formatter.button.paste')}
+    </button>
+    <button
       id="copy-btn"
       class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
     >
@@ -304,6 +310,9 @@ const translate = t(lang);
   function initializeButtons() {
     // 清空按钮
     document.getElementById('clear-btn')?.addEventListener('click', clearAll);
+    
+    // 粘贴按钮
+    document.getElementById('paste-btn')?.addEventListener('click', pasteFromClipboard);
     
     // 复制按钮
     document.getElementById('copy-btn')?.addEventListener('click', copyResult);
@@ -641,6 +650,37 @@ const translate = t(lang);
       document.execCommand('copy');
       document.body.removeChild(textArea);
       showSuccess('已复制到剪贴板');
+    }
+  }
+
+  // 从剪贴板粘贴
+  async function pasteFromClipboard() {
+    try {
+      // 现代浏览器的剪贴板 API
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          inputTextarea.value = text;
+          inputJson = text;
+          updateInputStatus();
+          processInput();
+          showSuccess('已从剪贴板粘贴内容');
+        } else {
+          showError('剪贴板为空');
+        }
+      } else {
+        // 降级方案：提示用户手动粘贴
+        inputTextarea.focus();
+        showError('请使用 Ctrl+V (或 Cmd+V) 手动粘贴内容');
+      }
+    } catch (error) {
+      // 处理权限错误或其他错误
+      if (error.name === 'NotAllowedError') {
+        showError('需要允许访问剪贴板权限');
+      } else {
+        inputTextarea.focus();
+        showError('请使用 Ctrl+V (或 Cmd+V) 手动粘贴内容');
+      }
     }
   }
 

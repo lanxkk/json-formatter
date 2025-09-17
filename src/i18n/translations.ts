@@ -4,7 +4,7 @@ export const translations = {
   'zh-cn': {
     // 页面标题和描述
     'page.title': 'JSON 格式化工具 - 在线JSON格式化、压缩、验证、转换',
-    'page.description': '专业的在线JSON格式化工具，支持JSON美化、压缩、验证和多格式转换，智能处理JavaScript对象、单引号、尾随逗号等非标准格式。',
+    'page.description': '专业的在线JSON格式化工具，支持JSON美化、压缩、验证、自动去转义和多格式转换、导出，智能处理 JavaScript 对象、无引号键名、单引号、尾随逗号等非标准格式 JSON 文档',
     'site.title': 'JSON 格式化工具',
     
     // 头部导航
@@ -21,6 +21,7 @@ export const translations = {
     'formatter.button.validate': '验证',
     'formatter.button.clear': '清空',
     'formatter.button.copy': '复制',
+    'formatter.button.paste': '粘贴',
     'formatter.button.download': '下载',
     'formatter.status.valid': 'JSON 有效',
     'formatter.status.invalid': 'JSON 无效',
@@ -118,6 +119,7 @@ export const translations = {
     'formatter.button.validate': 'Validate',
     'formatter.button.clear': 'Clear',
     'formatter.button.copy': 'Copy',
+    'formatter.button.paste': 'Paste',
     'formatter.button.download': 'Download',
     'formatter.status.valid': 'JSON Valid',
     'formatter.status.invalid': 'JSON Invalid',
@@ -215,6 +217,7 @@ export const translations = {
     'formatter.button.validate': '検証',
     'formatter.button.clear': 'クリア',
     'formatter.button.copy': 'コピー',
+    'formatter.button.paste': 'ペースト',
     'formatter.button.download': 'ダウンロード',
     'formatter.status.valid': 'JSON有効',
     'formatter.status.invalid': 'JSON無効',
@@ -312,6 +315,7 @@ export const translations = {
     'formatter.button.validate': '驗證',
     'formatter.button.clear': '清空',
     'formatter.button.copy': '複製',
+    'formatter.button.paste': '貼上',
     'formatter.button.download': '下載',
     'formatter.status.valid': 'JSON 有效',
     'formatter.status.invalid': 'JSON 無效',
