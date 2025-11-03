@@ -101,9 +101,9 @@ export const translations = {
   
   'en': {
     // Page title and description
-    'page.title': 'JSON Formatter - Online JSON Format, Compress, Validate, Convert',
+    'page.title': 'JSON Formatter Online - Online JSON Format, Compress, Validate, Convert',
     'page.description': 'Online JSON formatter with beautify, compress, validate and multi-format conversion. Smart handling of JavaScript objects, single quotes, trailing commas.',
-    'site.title': 'JSON Formatter',
+    'site.title': 'JSON Formatter Online',
     
     // Header navigation
     'nav.theme.toggle': 'Toggle Theme',
