@@ -60,6 +60,8 @@ export const translations = {
     'ui.option.trailing.commas': '允许尾随逗号（最后一项后面有逗号）',
     'ui.option.remove.quotes': '自动删除首尾引号',
     'ui.option.auto.unescape': '自动去转义',
+    'ui.option.trailing.semicolon': '允许末尾分号',
+    'ui.option.remove.comments': '移除代码注释',
     
     // 功能文档
     'features.main.title': '强大的JSON处理功能',
@@ -158,6 +160,8 @@ export const translations = {
     'ui.option.trailing.commas': 'Allow trailing commas',
     'ui.option.remove.quotes': 'Auto remove surrounding quotes',
     'ui.option.auto.unescape': 'Auto unescape',
+    'ui.option.trailing.semicolon': 'Allow trailing semicolon',
+    'ui.option.remove.comments': 'Remove code comments',
     
     // Features documentation
     'features.main.title': 'Powerful JSON Processing',
@@ -256,6 +260,8 @@ export const translations = {
     'ui.option.trailing.commas': '末尾カンマを許可',
     'ui.option.remove.quotes': '前後の引用符を自動削除',
     'ui.option.auto.unescape': '自動エスケープ解除',
+    'ui.option.trailing.semicolon': '末尾セミコロンを許可',
+    'ui.option.remove.comments': 'コードコメントを削除',
     
     // 機能ドキュメント
     'features.main.title': '強力なJSON処理機能',
@@ -354,6 +360,8 @@ export const translations = {
     'ui.option.trailing.commas': '允許尾隨逗號',
     'ui.option.remove.quotes': '自動刪除首尾引號',
     'ui.option.auto.unescape': '自動去轉義',
+    'ui.option.trailing.semicolon': '允許末尾分號',
+    'ui.option.remove.comments': '移除程式碼註解',
     
     // 功能文件
     'features.main.title': '強大的JSON處理功能',

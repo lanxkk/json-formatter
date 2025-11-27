@@ -105,6 +105,26 @@ const translate = t(lang);
       />
       <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.auto.unescape')}</span>
     </label>
+    
+    <label class="flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        id="allow-trailing-semicolon"
+        class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        checked
+      />
+      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.trailing.semicolon')}</span>
+    </label>
+    
+    <label class="flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        id="remove-comments"
+        class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        checked
+      />
+      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.remove.comments')}</span>
+    </label>
   </div>
 
   <!-- 主要工作区域 -->
@@ -351,7 +371,9 @@ const translate = t(lang);
       'allow-single-quotes', 
       'allow-trailing-commas',
       'remove-surrounding-quotes',
-      'auto-unescape'
+      'auto-unescape',
+      'allow-trailing-semicolon',
+      'remove-comments'
     ];
     
     configCheckboxes.forEach(id => {
@@ -458,8 +480,23 @@ const translate = t(lang);
     const allowTrailingCommas = (document.getElementById('allow-trailing-commas') as HTMLInputElement).checked;
     const removeSurroundingQuotes = (document.getElementById('remove-surrounding-quotes') as HTMLInputElement).checked;
     const autoUnescape = (document.getElementById('auto-unescape') as HTMLInputElement).checked;
+    const allowTrailingSemicolon = (document.getElementById('allow-trailing-semicolon') as HTMLInputElement).checked;
+    const removeComments = (document.getElementById('remove-comments') as HTMLInputElement).checked;
     
     let processedJson = jsonString.trim();
+    
+    // 步骤0：移除代码注释（需在其他处理之前执行，避免注释内容干扰后续正则匹配）
+    if (removeComments) {
+      // 移除多行注释 /* ... */
+      processedJson = processedJson.replace(/\/\*[\s\S]*?\*\//g, '');
+      // 移除单行注释 // ...（需避免 URL 中的 //，使用负向后行断言）
+      processedJson = processedJson.replace(/(?<![:\"\'])\/\/.*$/gm, '');
+    }
+    
+    // 步骤0.5：移除末尾分号
+    if (allowTrailingSemicolon) {
+      processedJson = processedJson.replace(/;\s*$/, '');
+    }
     
     // 步骤1：处理首尾引号删除
     if (removeSurroundingQuotes) {
