@@ -281,7 +281,7 @@ function validateJson() {
       size: JSON.stringify(parsed).length
     };
     
-    outputTextarea.value = `✅ JSON验证通过！
+    outputTextarea.value = `[Valid] JSON验证通过！
 
 类型: ${info.type}
 ${info.type === 'object' ? `属性数量: ${info.keys}` : ''}
@@ -294,7 +294,7 @@ ${JSON.stringify(parsed, null, 2)}`;
     updateOutputStatus();
     showSuccess('JSON验证通过！');
   } catch (error) {
-    outputTextarea.value = `❌ JSON验证失败
+    outputTextarea.value = `[Error] JSON验证失败
 
 错误信息: ${error.message}
 
