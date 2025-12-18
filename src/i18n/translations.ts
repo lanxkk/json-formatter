@@ -63,6 +63,17 @@ export const translations = {
     'ui.option.trailing.semicolon': '允许末尾分号',
     'ui.option.remove.comments': '移除代码注释',
     
+    // 树状视图
+    'ui.view.text': '文本视图',
+    'ui.view.tree': '树状视图',
+    'ui.tree.expand.all': '全部展开',
+    'ui.tree.collapse.all': '全部折叠',
+    'ui.tree.search': '搜索...',
+    'ui.tree.copy.path': '复制路径',
+    'ui.tree.edit': '编辑',
+    'ui.tree.save': '保存',
+    'ui.tree.cancel': '取消',
+    
     // 功能文档
     'features.main.title': '强大的JSON处理功能',
     'features.main.description': '支持多种非标准格式，让JSON处理变得更加灵活和便捷',
@@ -162,6 +173,17 @@ export const translations = {
     'ui.option.auto.unescape': 'Auto unescape',
     'ui.option.trailing.semicolon': 'Allow trailing semicolon',
     'ui.option.remove.comments': 'Remove code comments',
+    
+    // Tree view
+    'ui.view.text': 'Text View',
+    'ui.view.tree': 'Tree View',
+    'ui.tree.expand.all': 'Expand All',
+    'ui.tree.collapse.all': 'Collapse All',
+    'ui.tree.search': 'Search...',
+    'ui.tree.copy.path': 'Copy Path',
+    'ui.tree.edit': 'Edit',
+    'ui.tree.save': 'Save',
+    'ui.tree.cancel': 'Cancel',
     
     // Features documentation
     'features.main.title': 'Powerful JSON Processing',
@@ -263,6 +285,17 @@ export const translations = {
     'ui.option.trailing.semicolon': '末尾セミコロンを許可',
     'ui.option.remove.comments': 'コードコメントを削除',
     
+    // ツリービュー
+    'ui.view.text': 'テキストビュー',
+    'ui.view.tree': 'ツリービュー',
+    'ui.tree.expand.all': 'すべて展開',
+    'ui.tree.collapse.all': 'すべて折りたたむ',
+    'ui.tree.search': '検索...',
+    'ui.tree.copy.path': 'パスをコピー',
+    'ui.tree.edit': '編集',
+    'ui.tree.save': '保存',
+    'ui.tree.cancel': 'キャンセル',
+    
     // 機能ドキュメント
     'features.main.title': '強力なJSON処理機能',
     'features.main.description': '様々な非標準フォーマットをサポートし、JSON処理をより柔軟で便利にします',
@@ -362,6 +395,17 @@ export const translations = {
     'ui.option.auto.unescape': '自動去轉義',
     'ui.option.trailing.semicolon': '允許末尾分號',
     'ui.option.remove.comments': '移除程式碼註解',
+    
+    // 樹狀視圖
+    'ui.view.text': '文字視圖',
+    'ui.view.tree': '樹狀視圖',
+    'ui.tree.expand.all': '全部展開',
+    'ui.tree.collapse.all': '全部摺疊',
+    'ui.tree.search': '搜尋...',
+    'ui.tree.copy.path': '複製路徑',
+    'ui.tree.edit': '編輯',
+    'ui.tree.save': '儲存',
+    'ui.tree.cancel': '取消',
     
     // 功能文件
     'features.main.title': '強大的JSON處理功能',

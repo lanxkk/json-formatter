@@ -64,9 +64,12 @@ const translate = t(lang);
         class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         checked
       />
-      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.unquoted')}</span>
+      <span
+        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
+        >{translate('ui.option.unquoted')}</span
+      >
     </label>
-    
+
     <label class="flex items-center cursor-pointer">
       <input
         type="checkbox"
@@ -74,9 +77,12 @@ const translate = t(lang);
         class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         checked
       />
-      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.single.quotes')}</span>
+      <span
+        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
+        >{translate('ui.option.single.quotes')}</span
+      >
     </label>
-    
+
     <label class="flex items-center cursor-pointer">
       <input
         type="checkbox"
@@ -84,9 +90,12 @@ const translate = t(lang);
         class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         checked
       />
-      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.trailing.commas')}</span>
+      <span
+        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
+        >{translate('ui.option.trailing.commas')}</span
+      >
     </label>
-    
+
     <label class="flex items-center cursor-pointer">
       <input
         type="checkbox"
@@ -94,9 +103,12 @@ const translate = t(lang);
         class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         checked
       />
-      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.remove.quotes')}</span>
+      <span
+        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
+        >{translate('ui.option.remove.quotes')}</span
+      >
     </label>
-    
+
     <label class="flex items-center cursor-pointer">
       <input
         type="checkbox"
@@ -104,9 +116,12 @@ const translate = t(lang);
         class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         checked
       />
-      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.auto.unescape')}</span>
+      <span
+        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
+        >{translate('ui.option.auto.unescape')}</span
+      >
     </label>
-    
+
     <label class="flex items-center cursor-pointer">
       <input
         type="checkbox"
@@ -114,9 +129,12 @@ const translate = t(lang);
         class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         checked
       />
-      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.trailing.semicolon')}</span>
+      <span
+        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
+        >{translate('ui.option.trailing.semicolon')}</span
+      >
     </label>
-    
+
     <label class="flex items-center cursor-pointer">
       <input
         type="checkbox"
@@ -124,7 +142,10 @@ const translate = t(lang);
         class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         checked
       />
-      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">{translate('ui.option.remove.comments')}</span>
+      <span
+        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
+        >{translate('ui.option.remove.comments')}</span
+      >
     </label>
   </div>
 
@@ -133,28 +154,86 @@ const translate = t(lang);
     <!-- 输入区域 -->
     <div class="space-y-4">
       <div class="flex justify-between items-center">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{translate('ui.input')}</h2>
-        <span id="input-status" class="text-sm text-gray-500 dark:text-gray-400"></span>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+          {translate('ui.input')}
+        </h2>
+        <span id="input-status" class="text-sm text-gray-500 dark:text-gray-400"
+        ></span>
       </div>
       <textarea
         id="input-json"
         class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-        placeholder={translate('formatter.input.placeholder')}
-      ></textarea>
+        placeholder={translate('formatter.input.placeholder')}></textarea>
     </div>
 
     <!-- 输出区域 -->
     <div class="space-y-4">
       <div class="flex justify-between items-center">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{translate('ui.output')}</h2>
-        <span id="output-status" class="text-sm text-gray-500 dark:text-gray-400"></span>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+          {translate('ui.output')}
+        </h2>
+        <div class="flex items-center gap-2">
+          <span
+            id="output-status"
+            class="text-sm text-gray-500 dark:text-gray-400"></span>
+          <!-- 视图切换按钮 -->
+          <div class="view-toggle-buttons">
+            <button
+              id="text-view-btn"
+              class="view-toggle-btn active px-3 py-1 text-sm rounded-l-md border border-gray-300 dark:border-gray-600"
+              data-view="text"
+            >
+              {translate('ui.view.text')}
+            </button>
+            <button
+              id="tree-view-btn"
+              class="view-toggle-btn px-3 py-1 text-sm rounded-r-md border border-l-0 border-gray-300 dark:border-gray-600"
+              data-view="tree"
+            >
+              {translate('ui.view.tree')}
+            </button>
+          </div>
+        </div>
       </div>
+
+      <!-- 文本视图 -->
       <textarea
         id="output-json"
         class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm resize-none"
         readonly
-        placeholder={translate('formatter.output.placeholder')}
-      ></textarea>
+        placeholder={translate('formatter.output.placeholder')}></textarea>
+
+      <!-- 树状视图 -->
+      <div id="tree-view-container" class="hidden">
+        <!-- 树状视图控制栏 -->
+        <div class="tree-controls flex flex-wrap gap-2 mb-2">
+          <input
+            type="text"
+            id="tree-search"
+            placeholder={translate('ui.tree.search')}
+            class="flex-1 min-w-[200px] px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          />
+          <button
+            id="tree-expand-all"
+            class="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors"
+          >
+            {translate('ui.tree.expand.all')}
+          </button>
+          <button
+            id="tree-collapse-all"
+            class="px-3 py-1 text-sm bg-gray-500 hover:bg-gray-600 text-white rounded-md transition-colors"
+          >
+            {translate('ui.tree.collapse.all')}
+          </button>
+        </div>
+
+        <!-- 树状视图内容 -->
+        <div
+          id="tree-view"
+          class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 overflow-auto"
+        >
+        </div>
+      </div>
     </div>
   </div>
 
@@ -178,12 +257,7 @@ const translate = t(lang);
     >
       {translate('formatter.button.copy')}
     </button>
-    <input
-      type="file"
-      id="file-input"
-      accept=".json,.txt"
-      class="hidden"
-    />
+    <input type="file" id="file-input" accept=".json,.txt" class="hidden" />
     <button
       id="import-btn"
       class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
@@ -200,8 +274,12 @@ const translate = t(lang);
 
   <!-- 转换选项（仅在转换标签页显示） -->
   <div id="convert-options" class="mt-6 hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{translate('ui.convert.options')}</h3>
+    <div
+      class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700"
+    >
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        {translate('ui.convert.options')}
+      </h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <button
           id="to-yaml-btn"
@@ -230,12 +308,20 @@ const translate = t(lang);
 
   <!-- 错误提示 -->
   <div id="error-message" class="mt-4 hidden">
-    <div class="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-lg p-4">
+    <div
+      class="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-lg p-4"
+    >
       <div class="flex">
         <XCircle class="w-5 h-5 text-red-400 mt-0.5 mr-3 flex-shrink-0" />
         <div>
-          <h3 class="text-sm font-medium text-red-800 dark:text-red-200">错误</h3>
-          <p id="error-text" class="mt-1 text-sm text-red-700 dark:text-red-300"></p>
+          <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
+            错误
+          </h3>
+          <p
+            id="error-text"
+            class="mt-1 text-sm text-red-700 dark:text-red-300"
+          >
+          </p>
         </div>
       </div>
     </div>
@@ -243,12 +329,20 @@ const translate = t(lang);
 
   <!-- 成功提示 -->
   <div id="success-message" class="mt-4 hidden">
-    <div class="bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 rounded-lg p-4">
+    <div
+      class="bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 rounded-lg p-4"
+    >
       <div class="flex">
         <CheckCircle class="w-5 h-5 text-green-400 mt-0.5 mr-3 flex-shrink-0" />
         <div>
-          <h3 class="text-sm font-medium text-green-800 dark:text-green-200">成功</h3>
-          <p id="success-text" class="mt-1 text-sm text-green-700 dark:text-green-300"></p>
+          <h3 class="text-sm font-medium text-green-800 dark:text-green-200">
+            成功
+          </h3>
+          <p
+            id="success-text"
+            class="mt-1 text-sm text-green-700 dark:text-green-300"
+          >
+          </p>
         </div>
       </div>
     </div>
@@ -259,41 +353,188 @@ const translate = t(lang);
   .tab-button {
     @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-600;
   }
-  
+
   .tab-button.active {
     @apply border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400;
+  }
+
+  /* 视图切换按钮样式 */
+  .view-toggle-buttons {
+    @apply inline-flex;
+  }
+
+  .view-toggle-btn {
+    @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors;
+  }
+
+  .view-toggle-btn:hover {
+    @apply bg-gray-100 dark:bg-gray-700;
+  }
+
+  .view-toggle-btn.active {
+    @apply bg-blue-500 text-white border-blue-500;
+  }
+
+  /* 树状视图样式 */
+  #tree-view {
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+  }
+
+  .tree-node {
+    @apply relative py-0.5 hover:bg-gray-50 dark:hover:bg-gray-700 rounded transition-colors;
+    user-select: none;
+  }
+
+  .tree-leaf {
+    user-select: text;
+  }
+
+  .tree-toggle {
+    @apply inline-block w-4 text-center cursor-pointer text-gray-500 dark:text-gray-400 mr-1;
+    font-size: 10px;
+  }
+
+  .tree-toggle:hover {
+    @apply text-gray-700 dark:text-gray-200;
+  }
+
+  .tree-key {
+    @apply text-red-600 dark:text-red-400 font-semibold;
+  }
+
+  .tree-bracket {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+
+  .tree-preview {
+    @apply text-gray-500 dark:text-gray-500 italic ml-1;
+  }
+
+  /* 不同数据类型的语法高亮 */
+  .tree-value-string {
+    @apply text-green-600 dark:text-green-400;
+  }
+
+  .tree-value-number {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+
+  .tree-value-boolean {
+    @apply text-purple-600 dark:text-purple-400;
+  }
+
+  .tree-value-null {
+    @apply text-gray-500 dark:text-gray-500;
+  }
+
+  /* 编辑状态样式 */
+  .tree-value.editing {
+    @apply bg-yellow-100 dark:bg-yellow-900 px-1 rounded outline-none ring-2 ring-yellow-400;
+  }
+
+  .tree-value:not(.editing) {
+    cursor: pointer;
+  }
+
+  .tree-value:not(.editing):hover {
+    @apply bg-gray-100 dark:bg-gray-700 px-1 rounded;
+  }
+
+  /* 搜索高亮样式 - 使用 :global 因为这些类是动态添加的 */
+  :global(.search-highlight) {
+    background-color: #fef08a !important; /* yellow-200 */
+    padding: 0 0.25rem !important;
+    border-radius: 0.25rem !important;
+    font-weight: 600 !important;
+  }
+
+  :global(.dark .search-highlight) {
+    background-color: #a16207 !important; /* yellow-700 */
+  }
+
+  /* 复制路径按钮样式 */
+  .tree-copy-path {
+    @apply ml-2 opacity-0 inline-flex items-center justify-center w-6 h-6 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-all;
+  }
+
+  .tree-node:hover .tree-copy-path {
+    @apply opacity-100;
+  }
+
+  .tree-copy-path:active {
+    @apply scale-95;
+  }
+
+  /* 树状视图空状态 */
+  .tree-empty {
+    @apply text-gray-500 dark:text-gray-400 text-center py-8;
+  }
+
+  /* 树控制栏样式 */
+  .tree-controls {
+    @apply sticky top-0 bg-white dark:bg-gray-800 z-10 pb-2;
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 640px) {
+    .tree-node {
+      font-size: 0.875rem;
+    }
+
+    .tree-toggle {
+      font-size: 8px;
+    }
   }
 </style>
 
 <script>
+  // 导入树状视图脚本
+  import TreeViewer from '../scripts/tree-viewer.js';
+
   // 基础变量
   let currentTab = 'format';
   let inputJson = '';
   let outputJson = '';
+  let currentView = 'text'; // 'text' 或 'tree'
+  let treeViewer: TreeViewer | null = null;
+  let currentParsedData: any = null;
 
   // DOM 元素
-  const inputTextarea = document.getElementById('input-json') as HTMLTextAreaElement;
-  const outputTextarea = document.getElementById('output-json') as HTMLTextAreaElement;
+  const inputTextarea = document.getElementById(
+    'input-json'
+  ) as HTMLTextAreaElement;
+  const outputTextarea = document.getElementById(
+    'output-json'
+  ) as HTMLTextAreaElement;
   const errorMessage = document.getElementById('error-message') as HTMLElement;
-  const successMessage = document.getElementById('success-message') as HTMLElement;
+  const successMessage = document.getElementById(
+    'success-message'
+  ) as HTMLElement;
   const errorText = document.getElementById('error-text') as HTMLElement;
   const successText = document.getElementById('success-text') as HTMLElement;
   const inputStatus = document.getElementById('input-status') as HTMLElement;
   const outputStatus = document.getElementById('output-status') as HTMLElement;
-  const convertOptions = document.getElementById('convert-options') as HTMLElement;
+  const convertOptions = document.getElementById(
+    'convert-options'
+  ) as HTMLElement;
+  const treeViewContainer = document.getElementById(
+    'tree-view-container'
+  ) as HTMLElement;
 
   // 初始化
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     initializeTabs();
     initializeButtons();
     initializeTextarea();
+    initializeTreeView();
   });
 
   // 初始化选项卡
   function initializeTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
-    tabButtons.forEach(button => {
-      button.addEventListener('click', function() {
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', function () {
         const tabName = this.getAttribute('data-tab');
         switchTab(tabName);
       });
@@ -303,20 +544,20 @@ const translate = t(lang);
   // 切换选项卡
   function switchTab(tabName: string) {
     currentTab = tabName;
-    
+
     // 更新选项卡样式
-    document.querySelectorAll('.tab-button').forEach(btn => {
+    document.querySelectorAll('.tab-button').forEach((btn) => {
       btn.classList.remove('active');
     });
     document.getElementById(`${tabName}-tab`)?.classList.add('active');
-    
+
     // 显示/隐藏转换选项
     if (tabName === 'convert') {
       convertOptions.classList.remove('hidden');
     } else {
       convertOptions.classList.add('hidden');
     }
-    
+
     // 自动处理输入
     if (inputTextarea.value) {
       processInput();
@@ -327,27 +568,33 @@ const translate = t(lang);
   function initializeButtons() {
     // 清空按钮
     document.getElementById('clear-btn')?.addEventListener('click', clearAll);
-    
+
     // 粘贴按钮
-    document.getElementById('paste-btn')?.addEventListener('click', pasteFromClipboard);
-    
+    document
+      .getElementById('paste-btn')
+      ?.addEventListener('click', pasteFromClipboard);
+
     // 复制按钮
     document.getElementById('copy-btn')?.addEventListener('click', copyResult);
-    
+
     // 导入按钮
     document.getElementById('import-btn')?.addEventListener('click', () => {
       document.getElementById('file-input')?.click();
     });
-    
+
     // 文件输入
-    document.getElementById('file-input')?.addEventListener('change', handleFileImport);
-    
+    document
+      .getElementById('file-input')
+      ?.addEventListener('change', handleFileImport);
+
     // 导出按钮
-    document.getElementById('export-btn')?.addEventListener('click', exportResult);
-    
+    document
+      .getElementById('export-btn')
+      ?.addEventListener('click', exportResult);
+
     // 转换按钮
-    document.querySelectorAll('.convert-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
+    document.querySelectorAll('.convert-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
         const format = this.getAttribute('data-format');
         convertToFormat(format);
       });
@@ -356,27 +603,27 @@ const translate = t(lang);
 
   // 初始化文本区域
   function initializeTextarea() {
-    inputTextarea.addEventListener('input', function() {
+    inputTextarea.addEventListener('input', function () {
       inputJson = this.value;
       updateInputStatus();
       processInput();
     });
-    
+
     // 监听配置选项变化
     const configCheckboxes = [
       'allow-unquoted-keys',
-      'allow-single-quotes', 
+      'allow-single-quotes',
       'allow-trailing-commas',
       'remove-surrounding-quotes',
       'auto-unescape',
       'allow-trailing-semicolon',
-      'remove-comments'
+      'remove-comments',
     ];
-    
-    configCheckboxes.forEach(id => {
+
+    configCheckboxes.forEach((id) => {
       const checkbox = document.getElementById(id);
       if (checkbox) {
-        checkbox.addEventListener('change', function() {
+        checkbox.addEventListener('change', function () {
           if (inputJson.trim()) {
             processInput();
           }
@@ -388,13 +635,13 @@ const translate = t(lang);
   // 处理输入
   function processInput() {
     hideMessages();
-    
+
     if (!inputJson.trim()) {
       outputTextarea.value = '';
       updateOutputStatus();
       return;
     }
-    
+
     try {
       switch (currentTab) {
         case 'format':
@@ -421,18 +668,22 @@ const translate = t(lang);
   // 格式化 JSON
   function formatJson() {
     const parsed = parseJsonLeniently(inputJson);
+    currentParsedData = parsed;
     outputJson = JSON.stringify(parsed, null, 2);
     outputTextarea.value = outputJson;
     updateOutputStatus();
+    updateTreeView(parsed);
     showSuccess('JSON 已格式化');
   }
 
   // 压缩 JSON
   function compressJson() {
     const parsed = parseJsonLeniently(inputJson);
+    currentParsedData = parsed;
     outputJson = JSON.stringify(parsed);
     outputTextarea.value = outputJson;
     updateOutputStatus();
+    updateTreeView(parsed);
     showSuccess('JSON 已压缩');
   }
 
@@ -457,31 +708,51 @@ const translate = t(lang);
   // 验证 JSON
   function validateJson() {
     try {
-      parseJsonLeniently(inputJson);
+      const parsed = parseJsonLeniently(inputJson);
+      currentParsedData = parsed;
       outputJson = '[Valid] JSON 格式正确';
       outputTextarea.value = outputJson;
       updateOutputStatus();
+      updateTreeView(parsed);
       showSuccess('JSON 验证通过');
     } catch (error) {
       outputJson = `[Error] JSON 格式错误: ${error.message}`;
       outputTextarea.value = outputJson;
       updateOutputStatus();
+      currentParsedData = null;
+      if (treeViewer) {
+        treeViewer.render(null);
+      }
       showError(`JSON 验证失败: ${error.message}`);
     }
   }
 
   // 宽松解析 JSON
   function parseJsonLeniently(jsonString: string) {
-    const allowUnquotedKeys = (document.getElementById('allow-unquoted-keys') as HTMLInputElement).checked;
-    const allowSingleQuotes = (document.getElementById('allow-single-quotes') as HTMLInputElement).checked;
-    const allowTrailingCommas = (document.getElementById('allow-trailing-commas') as HTMLInputElement).checked;
-    const removeSurroundingQuotes = (document.getElementById('remove-surrounding-quotes') as HTMLInputElement).checked;
-    const autoUnescape = (document.getElementById('auto-unescape') as HTMLInputElement).checked;
-    const allowTrailingSemicolon = (document.getElementById('allow-trailing-semicolon') as HTMLInputElement).checked;
-    const removeComments = (document.getElementById('remove-comments') as HTMLInputElement).checked;
-    
+    const allowUnquotedKeys = (
+      document.getElementById('allow-unquoted-keys') as HTMLInputElement
+    ).checked;
+    const allowSingleQuotes = (
+      document.getElementById('allow-single-quotes') as HTMLInputElement
+    ).checked;
+    const allowTrailingCommas = (
+      document.getElementById('allow-trailing-commas') as HTMLInputElement
+    ).checked;
+    const removeSurroundingQuotes = (
+      document.getElementById('remove-surrounding-quotes') as HTMLInputElement
+    ).checked;
+    const autoUnescape = (
+      document.getElementById('auto-unescape') as HTMLInputElement
+    ).checked;
+    const allowTrailingSemicolon = (
+      document.getElementById('allow-trailing-semicolon') as HTMLInputElement
+    ).checked;
+    const removeComments = (
+      document.getElementById('remove-comments') as HTMLInputElement
+    ).checked;
+
     let processedJson = jsonString.trim();
-    
+
     // 步骤0：移除代码注释（需在其他处理之前执行，避免注释内容干扰后续正则匹配）
     if (removeComments) {
       // 移除多行注释 /* ... */
@@ -489,22 +760,24 @@ const translate = t(lang);
       // 移除单行注释 // ...（需避免 URL 中的 //，使用负向后行断言）
       processedJson = processedJson.replace(/(?<![:\"\'])\/\/.*$/gm, '');
     }
-    
+
     // 步骤0.5：移除末尾分号
     if (allowTrailingSemicolon) {
       processedJson = processedJson.replace(/;\s*$/, '');
     }
-    
+
     // 步骤1：处理首尾引号删除
     if (removeSurroundingQuotes) {
       // 检查是否以引号开头和结尾（单引号或双引号）
-      if ((processedJson.startsWith('"') && processedJson.endsWith('"')) ||
-          (processedJson.startsWith("'") && processedJson.endsWith("'"))) {
+      if (
+        (processedJson.startsWith('"') && processedJson.endsWith('"')) ||
+        (processedJson.startsWith("'") && processedJson.endsWith("'"))
+      ) {
         // 删除首尾引号
         processedJson = processedJson.slice(1, -1);
       }
     }
-    
+
     // 步骤2：独立的自动去转义处理
     if (autoUnescape && processedJson.includes('\\"')) {
       try {
@@ -513,28 +786,33 @@ const translate = t(lang);
       } catch (e) {
         // 如果解析失败，尝试简单的字符串替换
         try {
-          processedJson = processedJson.replace(/\\"/g, '"').replace(/\\'/g, "'");
+          processedJson = processedJson
+            .replace(/\\"/g, '"')
+            .replace(/\\'/g, "'");
         } catch (replaceError) {
           // 如果都失败了，保持原样
         }
       }
     }
-    
+
     // 处理单引号
     if (allowSingleQuotes) {
       processedJson = processedJson.replace(/'/g, '"');
     }
-    
+
     // 处理不带引号的键名
     if (allowUnquotedKeys) {
-      processedJson = processedJson.replace(/([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g, '$1"$2":');
+      processedJson = processedJson.replace(
+        /([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g,
+        '$1"$2":'
+      );
     }
-    
+
     // 处理尾随逗号
     if (allowTrailingCommas) {
       processedJson = processedJson.replace(/,(\s*[}\]])/g, '$1');
     }
-    
+
     return JSON.parse(processedJson);
   }
 
@@ -542,7 +820,8 @@ const translate = t(lang);
   function convertToFormat(format: string) {
     try {
       const parsed = parseJsonLeniently(inputJson);
-      
+      currentParsedData = parsed;
+
       switch (format) {
         case 'yaml':
           outputJson = jsonToYaml(parsed);
@@ -556,9 +835,10 @@ const translate = t(lang);
         default:
           throw new Error(`不支持的格式: ${format}`);
       }
-      
+
       outputTextarea.value = outputJson;
       updateOutputStatus();
+      updateTreeView(parsed);
       showSuccess(`已转换为 ${format.toUpperCase()} 格式`);
     } catch (error) {
       showError(`转换失败: ${error.message}`);
@@ -568,22 +848,26 @@ const translate = t(lang);
   // JSON 转 YAML（简单实现）
   function jsonToYaml(obj: any, indent = 0): string {
     const spaces = '  '.repeat(indent);
-    
+
     if (obj === null) return 'null';
     if (typeof obj === 'string') return `"${obj}"`;
     if (typeof obj === 'number' || typeof obj === 'boolean') return String(obj);
-    
+
     if (Array.isArray(obj)) {
       if (obj.length === 0) return '[]';
-      return obj.map(item => `${spaces}- ${jsonToYaml(item, indent + 1)}`).join('\n');
+      return obj
+        .map((item) => `${spaces}- ${jsonToYaml(item, indent + 1)}`)
+        .join('\n');
     }
-    
+
     if (typeof obj === 'object') {
       const keys = Object.keys(obj);
       if (keys.length === 0) return '{}';
-      return keys.map(key => `${spaces}${key}: ${jsonToYaml(obj[key], indent + 1)}`).join('\n');
+      return keys
+        .map((key) => `${spaces}${key}: ${jsonToYaml(obj[key], indent + 1)}`)
+        .join('\n');
     }
-    
+
     return String(obj);
   }
 
@@ -591,34 +875,46 @@ const translate = t(lang);
   function jsonToXml(obj: any, rootName = 'root'): string {
     function objectToXml(obj: any, nodeName: string): string {
       if (obj === null) return `<${nodeName}></${nodeName}>`;
-      if (typeof obj === 'string') return `<${nodeName}>${escapeXml(obj)}</${nodeName}>`;
-      if (typeof obj === 'number' || typeof obj === 'boolean') return `<${nodeName}>${obj}</${nodeName}>`;
-      
+      if (typeof obj === 'string')
+        return `<${nodeName}>${escapeXml(obj)}</${nodeName}>`;
+      if (typeof obj === 'number' || typeof obj === 'boolean')
+        return `<${nodeName}>${obj}</${nodeName}>`;
+
       if (Array.isArray(obj)) {
-        return obj.map((item, index) => objectToXml(item, `${nodeName}_${index}`)).join('');
+        return obj
+          .map((item, index) => objectToXml(item, `${nodeName}_${index}`))
+          .join('');
       }
-      
+
       if (typeof obj === 'object') {
-        const inner = Object.keys(obj).map(key => objectToXml(obj[key], key)).join('');
+        const inner = Object.keys(obj)
+          .map((key) => objectToXml(obj[key], key))
+          .join('');
         return `<${nodeName}>${inner}</${nodeName}>`;
       }
-      
+
       return `<${nodeName}>${obj}</${nodeName}>`;
     }
-    
+
     function escapeXml(str: string): string {
-      return str.replace(/[<>&'"]/g, function(char) {
+      return str.replace(/[<>&'"]/g, function (char) {
         switch (char) {
-          case '<': return '&lt;';
-          case '>': return '&gt;';
-          case '&': return '&amp;';
-          case '"': return '&quot;';
-          case "'": return '&#39;';
-          default: return char;
+          case '<':
+            return '&lt;';
+          case '>':
+            return '&gt;';
+          case '&':
+            return '&amp;';
+          case '"':
+            return '&quot;';
+          case "'":
+            return '&#39;';
+          default:
+            return char;
         }
       });
     }
-    
+
     return `<?xml version="1.0" encoding="UTF-8"?>\n${objectToXml(obj, rootName)}`;
   }
 
@@ -627,30 +923,32 @@ const translate = t(lang);
     if (!Array.isArray(obj)) {
       throw new Error('CSV 转换只支持数组格式的 JSON');
     }
-    
+
     if (obj.length === 0) return '';
-    
+
     // 获取所有键名
     const keys = new Set<string>();
-    obj.forEach(item => {
+    obj.forEach((item) => {
       if (typeof item === 'object' && item !== null) {
-        Object.keys(item).forEach(key => keys.add(key));
+        Object.keys(item).forEach((key) => keys.add(key));
       }
     });
-    
+
     const keyArray = Array.from(keys);
-    
+
     // 生成 CSV 头部
-    const header = keyArray.map(key => `"${key}"`).join(',');
-    
+    const header = keyArray.map((key) => `"${key}"`).join(',');
+
     // 生成 CSV 数据行
-    const rows = obj.map(item => {
-      return keyArray.map(key => {
-        const value = item && typeof item === 'object' ? item[key] : '';
-        return `"${String(value || '').replace(/"/g, '""')}"`;
-      }).join(',');
+    const rows = obj.map((item) => {
+      return keyArray
+        .map((key) => {
+          const value = item && typeof item === 'object' ? item[key] : '';
+          return `"${String(value || '').replace(/"/g, '""')}"`;
+        })
+        .join(',');
     });
-    
+
     return [header, ...rows].join('\n');
   }
 
@@ -671,7 +969,7 @@ const translate = t(lang);
       showError('没有可复制的内容');
       return;
     }
-    
+
     try {
       await navigator.clipboard.writeText(outputJson);
       showSuccess('已复制到剪贴板');
@@ -722,9 +1020,9 @@ const translate = t(lang);
   function handleFileImport(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
-    
+
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       const content = e.target?.result as string;
       inputTextarea.value = content;
       inputJson = content;
@@ -740,7 +1038,7 @@ const translate = t(lang);
       showError('没有可导出的内容');
       return;
     }
-    
+
     const blob = new Blob([outputJson], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -788,4 +1086,96 @@ const translate = t(lang);
     errorMessage.classList.add('hidden');
     successMessage.classList.add('hidden');
   }
-</script> 
+
+  // 初始化树状视图
+  function initializeTreeView() {
+    // 创建树状视图实例
+    treeViewer = new TreeViewer('tree-view');
+
+    // 视图切换按钮
+    const textViewBtn = document.getElementById('text-view-btn');
+    const treeViewBtn = document.getElementById('tree-view-btn');
+
+    textViewBtn?.addEventListener('click', () => switchView('text'));
+    treeViewBtn?.addEventListener('click', () => switchView('tree'));
+
+    // 树状视图控制按钮
+    const expandAllBtn = document.getElementById('tree-expand-all');
+    const collapseAllBtn = document.getElementById('tree-collapse-all');
+    const searchInput = document.getElementById(
+      'tree-search'
+    ) as HTMLInputElement;
+
+    expandAllBtn?.addEventListener('click', () => {
+      if (treeViewer) {
+        treeViewer.expandAll();
+      }
+    });
+
+    collapseAllBtn?.addEventListener('click', () => {
+      if (treeViewer) {
+        treeViewer.collapseAll();
+      }
+    });
+
+    // 搜索输入
+    let searchTimeout: ReturnType<typeof setTimeout>;
+    searchInput?.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        if (treeViewer) {
+          treeViewer.search((e.target as HTMLInputElement).value);
+        }
+      }, 300);
+    });
+
+    // 设置全局回调，当树视图数据更新时同步到文本视图
+    (window as any).onTreeDataUpdate = (data: any) => {
+      currentParsedData = data;
+      if (currentTab === 'format') {
+        outputJson = JSON.stringify(data, null, 2);
+      } else if (currentTab === 'compress') {
+        outputJson = JSON.stringify(data);
+      }
+      outputTextarea.value = outputJson;
+      updateOutputStatus();
+    };
+  }
+
+  // 切换视图
+  function switchView(view: 'text' | 'tree') {
+    currentView = view;
+
+    const textViewBtn = document.getElementById('text-view-btn');
+    const treeViewBtn = document.getElementById('tree-view-btn');
+
+    if (view === 'text') {
+      outputTextarea.classList.remove('hidden');
+      treeViewContainer?.classList.add('hidden');
+      textViewBtn?.classList.add('active');
+      treeViewBtn?.classList.remove('active');
+    } else {
+      outputTextarea.classList.add('hidden');
+      treeViewContainer?.classList.remove('hidden');
+      textViewBtn?.classList.remove('active');
+      treeViewBtn?.classList.add('active');
+
+      // 如果有数据，渲染树视图
+      if (currentParsedData && treeViewer) {
+        treeViewer.render(currentParsedData);
+      }
+    }
+  }
+
+  // 更新树视图
+  function updateTreeView(data: any) {
+    if (currentView === 'tree' && treeViewer) {
+      treeViewer.render(data);
+    }
+  }
+
+  // 导出全局函数供树状视图使用
+  (window as any).showSuccess = showSuccess;
+  (window as any).showError = showError;
+</script>
+
