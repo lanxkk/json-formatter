@@ -204,7 +204,7 @@ const translate = t(lang);
         placeholder={translate('formatter.output.placeholder')}></textarea>
 
       <!-- 树状视图 -->
-      <div id="tree-view-container" class="hidden">
+      <div id="tree-view-container" class="hidden h-96 flex flex-col">
         <!-- 树状视图控制栏 -->
         <div class="tree-controls flex flex-wrap gap-2 mb-2">
           <input
@@ -226,11 +226,11 @@ const translate = t(lang);
             {translate('ui.tree.collapse.all')}
           </button>
         </div>
-
+        
         <!-- 树状视图内容 -->
         <div
           id="tree-view"
-          class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 overflow-auto"
+          class="w-full flex-1 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 overflow-auto"
         >
         </div>
       </div>
