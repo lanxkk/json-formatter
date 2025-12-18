@@ -162,7 +162,7 @@ const translate = t(lang);
       </div>
       <textarea
         id="input-json"
-        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-y focus:ring-2 focus:ring-primary-500 focus:border-transparent"
         placeholder={translate('formatter.input.placeholder')}></textarea>
     </div>
 
@@ -199,14 +199,14 @@ const translate = t(lang);
       <!-- 文本视图 -->
       <textarea
         id="output-json"
-        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm resize-none"
+        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm resize-y"
         readonly
         placeholder={translate('formatter.output.placeholder')}></textarea>
 
       <!-- 树状视图 -->
-      <div id="tree-view-container" class="hidden h-96 flex flex-col">
+      <div id="tree-view-container" class="hidden min-h-96 flex flex-col resize-y overflow-auto border border-gray-300 dark:border-gray-600 rounded-lg">
         <!-- 树状视图控制栏 -->
-        <div class="tree-controls flex flex-wrap gap-2 mb-2">
+        <div class="tree-controls flex flex-wrap gap-2 p-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-600">
           <input
             type="text"
             id="tree-search"
@@ -230,7 +230,7 @@ const translate = t(lang);
         <!-- 树状视图内容 -->
         <div
           id="tree-view"
-          class="w-full flex-1 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 overflow-auto"
+          class="w-full flex-1 p-4 bg-white dark:bg-gray-800 overflow-auto"
         >
         </div>
       </div>
@@ -473,7 +473,13 @@ const translate = t(lang);
 
   /* 树控制栏样式 */
   .tree-controls {
-    @apply sticky top-0 bg-white dark:bg-gray-800 z-10 pb-2;
+    flex-shrink: 0; /* 防止控制栏被压缩 */
+  }
+
+  /* 树状视图容器可调整大小 */
+  #tree-view-container {
+    resize: vertical;
+    height: 24rem; /* 初始高度 h-96 = 384px = 24rem */
   }
 
   /* 响应式设计 */
@@ -481,7 +487,7 @@ const translate = t(lang);
     .tree-node {
       font-size: 0.875rem;
     }
-
+    
     .tree-toggle {
       font-size: 8px;
     }
