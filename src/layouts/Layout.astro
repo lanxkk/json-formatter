@@ -16,9 +16,6 @@ const translate = t(currentLang);
 // 如果没有传入title，使用默认的翻译标题
 const pageTitle = title || translate('page.title');
 
-// 在开发模式下导入 toolbar
-const isDev = import.meta.env.DEV;
-
 // 语言到HTML lang属性的映射
 const langMapping = {
   'zh-cn': 'zh-CN',
@@ -73,8 +70,5 @@ const langMapping = {
       // 全局主题切换函数
       (window as any).toggleTheme = toggleTheme;
     </script>
-    
-    <!-- 只在开发模式下加载 Stagewise Toolbar -->
-    {isDev && <script src="/src/scripts/stagewise-init.js" type="module"></script>}
   </body>
 </html> 
