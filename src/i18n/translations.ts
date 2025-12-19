@@ -11,6 +11,13 @@ export const translations = {
     'nav.theme.toggle': '切换主题',
     'nav.github': 'GitHub',
     'nav.language': '语言',
+    'nav.blog': '博客',
+    
+    // 博客
+    'blog.title': '博客文章',
+    'blog.readMore': '阅读更多',
+    'blog.backToList': '返回列表',
+    'blog.noPosts': '暂无文章',
     
     // JSON格式化器
     'formatter.title': 'JSON 格式化工具',
@@ -122,6 +129,13 @@ export const translations = {
     'nav.theme.toggle': 'Toggle Theme',
     'nav.github': 'GitHub',
     'nav.language': 'Language',
+    'nav.blog': 'Blog',
+    
+    // Blog
+    'blog.title': 'Blog',
+    'blog.readMore': 'Read more',
+    'blog.backToList': 'Back to list',
+    'blog.noPosts': 'No posts yet',
     
     // JSON formatter
     'formatter.title': 'JSON Formatter',
@@ -233,6 +247,13 @@ export const translations = {
     'nav.theme.toggle': 'テーマ切り替え',
     'nav.github': 'GitHub',
     'nav.language': '言語',
+    'nav.blog': 'ブログ',
+    
+    // ブログ
+    'blog.title': 'ブログ',
+    'blog.readMore': '続きを読む',
+    'blog.backToList': '一覧に戻る',
+    'blog.noPosts': '記事はまだありません',
     
     // JSONフォーマッター
     'formatter.title': 'JSONフォーマッター',
@@ -344,6 +365,13 @@ export const translations = {
     'nav.theme.toggle': '切換主題',
     'nav.github': 'GitHub',
     'nav.language': '語言',
+    'nav.blog': '部落格',
+    
+    // 部落格
+    'blog.title': '部落格文章',
+    'blog.readMore': '閱讀更多',
+    'blog.backToList': '返回列表',
+    'blog.noPosts': '暫無文章',
     
     // JSON格式化器
     'formatter.title': 'JSON 格式化工具',

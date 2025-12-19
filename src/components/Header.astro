@@ -15,10 +15,18 @@ const translate = t(lang);
 <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
-      <div class="flex items-center">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+      <div class="flex items-center space-x-6">
+        <a href={lang === 'en' ? '/' : `/${lang}/`} class="text-2xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
           {translate('site.title')}
-        </h1>
+        </a>
+        <nav class="hidden sm:flex items-center space-x-4">
+          <a 
+            href={lang === 'en' ? '/blog' : `/${lang}/blog`}
+            class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+          >
+            {translate('nav.blog')}
+          </a>
+        </nav>
       </div>
       
       <div class="flex items-center space-x-4">

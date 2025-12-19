@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import { t } from '../../../i18n/translations';
+
+const lang = 'ja';
+const translate = t(lang);
+
+// 获取日语博客文章
+const posts = await getCollection('blog', ({ id }) => id.startsWith('ja/'));
+
+// 按发布日期排序（最新的在前）
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+  
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
+      {translate('blog.title')}
+    </h1>
+    
+    <div class="space-y-6">
+      {sortedPosts.map((post) => {
+        // 从 id 中提取 slug（移除语言前缀）
+        const slug = post.id.replace('ja/', '').replace('.md', '');
+        return (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={slug}
+            lang={lang}
+          />
+        );
+      })}
+    </div>
+    
+    {sortedPosts.length === 0 && (
+      <p class="text-gray-500 dark:text-gray-400 text-center py-12">
+        {translate('blog.noPosts')}
+      </p>
+    )}
+  </main>
+</Layout>
+
