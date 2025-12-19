@@ -5,6 +5,14 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [tailwind()],
   output: 'static',
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark'
+      }
+    }
+  },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh-cn', 'ja', 'zh-tw'],

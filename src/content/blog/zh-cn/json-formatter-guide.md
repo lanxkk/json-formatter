@@ -66,7 +66,7 @@ author: 'Lanxk'
   "status": "active"
 }"
 
-// 处理后变成标准JSON
+// 处理后变成标准 JSON 
 {
   "name": "王五",
   "status": "active"
