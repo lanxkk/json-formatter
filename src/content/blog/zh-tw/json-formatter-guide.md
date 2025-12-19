@@ -117,4 +117,4 @@ author: 'Lanxk'
 
 整個過程全部在本地進行，不需要上傳到伺服器，只需要幾秒鐘就能完成 JSON 格式化處理，
 
-**立即體驗**：[JSON Formatter Tool](https://jsonformatter.lanxk.com/)
+**立即體驗**：[免費的線上 JSON 格式化工具](https://jsonformatter.lanxk.com/zh-tw/)

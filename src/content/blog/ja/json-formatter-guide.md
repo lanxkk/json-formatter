@@ -118,4 +118,4 @@ YAML、XML、CSVなど、JSONと他のフォーマット間の相互変換をサ
 
 すべての処理はローカルで行われ、サーバーへのアップロードは不要です。JSON整形はわずか数秒で完了します。
 
-**今すぐ試す**：[JSON Formatter Tool](https://jsonformatter.lanxk.com/)
+**今すぐ試す**：[無料オンライン JSON フォーマッター](https://jsonformatter.lanxk.com/ja/)

@@ -118,4 +118,4 @@ Using this tool is very simple:
 
 The entire process is done locally, no need to upload to a server. JSON formatting is completed in just a few seconds.
 
-**Try it now**: [JSON Formatter Tool](https://jsonformatter.lanxk.com/)
+**Try it now**: [Free Online JSON Formatter Tool](https://jsonformatter.lanxk.com/)
