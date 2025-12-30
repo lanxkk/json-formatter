@@ -1,0 +1,235 @@
+/* ===== 全局主题样式系统 ===== */
+
+/* ==================== 风格 1: 优雅极简 ==================== */
+[data-style="minimal"] {
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
+  --bg-hover: #f0f0f0;
+
+  --text-primary: #111111;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --text-inverse: #ffffff;
+
+  --border-light: #e5e5e5;
+  --border-medium: #d4d4d4;
+
+  --accent: #0066cc;
+  --accent-hover: #0052a3;
+  --accent-light: #e6f0ff;
+
+  --success: #00a86b;
+  --success-bg: #e8f7f2;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ==================== 风格 2: 温暖编辑 ==================== */
+[data-style="editorial"] {
+  --font-sans: 'Source Sans Pro', sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+
+  --bg-primary: #fdfbf7;
+  --bg-secondary: #f8f5f0;
+  --bg-tertiary: #f3efe8;
+  --bg-hover: #ede8e0;
+
+  --text-primary: #2c2416;
+  --text-secondary: #6b5d4f;
+  --text-tertiary: #9a8b7a;
+  --text-inverse: #ffffff;
+
+  --border-light: #e8ddd0;
+  --border-medium: #d4c4b0;
+
+  --accent: #c17f59;
+  --accent-hover: #a86745;
+  --accent-light: #f5ebe3;
+
+  --success: #7da87b;
+  --success-bg: #e8f3e8;
+  --error: #c45c5c;
+  --error-bg: #f5e8e8;
+
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+
+  --shadow-sm: 0 1px 3px rgba(44, 36, 22, 0.06);
+  --shadow-md: 0 4px 12px rgba(44, 36, 22, 0.08);
+  --shadow-lg: 0 8px 24px rgba(44, 36, 22, 0.10);
+}
+
+/* ==================== 风格 3: 新粗野主义波普 ==================== */
+[data-style="brutalist"] {
+  --font-display: 'Archivo Black', sans-serif;
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --bg-hover: #333333;
+
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-tertiary: #888888;
+  --text-inverse: #000000;
+
+  --border-light: #ff00ff;
+  --border-medium: #00ffff;
+
+  --accent: #ff00ff;
+  --accent-hover: #ff66ff;
+  --accent-light: #ff00ff33;
+
+  --success: #00ff00;
+  --success-bg: #00ff0022;
+  --error: #ffff00;
+  --error-bg: #ffff0022;
+
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+
+  --shadow-sm: 4px 4px 0 #ff00ff;
+  --shadow-md: 6px 6px 0 #00ffff;
+  --shadow-lg: 8px 8px 0 #ffff00;
+}
+
+/* ==================== 风格 4: 未来玻璃 ==================== */
+[data-style="glass"] {
+  --font-sans: 'Outfit', sans-serif;
+  --font-mono: 'Rajdhani', monospace;
+
+  --bg-primary: #0f0f23;
+  --bg-secondary: #1a1a3e;
+  --bg-tertiary: #252559;
+  --bg-hover: #303070;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8d1;
+  --text-tertiary: #7878a0;
+  --text-inverse: #0f0f23;
+
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-medium: rgba(255, 255, 255, 0.2);
+
+  --accent: #a78bfa;
+  --accent-hover: #c4b5fd;
+  --accent-light: rgba(167, 139, 250, 0.2);
+
+  --success: #4ade80;
+  --success-bg: rgba(74, 222, 128, 0.15);
+  --error: #f87171;
+  --error-bg: rgba(248, 113, 113, 0.15);
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ==================== 风格 5: 复古终端 ==================== */
+[data-style="terminal"] {
+  --font-mono: 'VT323', 'Courier New', monospace;
+
+  --bg-primary: #0c0c0c;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-hover: #222222;
+
+  --text-primary: #00ff00;
+  --text-secondary: #00cc00;
+  --text-tertiary: #009900;
+  --text-inverse: #000000;
+
+  --border-light: #003300;
+  --border-medium: #006600;
+
+  --accent: #00ff00;
+  --accent-hover: #00cc00;
+  --accent-light: #001a00;
+
+  --success: #00ff00;
+  --success-bg: #001a00;
+  --error: #00ff00;
+  --error-bg: #001a00;
+
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+}
+
+/* ===== 深色模式叠加 ===== */
+.dark[data-style="minimal"],
+.dark[data-style="editorial"] {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-hover: #222222;
+
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #666666;
+  --text-inverse: #000000;
+
+  --border-light: #2a2a2a;
+  --border-medium: #333333;
+}
+
+/* ===== 默认风格 (minimal) ===== */
+:root {
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
+  --bg-hover: #f0f0f0;
+
+  --text-primary: #111111;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --text-inverse: #ffffff;
+
+  --border-light: #e5e5e5;
+  --border-medium: #d4d4d4;
+
+  --accent: #0066cc;
+  --accent-hover: #0052a3;
+  --accent-light: #e6f0ff;
+
+  --success: #00a86b;
+  --success-bg: #e8f7f2;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+}

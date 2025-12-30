@@ -12,44 +12,40 @@ const translate = t(lang);
 const currentLang = lang;
 ---
 
-<div class="relative inline-block text-left">
+<div class="language-selector">
   <button
     id="language-menu-button"
     type="button"
-    class="inline-flex items-center justify-center w-full rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    class="selector-button"
     aria-expanded="false"
     aria-haspopup="true"
   >
-    {languages[currentLang]}
-    <ChevronDown class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+    {languages[currentLang]} &nbsp;
+    <ChevronDown class="chevron-icon" />
   </button>
 
   <div
     id="language-menu"
-    class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+    class="language-menu hidden"
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="language-menu-button"
     tabindex="-1"
   >
-    <div class="py-1" role="none">
+    <div class="menu-list" role="none">
       {Object.entries(languages).map(([lang, label]) => {
         const isActive = lang === currentLang;
         const href = lang === 'en' ? '/' : `/${lang}/`;
-        
+
         return (
           <a
             href={href}
-            class={`${
-              isActive 
-                ? 'bg-gray-100 dark:bg-gray-600 text-gray-900 dark:text-gray-100' 
-                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'
-            } group flex items-center px-4 py-2 text-sm transition-colors`}
+            class={`menu-item ${isActive ? 'active' : ''}`}
             role="menuitem"
           >
-            <span class="flex-1">{label}</span>
+            <span class="menu-label">{label}</span>
             {isActive && (
-              <Check class="w-4 h-4 text-blue-500" />
+              <Check class="check-icon" />
             )}
           </a>
         );
@@ -58,11 +54,95 @@ const currentLang = lang;
   </div>
 </div>
 
+<style>
+  .language-selector {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+  }
+
+  .selector-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition, 150ms ease);
+  }
+
+  .selector-button:hover {
+    background: var(--bg-hover);
+  }
+
+  .chevron-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    color: var(--text-secondary);
+  }
+
+  .language-menu {
+    position: absolute;
+    right: 0;
+    z-index: 50;
+    width: 14rem;
+    margin-top: 0.5rem;
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    transform-origin: top right;
+  }
+
+  .menu-list {
+    padding: 0.25rem 0;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition, 150ms ease);
+    cursor: pointer;
+  }
+
+  .menu-item:hover {
+    background: var(--bg-hover);
+  }
+
+  .menu-item.active {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  .menu-label {
+    flex: 1;
+  }
+
+  .check-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+  }
+</style>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const button = document.getElementById('language-menu-button');
     const menu = document.getElementById('language-menu');
-    
+
     if (button && menu) {
       button.addEventListener('click', function() {
         const isOpen = !menu.classList.contains('hidden');
@@ -74,7 +154,7 @@ const currentLang = lang;
           button.setAttribute('aria-expanded', 'true');
         }
       });
-      
+
       // 点击外部关闭菜单
       document.addEventListener('click', function(event) {
         if (!button.contains(event.target as Node) && !menu.contains(event.target as Node)) {

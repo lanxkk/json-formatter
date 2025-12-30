@@ -1,5 +1,4 @@
 ---
-// 产品功能说明文档组件
 import { t } from '../i18n/translations';
 import type { Language } from '../i18n/index';
 import { Wrench, Settings, Eraser, FileText } from '@lucide/astro';
@@ -13,89 +12,87 @@ const translate = t(lang);
 ---
 
 <section class="feature-documentation">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+  <div class="doc-container">
+    <div class="doc-header">
+      <h2 class="doc-title">
         {translate('features.main.title')}
       </h2>
-      <p class="text-lg text-gray-600 dark:text-gray-300">
+      <p class="doc-description">
         {translate('features.main.description')}
       </p>
     </div>
 
-    <!-- 配置选项说明 -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
-        <div class="flex items-center mb-4">
-          <span class="text-2xl mr-3"></span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{translate('features.unquoted.title')}</h3>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-icon"></span>
+          <h3 class="feature-title">{translate('features.unquoted.title')}</h3>
         </div>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">
+        <p class="feature-description">
           {translate('features.unquoted.description')}
         </p>
-        <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
-          <div class="text-gray-500 dark:text-gray-400 mb-1">{translate('ui.input.label')}</div>
-          <div class="text-gray-900 dark:text-white">
+        <div class="code-example">
+          <div class="code-label">{translate('ui.input.label')}</div>
+          <div class="code-content">
             <span>{'{'}name: "John", age: 30{'}'}</span>
           </div>
-          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">{translate('ui.output.label')}</div>
-          <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "John", "age": 30{'}'}</span>
+          <div class="code-label">{translate('ui.output.label')}</div>
+          <div class="code-content">
+            <span>{'{\\"'}name{'\\"'}: "John", \\"age\\"}: 30{'}'}</span>
           </div>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
-        <div class="flex items-center mb-4">
-          <span class="text-2xl mr-3"></span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{translate('features.quotes.title')}</h3>
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-icon"></span>
+          <h3 class="feature-title">{translate('features.quotes.title')}</h3>
         </div>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">
+        <p class="feature-description">
           {translate('features.quotes.description')}
         </p>
-        <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
-          <div class="text-gray-500 dark:text-gray-400 mb-1">{translate('ui.input.label')}</div>
-          <div class="text-gray-900 dark:text-white">
-            <span>{`{"name": 'Alice'}`}</span>
+        <div class="code-example">
+          <div class="code-label">{translate('ui.input.label')}</div>
+          <div class="code-content">
+            <span>{`{\\"name\\": 'Alice'}`}</span>
           </div>
-          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">{translate('ui.output.label')}</div>
-          <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "Alice"{'}'}</span>
+          <div class="code-label">{translate('ui.output.label')}</div>
+          <div class="code-content">
+            <span>{'{\\"'}name{'\\"'}: \\"Alice\\"{'}'}</span>
           </div>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md border border-gray-200 dark:border-gray-700">
-        <div class="flex items-center mb-4">
-          <span class="text-2xl mr-3"></span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{translate('features.trailing.title')}</h3>
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-icon"></span>
+          <h3 class="feature-title">{translate('features.trailing.title')}</h3>
         </div>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">
+        <p class="feature-description">
           {translate('features.trailing.description')}
         </p>
-        <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm">
-          <div class="text-gray-500 dark:text-gray-400 mb-1">{translate('ui.input.label')}</div>
-          <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "Bob",{'}'}</span>
+        <div class="code-example">
+          <div class="code-label">{translate('ui.input.label')}</div>
+          <div class="code-content">
+            <span>{'{\\"'}name{'\\"'}: \\"Bob\\",{'}'}</span>
           </div>
-          <div class="text-gray-500 dark:text-gray-400 mt-2 mb-1">{translate('ui.output.label')}</div>
-          <div class="text-gray-900 dark:text-white">
-            <span>{'{"'}name{'"'}: "Bob"{'}'}</span>
+          <div class="code-label">{translate('ui.output.label')}</div>
+          <div class="code-content">
+            <span>{'{\\"'}name{'\\"'}: \\"Bob\\"{'}'}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 综合示例 -->
-    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900 rounded-lg p-8 mb-12">
-      <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+    <div class="example-section">
+      <h3 class="section-title">
         {translate('features.example.title')}
       </h3>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div>
-          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{translate('features.example.input')}</h4>
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
-            <pre class="text-gray-900 dark:text-white font-mono"><code>&#123;
+      <div class="example-grid">
+        <div class="example-column">
+          <h4 class="column-title">{translate('features.example.input')}</h4>
+          <div class="code-block">
+            <pre class="code-pre"><code>&#123;
   name: 'JSON Formatter',
   age: 30,
   profile: &#123;
@@ -111,112 +108,110 @@ const translate = t(lang);
 &#125;</code></pre>
           </div>
         </div>
-        <div>
-          <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{translate('features.example.output')}</h4>
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
-            <pre class="text-gray-900 dark:text-white font-mono"><code>&#123;
-  "name": "JSON Formatter",
-  "age": 30,
-  "profile": &#123;
-    "job": "Developer",
-    "skills": ["JavaScript", "Python", "Go"],
-    "experience": &#123;
-      "years": 5,
-      "companies": ["A", "B"]
+        <div class="example-column">
+          <h4 class="column-title">{translate('features.example.output')}</h4>
+          <div class="code-block">
+            <pre class="code-pre"><code>&#123;
+  \\"name\\": \\"JSON Formatter\\",
+  \\"age\\}: 30,
+  \\"profile\\": &#123;
+    \\"job\\": \\"Developer\\",
+    \\"skills\\": [\\"JavaScript\\", \\"Python\\", \\"Go\\"],
+    \\"experience\\": &#123;
+      \\"years\\": 5,
+      \\"companies\\": [\\"A\\", \\"B\\"]
     &#125;
   &#125;,
-  "hobbies": ["Programming", "Reading", "Traveling"],
-  "active": true
+  \\"hobbies\\": [\\"Programming\\", \\"Reading\\", \\"Traveling\\"],
+  \\"active\\": true
 &#125;</code></pre>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 使用场景 -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-      <div class="text-center">
-        <div class="bg-blue-50 dark:bg-blue-950 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <Wrench class="w-8 h-8 text-blue-600 dark:text-blue-400" />
+    <div class="usage-grid">
+      <div class="usage-item">
+        <div class="usage-icon">
+          <Wrench class="icon-svg" />
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.debug')}</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.debug.desc')}</p>
+        <h4 class="usage-title">{translate('features.usage.debug')}</h4>
+        <p class="usage-description">{translate('features.usage.debug.desc')}</p>
       </div>
-      
-      <div class="text-center">
-        <div class="bg-blue-50 dark:bg-blue-950 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <Settings class="w-8 h-8 text-blue-600 dark:text-blue-400" />
+
+      <div class="usage-item">
+        <div class="usage-icon">
+          <Settings class="icon-svg" />
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.config')}</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.config.desc')}</p>
+        <h4 class="usage-title">{translate('features.usage.config')}</h4>
+        <p class="usage-description">{translate('features.usage.config.desc')}</p>
       </div>
-      
-      <div class="text-center">
-        <div class="bg-blue-50 dark:bg-blue-950 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <Eraser class="w-8 h-8 text-blue-600 dark:text-blue-400" />
+
+      <div class="usage-item">
+        <div class="usage-icon">
+          <Eraser class="icon-svg" />
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.clean')}</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.clean.desc')}</p>
+        <h4 class="usage-title">{translate('features.usage.clean')}</h4>
+        <p class="usage-description">{translate('features.usage.clean.desc')}</p>
       </div>
-      
-      <div class="text-center">
-        <div class="bg-blue-50 dark:bg-blue-950 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <FileText class="w-8 h-8 text-blue-600 dark:text-blue-400" />
+
+      <div class="usage-item">
+        <div class="usage-icon">
+          <FileText class="icon-svg" />
         </div>
-        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{translate('features.usage.format')}</h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.usage.format.desc')}</p>
+        <h4 class="usage-title">{translate('features.usage.format')}</h4>
+        <p class="usage-description">{translate('features.usage.format.desc')}</p>
       </div>
     </div>
 
-    <!-- 技术特点 -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-md border border-gray-200 dark:border-gray-700">
-      <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+    <div class="tech-section">
+      <h3 class="section-title">
         {translate('features.tech.title')}
       </h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="space-y-4">
-          <div class="flex items-start">
-            <span class="text-green-500 text-xl mr-3">✅</span>
+      <div class="tech-grid">
+        <div class="tech-column">
+          <div class="tech-item">
+            <span class="check-icon">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.order')}</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.order.desc')}</p>
+              <h4 class="tech-title">{translate('features.tech.order')}</h4>
+              <p class="tech-description">{translate('features.tech.order.desc')}</p>
             </div>
           </div>
-          <div class="flex items-start">
-            <span class="text-green-500 text-xl mr-3">✅</span>
+          <div class="tech-item">
+            <span class="check-icon">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.safe')}</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.safe.desc')}</p>
+              <h4 class="tech-title">{translate('features.tech.safe')}</h4>
+              <p class="tech-description">{translate('features.tech.safe.desc')}</p>
             </div>
           </div>
-          <div class="flex items-start">
-            <span class="text-green-500 text-xl mr-3">✅</span>
+          <div class="tech-item">
+            <span class="check-icon">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.integration')}</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.integration.desc')}</p>
+              <h4 class="tech-title">{translate('features.tech.integration')}</h4>
+              <p class="tech-description">{translate('features.tech.integration.desc')}</p>
             </div>
           </div>
         </div>
-        <div class="space-y-4">
-          <div class="flex items-start">
-            <span class="text-green-500 text-xl mr-3">✅</span>
+        <div class="tech-column">
+          <div class="tech-item">
+            <span class="check-icon">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.realtime')}</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.realtime.desc')}</p>
+              <h4 class="tech-title">{translate('features.tech.realtime')}</h4>
+              <p class="tech-description">{translate('features.tech.realtime.desc')}</p>
             </div>
           </div>
-          <div class="flex items-start">
-            <span class="text-green-500 text-xl mr-3">✅</span>
+          <div class="tech-item">
+            <span class="check-icon">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.error')}</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.error.desc')}</p>
+              <h4 class="tech-title">{translate('features.tech.error')}</h4>
+              <p class="tech-description">{translate('features.tech.error.desc')}</p>
             </div>
           </div>
-          <div class="flex items-start">
-            <span class="text-green-500 text-xl mr-3">✅</span>
+          <div class="tech-item">
+            <span class="check-icon">✅</span>
             <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">{translate('features.tech.compatible')}</h4>
-              <p class="text-gray-600 dark:text-gray-300 text-sm">{translate('features.tech.compatible.desc')}</p>
+              <h4 class="tech-title">{translate('features.tech.compatible')}</h4>
+              <p class="tech-description">{translate('features.tech.compatible.desc')}</p>
             </div>
           </div>
         </div>
@@ -227,32 +222,239 @@ const translate = t(lang);
 
 <style>
   .feature-documentation {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border-top: 1px solid #e2e8f0;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-light);
+    transition: all 0.3s ease;
   }
-  
-  .dark .feature-documentation {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border-top: 1px solid #334155;
+
+  .doc-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
   }
-  
-  pre {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+
+  .doc-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .doc-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .doc-description {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .feature-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .feature-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .feature-icon {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .feature-description {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .code-example {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .code-label {
+    color: var(--text-tertiary);
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .code-label:not(:first-child) {
+    margin-top: 0.5rem;
+  }
+
+  .code-content {
+    color: var(--text-primary);
+  }
+
+  .example-section {
+    background: var(--accent-light);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .example-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .example-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .column-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .code-block {
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    overflow-x: auto;
+    border: 1px solid var(--border-light);
+  }
+
+  .code-pre {
+    font-family: var(--font-mono);
     line-height: 1.5;
+    color: var(--text-primary);
+    margin: 0;
   }
-  
-  code {
-    font-family: inherit;
+
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
   }
-  
-  /* 响应式调整 */
-  @media (max-width: 768px) {
-    .feature-documentation .grid {
-      grid-template-columns: 1fr;
+
+  @media (min-width: 768px) {
+    .usage-grid {
+      grid-template-columns: repeat(4, 1fr);
     }
-    
-    pre {
-      font-size: 0.75rem;
+  }
+
+  .usage-item {
+    text-align: center;
+  }
+
+  .usage-icon {
+    background: var(--accent-light);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .icon-svg {
+    width: 32px;
+    height: 32px;
+    color: var(--accent);
+  }
+
+  .usage-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .usage-description {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .tech-section {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .tech-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
-</style> 
+
+  .tech-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .check-icon {
+    color: var(--success);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .tech-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .tech-description {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+</style>

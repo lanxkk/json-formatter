@@ -28,67 +28,196 @@ const formattedDate = pubDate.toLocaleDateString(lang === 'zh-cn' ? 'zh-CN' : la
 
 <Layout title={title} lang={lang}>
   <Header lang={lang} />
-  
-  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+  <article class="blog-article">
     <!-- 返回链接 -->
-    <a 
+    <a
       href={blogListUrl}
-      class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-8 transition-colors"
+      class="back-link"
     >
-      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
       {translate('blog.backToList')}
     </a>
-    
+
     <!-- 文章头部 -->
-    <header class="mb-10">
-      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+    <header class="article-header">
+      <h1 class="article-title">
         {title}
       </h1>
-      
-      <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
+
+      <div class="article-meta">
         <time datetime={pubDate.toISOString()}>
           {formattedDate}
         </time>
         {author && (
-          <span class="mx-2">·</span>
+          <span class="meta-separator">·</span>
           <span>{author}</span>
         )}
       </div>
     </header>
-    
+
     <!-- 文章内容 -->
-    <div class="prose prose-lg dark:prose-invert max-w-none
-      prose-headings:text-gray-900 dark:prose-headings:text-white
-      prose-p:text-gray-700 dark:prose-p:text-gray-300
-      prose-a:text-blue-600 dark:prose-a:text-blue-400
-      prose-strong:text-gray-900 dark:prose-strong:text-white
-      prose-code:text-pink-600 dark:prose-code:text-pink-400
-      prose-code:bg-gray-100 dark:prose-code:bg-gray-800
-      prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-      prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800
-      prose-ul:text-gray-700 dark:prose-ul:text-gray-300
-      prose-ol:text-gray-700 dark:prose-ol:text-gray-300
-      prose-li:text-gray-700 dark:prose-li:text-gray-300
-      prose-blockquote:border-blue-500
-      prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-300
-    ">
+    <div class="article-content">
       <slot />
     </div>
   </article>
 </Layout>
 
+<style>
+  .blog-article {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: color 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: var(--accent-hover);
+  }
+
+  .back-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+  }
+
+  .article-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .article-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 640px) {
+    .article-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+  }
+
+  .meta-separator {
+    margin: 0 0.5rem;
+  }
+
+  .article-content {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-size: 1.125rem;
+  }
+
+  .article-content :global(h2) {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .article-content :global(h3) {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .article-content :global(p) {
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+  }
+
+  .article-content :global(a) {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .article-content :global(a:hover) {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .article-content :global(strong) {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .article-content :global(code) {
+    color: #db2777;
+    background: var(--bg-tertiary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+  }
+
+  .article-content :global(pre) {
+    background: var(--bg-tertiary);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  .article-content :global(pre code) {
+    background: transparent;
+    padding: 0;
+    color: var(--text-primary);
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    color: var(--text-secondary);
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .article-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .article-content :global(blockquote) {
+    border-left: 4px solid var(--accent);
+    padding-left: 1rem;
+    color: var(--text-secondary);
+    margin: 1.5rem 0;
+    font-style: italic;
+  }
+</style>
+
 <style is:global>
   /* Shiki 双主题切换 - 覆盖内联样式 */
   /* 亮色模式（默认）- 只覆盖背景色，文字颜色使用 Shiki 内联样式 */
   .astro-code {
-    background-color: #f3f4f6 !important; /* bg-gray-100 */
+    background-color: var(--bg-tertiary) !important;
   }
-  
+
   /* 暗色模式 - 切换到深色主题 */
   .dark .astro-code {
-    background-color: #1f2937 !important; /* bg-gray-800 */
+    background-color: #1f2937 !important;
   }
   .dark .astro-code span {
     color: var(--shiki-dark) !important;

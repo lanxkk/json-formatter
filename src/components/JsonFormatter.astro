@@ -9,381 +9,1363 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 const translate = t(lang);
+
+// 预先获取所有翻译字符串
+const translations = {
+  message: {
+    cleared: translate('message.cleared'),
+    copied: translate('message.copied'),
+    pasted: translate('message.pasted'),
+    imported: translate('message.imported'),
+    exported: translate('message.exported'),
+    formatted: translate('message.formatted'),
+    compressed: translate('message.compressed'),
+    unescaped: translate('message.unescaped'),
+    valid: translate('message.valid'),
+    invalid: translate('message.invalid'),
+    converted: translate('message.converted'),
+    processed: translate('message.processed'),
+    nothingCopy: translate('message.nothing.copy'),
+    nothingExport: translate('message.nothing.export'),
+    clipboardEmpty: translate('message.clipboard.empty'),
+    clipboardPermission: translate('message.clipboard.permission'),
+    manualPaste: translate('message.manual.paste'),
+    fileLoaded: translate('message.file.loaded'),
+    invalidFile: translate('message.invalid.file'),
+    historyLoaded: translate('message.history.loaded'),
+    validationFailed: translate('message.validation.invalid'),
+  }
+};
 ---
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="formatter-wrapper">
+  <!-- 头部 -->
+  <header class="formatter-header">
+    <h1 class="page-title">JSON Formatter</h1>
+    <p class="page-subtitle">Professional JSON processing tool</p>
+  </header>
+
   <!-- 功能选项卡 -->
-  <div class="mb-6">
-    <div class="border-b border-gray-200 dark:border-gray-700">
-      <nav class="-mb-px flex space-x-8">
-        <button
-          id="format-tab"
-          class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
-          data-tab="format"
-        >
-          {translate('formatter.button.format')}
-        </button>
-        <button
-          id="compress-tab"
-          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
-          data-tab="compress"
-        >
-          {translate('formatter.button.compress')}
-        </button>
-        <button
-          id="unescape-tab"
-          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
-          data-tab="unescape"
-        >
-          {translate('ui.unescape')}
-        </button>
-        <button
-          id="validate-tab"
-          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
-          data-tab="validate"
-        >
-          {translate('formatter.button.validate')}
-        </button>
-        <button
-          id="convert-tab"
-          class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm"
-          data-tab="convert"
-        >
-          {translate('ui.convert')}
-        </button>
-      </nav>
-    </div>
+  <div class="tabs-wrapper">
+    <nav class="tabs">
+      <button id="format-tab" class="tab active" data-tab="format">
+        {translate('formatter.button.format')}
+      </button>
+      <button id="compress-tab" class="tab" data-tab="compress">
+        {translate('formatter.button.compress')}
+      </button>
+      <button id="unescape-tab" class="tab" data-tab="unescape">
+        {translate('ui.unescape')}
+      </button>
+      <button id="validate-tab" class="tab" data-tab="validate">
+        {translate('formatter.button.validate')}
+      </button>
+      <button id="convert-tab" class="tab" data-tab="convert">
+        {translate('ui.convert')}
+      </button>
+    </nav>
   </div>
 
   <!-- 配置选项 -->
-  <div class="mb-4 flex flex-wrap items-center gap-4">
-    <label class="flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        id="allow-unquoted-keys"
-        class="w-4 h-4 text-primary-600 bg-transparent border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:border-gray-600"
-        checked
-      />
-      <span
-        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
-        >{translate('ui.option.unquoted')}</span
-      >
-    </label>
+  <div class="options-section">
+    <div class="options-grid">
+      <label class="checkbox-label">
+        <input type="checkbox" id="allow-unquoted-keys" checked />
+        <span>{translate('ui.option.unquoted')}</span>
+      </label>
 
-    <label class="flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        id="allow-single-quotes"
-        class="w-4 h-4 text-primary-600 bg-transparent border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:border-gray-600"
-        checked
-      />
-      <span
-        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
-        >{translate('ui.option.single.quotes')}</span
-      >
-    </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="allow-single-quotes" checked />
+        <span>{translate('ui.option.single.quotes')}</span>
+      </label>
 
-    <label class="flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        id="allow-trailing-commas"
-        class="w-4 h-4 text-primary-600 bg-transparent border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:border-gray-600"
-        checked
-      />
-      <span
-        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
-        >{translate('ui.option.trailing.commas')}</span
-      >
-    </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="allow-trailing-commas" checked />
+        <span>{translate('ui.option.trailing.commas')}</span>
+      </label>
 
-    <label class="flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        id="remove-surrounding-quotes"
-        class="w-4 h-4 text-primary-600 bg-transparent border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:border-gray-600"
-        checked
-      />
-      <span
-        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
-        >{translate('ui.option.remove.quotes')}</span
-      >
-    </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="remove-surrounding-quotes" checked />
+        <span>{translate('ui.option.remove.quotes')}</span>
+      </label>
 
-    <label class="flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        id="auto-unescape"
-        class="w-4 h-4 text-primary-600 bg-transparent border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:border-gray-600"
-        checked
-      />
-      <span
-        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
-        >{translate('ui.option.auto.unescape')}</span
-      >
-    </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="auto-unescape" checked />
+        <span>{translate('ui.option.auto.unescape')}</span>
+      </label>
 
-    <label class="flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        id="allow-trailing-semicolon"
-        class="w-4 h-4 text-primary-600 bg-transparent border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:border-gray-600"
-        checked
-      />
-      <span
-        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
-        >{translate('ui.option.trailing.semicolon')}</span
-      >
-    </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="allow-trailing-semicolon" checked />
+        <span>{translate('ui.option.trailing.semicolon')}</span>
+      </label>
 
-    <label class="flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        id="remove-comments"
-        class="w-4 h-4 text-primary-600 bg-transparent border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:border-gray-600"
-        checked
-      />
-      <span
-        class="ml-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
-        >{translate('ui.option.remove.comments')}</span
-      >
-    </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="remove-comments" checked />
+        <span>{translate('ui.option.remove.comments')}</span>
+      </label>
+    </div>
   </div>
 
-  <!-- 主要工作区域 -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- 输入区域 -->
-    <div class="space-y-4">
-      <div class="flex justify-between items-center">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-          {translate('ui.input')}
-        </h2>
-        <span id="input-status" class="text-sm text-gray-500 dark:text-gray-400"
-        ></span>
+  <!-- 主编辑器 -->
+  <div class="editor-layout">
+    <!-- 输入 -->
+    <div class="editor-side input-side">
+      <div class="editor-header">
+        <span class="editor-label">Input</span>
+        <span id="input-status" class="status-text"></span>
       </div>
-      <textarea
-        id="input-json"
-        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-mono text-sm resize-y focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-        placeholder={translate('formatter.input.placeholder')}></textarea>
+      <div class="editor-content" id="drop-zone">
+        <textarea
+          id="input-json"
+          class="code-editor"
+          placeholder={translate('formatter.input.placeholder')}></textarea>
+        <div class="drop-overlay" id="drop-overlay">
+          <p class="drop-text">{translate('drag.drop.text')}</p>
+        </div>
+      </div>
     </div>
 
-    <!-- 输出区域 -->
-    <div class="space-y-4">
-      <div class="flex justify-between items-center">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-          {translate('ui.output')}
-        </h2>
-        <div class="flex items-center gap-2">
-          <span
-            id="output-status"
-            class="text-sm text-gray-500 dark:text-gray-400"></span>
-          <!-- 视图切换按钮 -->
-          <div class="view-toggle-buttons">
-            <button
-              id="text-view-btn"
-              class="view-toggle-btn active px-3 py-1 text-sm rounded-l-md border border-gray-300 dark:border-gray-600"
-              data-view="text"
-            >
-              {translate('ui.view.text')}
-            </button>
-            <button
-              id="tree-view-btn"
-              class="view-toggle-btn px-3 py-1 text-sm rounded-r-md border border-l-0 border-gray-300 dark:border-gray-600"
-              data-view="tree"
-            >
-              {translate('ui.view.tree')}
-            </button>
+    <!-- 输出 -->
+    <div class="editor-side output-side">
+      <div class="editor-header">
+        <span class="editor-label">Output</span>
+        <div class="header-actions">
+          <span id="output-status" class="status-text"></span>
+          <div class="view-switcher">
+            <button id="text-view-btn" class="view-btn active" data-view="text">Text</button>
+            <button id="tree-view-btn" class="view-btn" data-view="tree">Tree</button>
           </div>
         </div>
       </div>
 
-      <!-- 文本视图 -->
       <textarea
         id="output-json"
-        class="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm resize-y"
+        class="code-editor"
         readonly
         placeholder={translate('formatter.output.placeholder')}></textarea>
 
-      <!-- 树状视图 -->
-      <div id="tree-view-container" class="hidden min-h-96 flex flex-col resize-y overflow-auto border border-gray-300 dark:border-gray-600 rounded-lg">
-        <!-- 树状视图控制栏 -->
-        <div class="tree-controls flex flex-wrap gap-2 p-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-600">
-          <input
-            type="text"
-            id="tree-search"
-            placeholder={translate('ui.tree.search')}
-            class="flex-1 min-w-[200px] px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          />
-          <button
-            id="tree-expand-all"
-            class="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors"
-          >
-            {translate('ui.tree.expand.all')}
-          </button>
-          <button
-            id="tree-collapse-all"
-            class="px-3 py-1 text-sm bg-gray-500 hover:bg-gray-600 text-white rounded-md transition-colors"
-          >
-            {translate('ui.tree.collapse.all')}
-          </button>
+      <div id="tree-view-container" class="tree-container hidden">
+        <div class="tree-toolbar">
+          <input type="text" id="tree-search" placeholder={translate('ui.tree.search')} class="search-input" />
+          <div class="tree-buttons">
+            <button id="tree-expand-all" class="tree-btn">Expand All</button>
+            <button id="tree-collapse-all" class="tree-btn">Collapse All</button>
+          </div>
         </div>
-        
-        <!-- 树状视图内容 -->
-        <div
-          id="tree-view"
-          class="w-full flex-1 p-4 bg-white dark:bg-gray-800 overflow-auto"
-        >
-        </div>
+        <div id="tree-view" class="tree-content"></div>
       </div>
     </div>
   </div>
 
-  <!-- 工具栏按钮 -->
-  <div class="mt-6 flex flex-wrap gap-3 justify-center">
-    <button
-      id="clear-btn"
-      class="px-4 py-2 bg-transparent border-2 border-gray-500 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg transition-colors"
-    >
+  <!-- 工具栏 -->
+  <div class="action-toolbar">
+    <button id="clear-btn" class="action-btn" title="Ctrl+Shift+C">
       {translate('formatter.button.clear')}
     </button>
-    <button
-      id="paste-btn"
-      class="px-4 py-2 bg-transparent border-2 border-orange-500 text-orange-600 hover:bg-orange-50 dark:text-orange-400 dark:hover:bg-orange-950 rounded-lg transition-colors"
-    >
+    <button id="paste-btn" class="action-btn" title="Ctrl+Shift+V">
       {translate('formatter.button.paste')}
     </button>
-    <button
-      id="copy-btn"
-      class="px-4 py-2 bg-transparent border-2 border-green-500 text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-950 rounded-lg transition-colors"
-    >
+    <button id="copy-btn" class="action-btn" title="Ctrl+Shift+C">
       {translate('formatter.button.copy')}
     </button>
     <input type="file" id="file-input" accept=".json,.txt" class="hidden" />
-    <button
-      id="import-btn"
-      class="px-4 py-2 bg-transparent border-2 border-blue-500 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-950 rounded-lg transition-colors"
-    >
+    <button id="import-btn" class="action-btn" title="Ctrl+O">
       {translate('ui.import')}
     </button>
-    <button
-      id="export-btn"
-      class="px-4 py-2 bg-transparent border-2 border-purple-500 text-purple-600 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-950 rounded-lg transition-colors"
-    >
+    <button id="export-btn" class="action-btn" title="Ctrl+S">
       {translate('formatter.button.download')}
+    </button>
+    <button id="history-btn" class="action-btn" title="Ctrl+H">
+      {translate('history.button')}
     </button>
   </div>
 
-  <!-- 转换选项（仅在转换标签页显示） -->
-  <div id="convert-options" class="mt-6 hidden">
-    <div
-      class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700"
-    >
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-        {translate('ui.convert.options')}
-      </h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <button
-          id="to-yaml-btn"
-          class="convert-btn px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
-          data-format="yaml"
-        >
-          {translate('ui.convert.yaml')}
-        </button>
-        <button
-          id="to-xml-btn"
-          class="convert-btn px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-          data-format="xml"
-        >
-          {translate('ui.convert.xml')}
-        </button>
-        <button
-          id="to-csv-btn"
-          class="convert-btn px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
-          data-format="csv"
-        >
-          {translate('ui.convert.csv')}
-        </button>
-      </div>
+  <!-- 转换面板 -->
+  <div id="convert-options" class="convert-section hidden">
+    <div class="convert-grid">
+      <button id="to-yaml-btn" class="convert-card" data-format="yaml">
+        <span class="convert-format">YAML</span>
+      </button>
+      <button id="to-xml-btn" class="convert-card" data-format="xml">
+        <span class="convert-format">XML</span>
+      </button>
+      <button id="to-csv-btn" class="convert-card" data-format="csv">
+        <span class="convert-format">CSV</span>
+      </button>
     </div>
   </div>
 
-  <!-- 错误提示 -->
-  <div id="error-message" class="mt-4 hidden">
-    <div
-      class="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-lg p-4"
-    >
-      <div class="flex">
-        <XCircle class="w-5 h-5 text-red-400 mt-0.5 mr-3 flex-shrink-0" />
-        <div>
-          <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
-            错误
-          </h3>
-          <p
-            id="error-text"
-            class="mt-1 text-sm text-red-700 dark:text-red-300"
-          >
-          </p>
-        </div>
-      </div>
+  <!-- 历史记录面板 -->
+  <div id="history-panel" class="history-panel hidden">
+    <div class="history-header">
+      <h3>{translate('history.title')}</h3>
+      <button id="close-history" class="close-btn">×</button>
     </div>
+    <div class="history-list" id="history-list"></div>
   </div>
 
-  <!-- 成功提示 -->
-  <div id="success-message" class="mt-4 hidden">
-    <div
-      class="bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 rounded-lg p-4"
-    >
-      <div class="flex">
-        <CheckCircle class="w-5 h-5 text-green-400 mt-0.5 mr-3 flex-shrink-0" />
-        <div>
-          <h3 class="text-sm font-medium text-green-800 dark:text-green-200">
-            成功
-          </h3>
-          <p
-            id="success-text"
-            class="mt-1 text-sm text-green-700 dark:text-green-300"
-          >
-          </p>
-        </div>
-      </div>
-    </div>
+  <!-- 消息提示 -->
+  <div id="error-message" class="message-toast error hidden">
+    <XCircle class="toast-icon" />
+    <p id="error-text" class="toast-text"></p>
+  </div>
+
+  <div id="success-message" class="message-toast success hidden">
+    <CheckCircle class="toast-icon" />
+    <p id="success-text" class="toast-text"></p>
   </div>
 </div>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;600&family=Fira+Code:wght@400;500&family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
 <style>
-  .tab-button {
-    @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-600;
+  /* ===== 基础 CSS 变量 ===== */
+  :root {
+    --transition: 150ms ease;
   }
 
-  .tab-button.active {
-    @apply border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400;
+  /* ==================== 风格 1: 优雅极简 ==================== */
+  [data-style="minimal"] {
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+    --bg-primary: #ffffff;
+    --bg-secondary: #fafafa;
+    --bg-tertiary: #f5f5f5;
+    --bg-hover: #f0f0f0;
+
+    --text-primary: #111111;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --text-inverse: #ffffff;
+
+    --border-light: #e5e5e5;
+    --border-medium: #d4d4d4;
+
+    --accent: #0066cc;
+    --accent-hover: #0052a3;
+    --accent-light: #e6f0ff;
+
+    --success: #00a86b;
+    --success-bg: #e8f7f2;
+    --error: #dc2626;
+    --error-bg: #fef2f2;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
 
-  /* 视图切换按钮样式 */
-  .view-toggle-buttons {
-    @apply inline-flex;
+  /* ==================== 风格 2: 温暖编辑 ==================== */
+  [data-style="editorial"] {
+    --font-sans: 'Source Sans Pro', sans-serif;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-mono: 'Fira Code', 'Courier New', monospace;
+
+    --bg-primary: #fdfbf7;
+    --bg-secondary: #f8f5f0;
+    --bg-tertiary: #f3efe8;
+    --bg-hover: #ede8e0;
+
+    --text-primary: #2c2416;
+    --text-secondary: #6b5d4f;
+    --text-tertiary: #9a8b7a;
+    --text-inverse: #ffffff;
+
+    --border-light: #e8ddd0;
+    --border-medium: #d4c4b0;
+
+    --accent: #c17f59;
+    --accent-hover: #a86745;
+    --accent-light: #f5ebe3;
+
+    --success: #7da87b;
+    --success-bg: #e8f3e8;
+    --error: #c45c5c;
+    --error-bg: #f5e8e8;
+
+    --radius-sm: 2px;
+    --radius-md: 3px;
+    --radius-lg: 4px;
+
+    --shadow-sm: 0 1px 3px rgba(44, 36, 22, 0.06);
+    --shadow-md: 0 4px 12px rgba(44, 36, 22, 0.08);
+    --shadow-lg: 0 8px 24px rgba(44, 36, 22, 0.10);
   }
 
-  .view-toggle-btn {
-    @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors;
+  /* ==================== 风格 3: 新粗野主义波普 ==================== */
+  [data-style="brutalist"] {
+    --font-display: 'Archivo Black', sans-serif;
+    --font-sans: 'Space Grotesk', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #2a2a2a;
+    --bg-hover: #333333;
+
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-tertiary: #888888;
+    --text-inverse: #000000;
+
+    --border-light: #ff00ff;
+    --border-medium: #00ffff;
+
+    --accent: #ff00ff;
+    --accent-hover: #ff66ff;
+    --accent-light: #ff00ff33;
+
+    --success: #00ff00;
+    --success-bg: #00ff0022;
+    --error: #ffff00;
+    --error-bg: #ffff0022;
+
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+
+    --shadow-sm: 4px 4px 0 #ff00ff;
+    --shadow-md: 6px 6px 0 #00ffff;
+    --shadow-lg: 8px 8px 0 #ffff00;
   }
 
-  .view-toggle-btn:hover {
-    @apply bg-gray-100 dark:bg-gray-700;
+  /* ==================== 风格 4: 未来玻璃 ==================== */
+  [data-style="glass"] {
+    --font-sans: 'Outfit', sans-serif;
+    --font-mono: 'Rajdhani', monospace;
+
+    --bg-primary: #0f0f23;
+    --bg-secondary: #1a1a3e;
+    --bg-tertiary: #252559;
+    --bg-hover: #303070;
+
+    --text-primary: #ffffff;
+    --text-secondary: #b8b8d1;
+    --text-tertiary: #7878a0;
+    --text-inverse: #0f0f23;
+
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-medium: rgba(255, 255, 255, 0.2);
+
+    --accent: #a78bfa;
+    --accent-hover: #c4b5fd;
+    --accent-light: rgba(167, 139, 250, 0.2);
+
+    --success: #4ade80;
+    --success-bg: rgba(74, 222, 128, 0.15);
+    --error: #f87171;
+    --error-bg: rgba(248, 113, 113, 0.15);
+
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+
+    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
-  .view-toggle-btn.active {
-    @apply bg-blue-500 text-white border-blue-500;
+  /* ==================== 风格 5: 复古终端 ==================== */
+  [data-style="terminal"] {
+    --font-mono: 'VT323', 'Courier New', monospace;
+
+    --bg-primary: #0c0c0c;
+    --bg-secondary: #111111;
+    --bg-tertiary: #1a1a1a;
+    --bg-hover: #222222;
+
+    --text-primary: #00ff00;
+    --text-secondary: #00cc00;
+    --text-tertiary: #009900;
+    --text-inverse: #000000;
+
+    --border-light: #003300;
+    --border-medium: #006600;
+
+    --accent: #00ff00;
+    --accent-hover: #00cc00;
+    --accent-light: #001a00;
+
+    --success: #00ff00;
+    --success-bg: #001a00;
+    --error: #00ff00;
+    --error-bg: #001a00;
+
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
   }
 
-  /* 树状视图样式 */
-  #tree-view {
-    font-family: 'Courier New', Courier, monospace;
+  /* ===== 深色模式叠加 ===== */
+  .dark[data-style="minimal"],
+  .dark[data-style="editorial"] {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-tertiary: #1a1a1a;
+    --bg-hover: #222222;
+
+    --text-primary: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #666666;
+    --text-inverse: #000000;
+
+    --border-light: #2a2a2a;
+    --border-medium: #333333;
+  }
+
+  /* ===== 基础样式 ===== */
+  .formatter-wrapper {
+    font-family: var(--font-sans, sans-serif);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* ===== 风格切换器 ===== */
+  .style-switcher {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 1000;
+  }
+
+  .switcher-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-md);
+  }
+
+  .switcher-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .toggle-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .style-panel {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    width: 280px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition);
+  }
+
+  .style-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .style-panel-header {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .style-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .style-option {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .style-option:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+  }
+
+  .style-option.active {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .style-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    border: 2px solid var(--border-medium);
+  }
+
+  .style-preview.minimal {
+    background: linear-gradient(135deg, #ffffff 50%, #0066cc 50%);
+  }
+
+  .style-preview.editorial {
+    background: linear-gradient(135deg, #fdfbf7 50%, #c17f59 50%);
+  }
+
+  .style-preview.brutalist {
+    background: linear-gradient(135deg, #0a0a0a 50%, #ff00ff 50%);
+  }
+
+  .style-preview.glass {
+    background: linear-gradient(135deg, #0f0f23 50%, #a78bfa 50%);
+  }
+
+  .style-preview.terminal {
+    background: linear-gradient(135deg, #0c0c0c 50%, #00ff00 50%);
+  }
+
+  /* ===== 头部 ===== */
+  .formatter-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem 0;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  [data-style="editorial"] .page-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+  }
+
+  [data-style="brutalist"] .page-title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 3rem;
+  }
+
+  [data-style="terminal"] .page-title {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  .page-subtitle {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  /* ===== 选项卡 ===== */
+  .tabs-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border-light);
+    overflow-x: auto;
+  }
+
+  [data-style="brutalist"] .tabs {
+    border: 2px solid var(--border-medium);
+    border-bottom: none;
+  }
+
+  .tab {
+    padding: 0.875rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+    margin-bottom: -1px;
+  }
+
+  [data-style="brutalist"] .tab {
+    border: 2px solid transparent;
+    border-bottom: none;
+    margin-bottom: 0;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+  }
+
+  [data-style="terminal"] .tab {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+  }
+
+  .tab:hover {
+    color: var(--text-primary);
+  }
+
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  [data-style="brutalist"] .tab.active {
+    background: var(--accent);
+    color: var(--text-inverse);
+    border-color: var(--accent);
+  }
+
+  [data-style="glass"] .tab.active {
+    background: var(--accent-light);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+
+  /* ===== 配置选项 ===== */
+  .options-section {
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  [data-style="brutalist"] .options-section {
+    border: 3px solid var(--border-medium);
+    box-shadow: var(--shadow-sm);
+  }
+
+  [data-style="glass"] .options-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-medium);
+  }
+
+  .options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border-medium);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    appearance: none;
+    position: relative;
+    transition: all var(--transition);
+  }
+
+  [data-style="brutalist"] .checkbox-label input[type="checkbox"] {
+    border-width: 2px;
+  }
+
+  .checkbox-label input[type="checkbox"]:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .checkbox-label input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--text-inverse);
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+  }
+
+  .checkbox-label input[type="checkbox"]:hover {
+    border-color: var(--accent);
+  }
+
+  /* ===== 编辑器布局 ===== */
+  .editor-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    .editor-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .editor-side {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .editor-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+  }
+
+  [data-style="editorial"] .editor-label {
+    font-family: var(--font-serif);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .status-text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    transition: color 0.3s ease;
+  }
+
+  .view-switcher {
+    display: flex;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 0.125rem;
+    border: 1px solid var(--border-light);
+  }
+
+  [data-style="brutalist"] .view-switcher {
+    border: 2px solid var(--border-medium);
+  }
+
+  .view-btn {
+    padding: 0.375rem 0.75rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .view-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .view-btn.active {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  [data-style="brutalist"] .view-btn.active {
+    background: var(--accent);
+    color: var(--text-inverse);
+    box-shadow: none;
+  }
+
+  [data-style="terminal"] .view-btn {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .editor-content {
+    position: relative;
+    flex: 1;
+  }
+
+  .code-editor {
+    width: 100%;
+    min-height: 480px;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    resize: vertical;
+    transition: all 0.3s ease;
+  }
+
+  [data-style="brutalist"] .code-editor {
+    border: 3px solid var(--border-medium);
+  }
+
+  [data-style="glass"] .code-editor {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-medium);
+  }
+
+  [data-style="terminal"] .code-editor {
+    background: #000;
+    border: 2px solid var(--accent);
+    font-size: 1.125rem;
+  }
+
+  .code-editor:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+
+  [data-style="brutalist"] .code-editor:focus {
+    box-shadow: var(--shadow-sm);
+  }
+
+  [data-style="terminal"] .code-editor:focus {
+    box-shadow: 0 0 10px var(--accent), inset 0 0 10px rgba(0, 255, 0, 0.1);
+  }
+
+  .code-editor::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  /* ===== 拖拽上传 ===== */
+  .drop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--accent-light);
+    border: 3px dashed var(--accent);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition);
+    pointer-events: none;
+  }
+
+  .drop-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .drop-text {
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* ===== 树状视图 ===== */
+  .tree-container {
+    flex: 1;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  [data-style="brutalist"] .tree-container {
+    border: 3px solid var(--border-medium);
+  }
+
+  [data-style="glass"] .tree-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-medium);
+  }
+
+  [data-style="terminal"] .tree-container {
+    background: #000;
+    border: 2px solid var(--accent);
+  }
+
+  .tree-toolbar {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-light);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  [data-style="terminal"] .search-input {
+    background: #000;
+    border: 1px solid var(--accent);
+    color: #0f0;
+    font-family: var(--font-mono);
+  }
+
+  .tree-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tree-btn {
+    padding: 0.5rem 0.875rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .tree-btn:hover {
+    background: var(--bg-hover);
+  }
+
+  [data-style="terminal"] .tree-btn {
+    background: #000;
+    border: 1px solid var(--accent);
+    color: #0f0;
+    font-family: var(--font-mono);
+  }
+
+  .tree-content {
+    flex: 1;
+    padding: 1rem;
+    overflow: auto;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
     line-height: 1.6;
   }
 
+  /* ===== 工具栏 ===== */
+  .action-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .action-btn {
+    padding: 0.625rem 1.25rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  [data-style="brutalist"] .action-btn {
+    border: 2px solid var(--border-medium);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+  }
+
+  [data-style="editorial"] .action-btn {
+    font-family: var(--font-serif);
+    font-style: italic;
+  }
+
+  [data-style="glass"] .action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-medium);
+  }
+
+  [data-style="terminal"] .action-btn {
+    background: #000;
+    border: 2px solid var(--accent);
+    color: #0f0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .action-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  [data-style="brutalist"] .action-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--accent);
+  }
+
+  [data-style="terminal"] .action-btn:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  .action-btn:active {
+    transform: translateY(0);
+  }
+
+  /* ===== 转换面板 ===== */
+  .convert-section {
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+  }
+
+  [data-style="brutalist"] .convert-section {
+    border: 3px solid var(--border-medium);
+    box-shadow: var(--shadow-sm);
+  }
+
+  [data-style="glass"] .convert-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-medium);
+  }
+
+  .convert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .convert-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .convert-card {
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  [data-style="brutalist"] .convert-card {
+    border: 2px solid var(--border-medium);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .convert-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  [data-style="brutalist"] .convert-card:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0 var(--accent);
+  }
+
+  [data-style="glass"] .convert-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  [data-style="terminal"] .convert-card {
+    background: #000;
+    border: 2px solid var(--accent);
+    color: #0f0;
+    font-family: var(--font-mono);
+  }
+
+  .convert-format {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  /* ===== 历史记录面板 ===== */
+  .history-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background: var(--bg-primary);
+    border-left: 1px solid var(--border-light);
+    box-shadow: var(--shadow-lg);
+    transition: right 0.3s ease;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .history-panel.open {
+    right: 0;
+  }
+
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .history-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .close-btn:hover {
+    background: var(--bg-hover);
+  }
+
+  .history-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .history-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .history-item:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+  }
+
+  .history-time {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-bottom: 0.25rem;
+  }
+
+  .history-preview {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ===== 消息提示 ===== */
+  .message-toast {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    animation: toastIn 0.2s ease;
+    transition: all 0.3s ease;
+  }
+
+  @keyframes toastIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .message-toast.error {
+    background: var(--error-bg);
+    border: 1px solid var(--error);
+  }
+
+  [data-style="brutalist"] .message-toast.error {
+    background: #ffff0022;
+    border: 3px solid #ffff00;
+  }
+
+  .message-toast.success {
+    background: var(--success-bg);
+    border: 1px solid var(--success);
+  }
+
+  [data-style="brutalist"] .message-toast.success {
+    background: #00ff0022;
+    border: 3px solid #00ff00;
+  }
+
+  .toast-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .message-toast.error .toast-icon {
+    color: var(--error);
+  }
+
+  .message-toast.success .toast-icon {
+    color: var(--success);
+  }
+
+  [data-style="terminal"] .toast-icon {
+    color: #0f0 !important;
+  }
+
+  .toast-text {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    margin: 0;
+  }
+
+  .message-toast.error .toast-text {
+    color: var(--error);
+  }
+
+  .message-toast.success .toast-text {
+    color: var(--success);
+  }
+
+  [data-style="terminal"] .toast-text {
+    color: #0f0 !important;
+  }
+
+  /* ===== 树状视图样式 ===== */
   .tree-node {
-    @apply relative py-0.5 hover:bg-gray-50 dark:hover:bg-gray-700 rounded transition-colors;
+    position: relative;
+    padding: 0.125rem 0;
     user-select: none;
+  }
+
+  .tree-node:hover {
+    background: var(--bg-hover);
+    border-radius: var(--radius-sm);
+  }
+
+  [data-style="brutalist"] .tree-node:hover {
+    background: #ff00ff22;
+  }
+
+  [data-style="glass"] .tree-node:hover {
+    background: rgba(167, 139, 250, 0.1);
+  }
+
+  [data-style="terminal"] .tree-node:hover {
+    background: #00ff0022;
   }
 
   .tree-leaf {
@@ -391,46 +1373,104 @@ const translate = t(lang);
   }
 
   .tree-toggle {
-    @apply inline-block w-4 text-center cursor-pointer text-gray-500 dark:text-gray-400 mr-1;
+    display: inline-block;
+    width: 14px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    margin-right: 0.25rem;
     font-size: 10px;
+    transition: color var(--transition);
   }
 
   .tree-toggle:hover {
-    @apply text-gray-700 dark:text-gray-200;
+    color: var(--text-secondary);
+  }
+
+  [data-style="terminal"] .tree-toggle:hover {
+    color: #0f0;
   }
 
   .tree-key {
-    @apply text-red-600 dark:text-red-400 font-semibold;
+    color: var(--error);
+    font-weight: 500;
+  }
+
+  [data-style="brutalist"] .tree-key {
+    color: #ff00ff;
+  }
+
+  [data-style="glass"] .tree-key {
+    color: #f87171;
+  }
+
+  [data-style="terminal"] .tree-key {
+    color: #0f0;
   }
 
   .tree-bracket {
-    @apply text-gray-600 dark:text-gray-400;
+    color: var(--text-secondary);
   }
 
   .tree-preview {
-    @apply text-gray-500 dark:text-gray-500 italic ml-1;
+    color: var(--text-tertiary);
+    font-style: italic;
+    margin-left: 0.25rem;
   }
 
-  /* 不同数据类型的语法高亮 */
   .tree-value-string {
-    @apply text-green-600 dark:text-green-400;
+    color: var(--success);
+  }
+
+  [data-style="brutalist"] .tree-value-string {
+    color: #00ff00;
+  }
+
+  [data-style="glass"] .tree-value-string {
+    color: #4ade80;
+  }
+
+  [data-style="terminal"] .tree-value-string {
+    color: #0f0;
   }
 
   .tree-value-number {
-    @apply text-blue-600 dark:text-blue-400;
+    color: var(--accent);
+  }
+
+  [data-style="brutalist"] .tree-value-number {
+    color: #00ffff;
+  }
+
+  [data-style="glass"] .tree-value-number {
+    color: #a78bfa;
+  }
+
+  [data-style="terminal"] .tree-value-number {
+    color: #0f0;
   }
 
   .tree-value-boolean {
-    @apply text-purple-600 dark:text-purple-400;
+    color: #9333ea;
+  }
+
+  [data-style="brutalist"] .tree-value-boolean {
+    color: #ffff00;
+  }
+
+  [data-style="glass"] .tree-value-boolean {
+    color: #f472b6;
   }
 
   .tree-value-null {
-    @apply text-gray-500 dark:text-gray-500;
+    color: var(--text-tertiary);
   }
 
-  /* 编辑状态样式 */
   .tree-value.editing {
-    @apply bg-yellow-100 dark:bg-yellow-900 px-1 rounded outline-none ring-2 ring-yellow-400;
+    background: var(--accent-light);
+    padding: 0 0.25rem;
+    border-radius: var(--radius-sm);
+    outline: none;
   }
 
   .tree-value:not(.editing) {
@@ -438,95 +1478,775 @@ const translate = t(lang);
   }
 
   .tree-value:not(.editing):hover {
-    @apply bg-gray-100 dark:bg-gray-700 px-1 rounded;
+    background: var(--bg-hover);
+    padding: 0 0.25rem;
+    border-radius: var(--radius-sm);
   }
 
-  /* 搜索高亮样式 - 使用 :global 因为这些类是动态添加的 */
+  [data-style="terminal"] .tree-value:not(.editing):hover {
+    background: #00ff0022;
+  }
+
   :global(.search-highlight) {
-    background-color: #fef08a !important; /* yellow-200 */
+    background-color: #fef08a !important;
     padding: 0 0.25rem !important;
-    border-radius: 0.25rem !important;
-    font-weight: 600 !important;
+    border-radius: var(--radius-sm) !important;
+    font-weight: 500 !important;
   }
 
   :global(.dark .search-highlight) {
-    background-color: #a16207 !important; /* yellow-700 */
+    background-color: #713f12 !important;
   }
 
-  /* 复制路径按钮样式 */
+  [data-style="brutalist"] :global(.search-highlight) {
+    background-color: #ffff00 !important;
+    color: #000 !important;
+  }
+
+  [data-style="terminal"] :global(.search-highlight) {
+    background-color: #00ff00 !important;
+    color: #000 !important;
+  }
+
   .tree-copy-path {
-    @apply ml-2 opacity-0 inline-flex items-center justify-center w-6 h-6 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-all;
+    margin-left: 0.5rem;
+    opacity: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--text-tertiary);
+    transition: all var(--transition);
   }
 
   .tree-node:hover .tree-copy-path {
-    @apply opacity-100;
+    opacity: 1;
+  }
+
+  .tree-copy-path:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+    border-radius: var(--radius-sm);
   }
 
   .tree-copy-path:active {
-    @apply scale-95;
+    transform: scale(0.95);
   }
 
-  /* 树状视图空状态 */
   .tree-empty {
-    @apply text-gray-500 dark:text-gray-400 text-center py-8;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 2rem;
   }
 
-  /* 树控制栏样式 */
-  .tree-controls {
-    flex-shrink: 0; /* 防止控制栏被压缩 */
-  }
-
-  /* 树状视图容器可调整大小 */
-  #tree-view-container {
-    resize: vertical;
-    height: 24rem; /* 初始高度 h-96 = 384px = 24rem */
-  }
-
-  /* 响应式设计 */
-  @media (max-width: 640px) {
-    .tree-node {
-      font-size: 0.875rem;
+  /* ===== 响应式 ===== */
+  @media (max-width: 768px) {
+    .formatter-wrapper {
+      padding: 1.5rem 1rem;
     }
-    
-    .tree-toggle {
-      font-size: 8px;
+
+    .style-switcher {
+      top: 1rem;
+      right: 1rem;
     }
+
+    .page-title {
+      font-size: 1.875rem;
+    }
+
+    .tabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .options-grid {
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .action-toolbar {
+      flex-direction: column;
+    }
+
+    .action-btn {
+      width: 100%;
+    }
+
+    .editor-header {
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .view-switcher {
+      width: 100%;
+    }
+
+    .view-btn {
+      flex: 1;
+    }
+
+    .tree-toolbar {
+      flex-direction: column;
+    }
+
+    .tree-buttons {
+      width: 100%;
+    }
+
+    .tree-btn {
+      flex: 1;
+    }
+
+    .history-panel {
+      width: 100%;
+      right: -100%;
+    }
+  }
+
+  /* ===== 辅助类 ===== */
+  .hidden {
+    display: none !important;
   }
 </style>
 
-<script>
-  // 导入树状视图脚本
-  import TreeViewer from '../scripts/tree-viewer.js';
+<script type="module" define:vars={{ translations }}>
+  // 树状视图类 - 用于将JSON数据渲染为可交互的树结构
+  class TreeViewer {
+    constructor(containerId) {
+      this.container = document.getElementById(containerId);
+      this.data = null;
+      this.expandedPaths = new Set();
+      this.searchTerm = '';
+      this.editingPath = null;
+    }
+
+    /**
+     * 渲染JSON数据为树结构
+     * @param {*} jsonData - 要渲染的JSON数据
+     */
+    render(jsonData) {
+      this.data = jsonData;
+      if (!this.container) return;
+
+      this.container.innerHTML = '';
+
+      if (jsonData === null || jsonData === undefined) {
+        this.container.innerHTML = '<div class="tree-empty">无数据</div>';
+        return;
+      }
+
+      const tree = this.buildTreeNode(null, jsonData, '', 0);
+      this.container.innerHTML = tree;
+      this.attachEventListeners();
+    }
+
+    /**
+     * 构建树节点HTML
+     * @param {string} key - 节点键名
+     * @param {*} value - 节点值
+     * @param {string} path - 节点路径
+     * @param {number} depth - 节点深度
+     * @returns {string} 节点HTML字符串
+     */
+    buildTreeNode(key, value, path, depth) {
+      const type = this.getValueType(value);
+      const isExpandable = type === 'object' || type === 'array';
+      const isExpanded = this.expandedPaths.has(path);
+      const indent = depth * 20;
+
+      // 检查键名和值是否匹配搜索词
+      const keyMatches =
+        this.searchTerm &&
+        key !== null &&
+        String(key).toLowerCase().includes(this.searchTerm);
+      const valueMatches =
+        this.searchTerm &&
+        type !== 'object' &&
+        type !== 'array' &&
+        value !== null &&
+        value !== undefined &&
+        String(value).toLowerCase().includes(this.searchTerm);
+
+      let html = '';
+
+      if (type === 'object') {
+        const keys = Object.keys(value);
+        const preview = isExpanded
+          ? ''
+          : `{${keys.length} ${keys.length === 1 ? 'key' : 'keys'}}`;
+
+        html += `<div class="tree-node" data-path="${this.escapeHtml(
+          path
+        )}" style="padding-left: ${indent}px;">`;
+
+        // 展开/折叠图标
+        html += `<span class="tree-toggle ${
+          isExpanded ? 'expanded' : ''
+        }" data-path="${this.escapeHtml(path)}">
+          ${isExpanded ? '▼' : '▶'}
+        </span>`;
+
+        // 键名（带高亮）
+        if (key !== null) {
+          const keyClass = keyMatches ? 'tree-key search-highlight' : 'tree-key';
+          html += `<span class="${keyClass}">"${this.escapeHtml(key)}"</span>: `;
+        }
+
+        // 对象括号和预览
+        html += `<span class="tree-bracket">{</span>`;
+        if (!isExpanded) {
+          html += `<span class="tree-preview">${preview}</span><span class="tree-bracket">}</span>`;
+        }
+
+        // 复制路径按钮
+        html += `<button class="tree-copy-path" data-path="${this.escapeHtml(
+          path
+        )}" title="复制路径">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>`;
+
+        html += '</div>';
+
+        // 子节点
+        if (isExpanded) {
+          keys.forEach((k, index) => {
+            const childPath = path ? `${path}.${k}` : k;
+            html += this.buildTreeNode(k, value[k], childPath, depth + 1);
+          });
+
+          // 闭合括号
+          html += `<div class="tree-node" style="padding-left: ${indent}px;">`;
+          html += `<span class="tree-bracket">}</span>`;
+          html += '</div>';
+        }
+      } else if (type === 'array') {
+        const length = value.length;
+        const preview = isExpanded
+          ? ''
+          : `[${length} ${length === 1 ? 'item' : 'items'}]`;
+
+        html += `<div class="tree-node" data-path="${this.escapeHtml(
+          path
+        )}" style="padding-left: ${indent}px;">`;
+
+        // 展开/折叠图标
+        html += `<span class="tree-toggle ${
+          isExpanded ? 'expanded' : ''
+        }" data-path="${this.escapeHtml(path)}">
+          ${isExpanded ? '▼' : '▶'}
+        </span>`;
+
+        // 键名（带高亮）
+        if (key !== null) {
+          const keyClass = keyMatches ? 'tree-key search-highlight' : 'tree-key';
+          html += `<span class="${keyClass}">"${this.escapeHtml(key)}"</span>: `;
+        }
+
+        // 数组括号和预览
+        html += `<span class="tree-bracket">[</span>`;
+        if (!isExpanded) {
+          html += `<span class="tree-preview">${preview}</span><span class="tree-bracket">]</span>`;
+        }
+
+        // 复制路径按钮
+        html += `<button class="tree-copy-path" data-path="${this.escapeHtml(
+          path
+        )}" title="复制路径">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>`;
+
+        html += '</div>';
+
+        // 子节点
+        if (isExpanded) {
+          value.forEach((item, index) => {
+            const childPath = `${path}[${index}]`;
+            html += this.buildTreeNode(
+              index.toString(),
+              item,
+              childPath,
+              depth + 1
+            );
+          });
+
+          // 闭合括号
+          html += `<div class="tree-node" style="padding-left: ${indent}px;">`;
+          html += `<span class="tree-bracket">]</span>`;
+          html += '</div>';
+        }
+      } else {
+        // 基本类型
+        html += `<div class="tree-node tree-leaf" data-path="${this.escapeHtml(
+          path
+        )}" style="padding-left: ${indent}px;">`;
+
+        // 键名（带高亮）
+        if (key !== null) {
+          const keyClass = keyMatches ? 'tree-key search-highlight' : 'tree-key';
+          html += `<span class="${keyClass}">"${this.escapeHtml(key)}"</span>: `;
+        }
+
+        // 值（可编辑，带高亮）
+        const valueClass = valueMatches
+          ? `tree-value tree-value-${type} search-highlight`
+          : `tree-value tree-value-${type}`;
+        html += `<span class="${valueClass}" data-path="${this.escapeHtml(
+          path
+        )}" data-type="${type}">`;
+        if (type === 'string') {
+          html += `"${this.escapeHtml(value)}"`;
+        } else if (type === 'null') {
+          html += 'null';
+        } else {
+          html += this.escapeHtml(String(value));
+        }
+        html += `</span>`;
+
+        // 复制路径按钮
+        html += `<button class="tree-copy-path" data-path="${this.escapeHtml(
+          path
+        )}" title="复制路径">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>`;
+
+        html += '</div>';
+      }
+
+      return html;
+    }
+
+    /**
+     * 附加事件监听器
+     */
+    attachEventListeners() {
+      // 展开/折叠
+      this.container.querySelectorAll('.tree-toggle').forEach((toggle) => {
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const path = toggle.getAttribute('data-path');
+          this.toggleNode(path);
+        });
+      });
+
+      // 复制路径
+      this.container.querySelectorAll('.tree-copy-path').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const path = btn.getAttribute('data-path');
+          this.copyPath(path);
+        });
+      });
+
+      // 双击编辑值
+      this.container.querySelectorAll('.tree-value').forEach((valueEl) => {
+        valueEl.addEventListener('dblclick', (e) => {
+          e.stopPropagation();
+          const path = valueEl.getAttribute('data-path');
+          const type = valueEl.getAttribute('data-type');
+          this.enableEdit(path, valueEl, type);
+        });
+      });
+    }
+
+    /**
+     * 展开/折叠节点
+     * @param {string} path - 节点路径
+     */
+    toggleNode(path) {
+      if (this.expandedPaths.has(path)) {
+        this.expandedPaths.delete(path);
+      } else {
+        this.expandedPaths.add(path);
+      }
+      this.render(this.data);
+    }
+
+    /**
+     * 全部展开
+     */
+    expandAll() {
+      this.expandedPaths.clear();
+      this.collectAllPaths(this.data, '', this.expandedPaths);
+      this.render(this.data);
+    }
+
+    /**
+     * 全部折叠
+     */
+    collapseAll() {
+      this.expandedPaths.clear();
+      this.render(this.data);
+    }
+
+    /**
+     * 收集所有可展开的路径
+     */
+    collectAllPaths(obj, currentPath, pathSet) {
+      if (obj && typeof obj === 'object') {
+        pathSet.add(currentPath);
+
+        if (Array.isArray(obj)) {
+          obj.forEach((item, index) => {
+            const newPath = currentPath
+              ? `${currentPath}[${index}]`
+              : `[${index}]`;
+            this.collectAllPaths(item, newPath, pathSet);
+          });
+        } else {
+          Object.keys(obj).forEach((key) => {
+            const newPath = currentPath ? `${currentPath}.${key}` : key;
+            this.collectAllPaths(obj[key], newPath, pathSet);
+          });
+        }
+      }
+    }
+
+    /**
+     * 搜索过滤
+     * @param {string} term - 搜索词
+     */
+    search(term) {
+      this.searchTerm = term.toLowerCase().trim();
+
+      if (this.searchTerm) {
+        this.expandedPaths.clear();
+        this.expandMatchingPaths(this.data, '');
+      }
+
+      this.render(this.data);
+    }
+
+    /**
+     * 展开匹配路径
+     */
+    expandMatchingPaths(obj, currentPath) {
+      if (!obj || typeof obj !== 'object') {
+        if (this.searchTerm) {
+          const valueStr = String(obj).toLowerCase();
+          return valueStr.includes(this.searchTerm);
+        }
+        return false;
+      }
+
+      let hasMatch = false;
+
+      if (Array.isArray(obj)) {
+        obj.forEach((item, index) => {
+          const newPath = currentPath ? `${currentPath}[${index}]` : `[${index}]`;
+          if (this.expandMatchingPaths(item, newPath)) {
+            hasMatch = true;
+            this.expandedPaths.add(currentPath);
+          }
+        });
+      } else {
+        Object.keys(obj).forEach((key) => {
+          const newPath = currentPath ? `${currentPath}.${key}` : key;
+
+          if (key.toLowerCase().includes(this.searchTerm)) {
+            hasMatch = true;
+            this.expandedPaths.add(currentPath);
+          }
+
+          if (this.expandMatchingPaths(obj[key], newPath)) {
+            hasMatch = true;
+            this.expandedPaths.add(currentPath);
+          }
+        });
+      }
+
+      return hasMatch;
+    }
+
+    /**
+     * 复制路径
+     * @param {string} path - 要复制的路径
+     */
+    async copyPath(path) {
+      try {
+        await navigator.clipboard.writeText(path || 'root');
+
+        if (typeof showSuccess === 'function') {
+          showSuccess(`已复制路径: ${path || 'root'}`);
+        }
+      } catch (error) {
+        console.error('复制失败:', error);
+        if (typeof showError === 'function') {
+          showError('复制失败');
+        }
+      }
+    }
+
+    /**
+     * 启用编辑
+     * @param {string} path - 节点路径
+     * @param {HTMLElement} element - 要编辑的元素
+     * @param {string} type - 值类型
+     */
+    enableEdit(path, element, type) {
+      if (this.editingPath) return;
+
+      this.editingPath = path;
+      const currentValue = this.getValueByPath(this.data, path);
+
+      let editValue = currentValue;
+      if (type === 'string') {
+        editValue = currentValue;
+      }
+
+      element.setAttribute('contenteditable', 'true');
+      element.classList.add('editing');
+      element.textContent = editValue;
+      element.focus();
+
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      const saveEdit = () => {
+        const newValue = element.textContent;
+        this.saveEdit(path, newValue, type);
+        element.removeAttribute('contenteditable');
+        element.classList.remove('editing');
+        this.editingPath = null;
+      };
+
+      const cancelEdit = () => {
+        element.removeAttribute('contenteditable');
+        element.classList.remove('editing');
+        this.editingPath = null;
+        this.render(this.data);
+      };
+
+      const keyHandler = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          saveEdit();
+          element.removeEventListener('keydown', keyHandler);
+          element.removeEventListener('blur', blurHandler);
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          cancelEdit();
+          element.removeEventListener('keydown', keyHandler);
+          element.removeEventListener('blur', blurHandler);
+        }
+      };
+
+      const blurHandler = () => {
+        saveEdit();
+        element.removeEventListener('keydown', keyHandler);
+        element.removeEventListener('blur', blurHandler);
+      };
+
+      element.addEventListener('keydown', keyHandler);
+      element.addEventListener('blur', blurHandler);
+    }
+
+    /**
+     * 保存编辑
+     * @param {string} path - 节点路径
+     * @param {string} newValue - 新值
+     * @param {string} type - 值类型
+     */
+    saveEdit(path, newValue, type) {
+      try {
+        let parsedValue = newValue;
+
+        if (type === 'number') {
+          parsedValue = Number(newValue);
+          if (isNaN(parsedValue)) {
+            throw new Error('无效的数字');
+          }
+        } else if (type === 'boolean') {
+          if (newValue.toLowerCase() === 'true') {
+            parsedValue = true;
+          } else if (newValue.toLowerCase() === 'false') {
+            parsedValue = false;
+          } else {
+            throw new Error('布尔值只能是 true 或 false');
+          }
+        } else if (type === 'null') {
+          if (newValue.toLowerCase() !== 'null') {
+            throw new Error('null 值不能更改为其他类型');
+          }
+          parsedValue = null;
+        }
+
+        this.setValueByPath(this.data, path, parsedValue);
+        this.render(this.data);
+
+        if (typeof window.onTreeDataUpdate === 'function') {
+          window.onTreeDataUpdate(this.data);
+        }
+
+        if (typeof showSuccess === 'function') {
+          showSuccess('值已更新');
+        }
+      } catch (error) {
+        if (typeof showError === 'function') {
+          showError(`更新失败: ${error.message}`);
+        }
+        this.render(this.data);
+      }
+    }
+
+    /**
+     * 根据路径获取值
+     * @param {*} obj - 对象
+     * @param {string} path - 路径
+     * @returns {*} 值
+     */
+    getValueByPath(obj, path) {
+      if (!path) return obj;
+
+      const parts = this.parsePath(path);
+      let current = obj;
+
+      for (const part of parts) {
+        if (current === null || current === undefined) return undefined;
+        current = current[part];
+      }
+
+      return current;
+    }
+
+    /**
+     * 根据路径设置值
+     * @param {*} obj - 对象
+     * @param {string} path - 路径
+     * @param {*} value - 新值
+     */
+    setValueByPath(obj, path, value) {
+      if (!path) return;
+
+      const parts = this.parsePath(path);
+      let current = obj;
+
+      for (let i = 0; i < parts.length - 1; i++) {
+        current = current[parts[i]];
+      }
+
+      current[parts[parts.length - 1]] = value;
+    }
+
+    /**
+     * 解析路径为数组
+     * @param {string} path - 路径字符串
+     * @returns {Array} 路径数组
+     */
+    parsePath(path) {
+      const parts = [];
+      let current = '';
+      let inBracket = false;
+
+      for (let i = 0; i < path.length; i++) {
+        const char = path[i];
+
+        if (char === '[') {
+          if (current) {
+            parts.push(current);
+            current = '';
+          }
+          inBracket = true;
+        } else if (char === ']') {
+          if (inBracket && current) {
+            parts.push(parseInt(current));
+            current = '';
+          }
+          inBracket = false;
+        } else if (char === '.' && !inBracket) {
+          if (current) {
+            parts.push(current);
+            current = '';
+          }
+        } else {
+          current += char;
+        }
+      }
+
+      if (current) {
+        parts.push(inBracket ? parseInt(current) : current);
+      }
+
+      return parts;
+    }
+
+    /**
+     * 获取值类型
+     * @param {*} value - 值
+     * @returns {string} 类型
+     */
+    getValueType(value) {
+      if (value === null) return 'null';
+      if (Array.isArray(value)) return 'array';
+      if (typeof value === 'object') return 'object';
+      if (typeof value === 'string') return 'string';
+      if (typeof value === 'number') return 'number';
+      if (typeof value === 'boolean') return 'boolean';
+      return 'unknown';
+    }
+
+    /**
+     * HTML转义
+     * @param {string} str - 要转义的字符串
+     * @returns {string} 转义后的字符串
+     */
+    escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    /**
+     * 获取当前数据
+     * @returns {*} 当前数据
+     */
+    getData() {
+      return this.data;
+    }
+  }
 
   // 基础变量
   let currentTab = 'format';
   let inputJson = '';
   let outputJson = '';
-  let currentView = 'text'; // 'text' 或 'tree'
-  let treeViewer: TreeViewer | null = null;
-  let currentParsedData: any = null;
+  let currentView = 'text';
+  let currentStyle = 'minimal';
+  let treeViewer = null;
+  let currentParsedData = null;
+  let history = [];
 
   // DOM 元素
-  const inputTextarea = document.getElementById(
-    'input-json'
-  ) as HTMLTextAreaElement;
-  const outputTextarea = document.getElementById(
-    'output-json'
-  ) as HTMLTextAreaElement;
-  const errorMessage = document.getElementById('error-message') as HTMLElement;
-  const successMessage = document.getElementById(
-    'success-message'
-  ) as HTMLElement;
-  const errorText = document.getElementById('error-text') as HTMLElement;
-  const successText = document.getElementById('success-text') as HTMLElement;
-  const inputStatus = document.getElementById('input-status') as HTMLElement;
-  const outputStatus = document.getElementById('output-status') as HTMLElement;
-  const convertOptions = document.getElementById(
-    'convert-options'
-  ) as HTMLElement;
-  const treeViewContainer = document.getElementById(
-    'tree-view-container'
-  ) as HTMLElement;
+  const inputTextarea = document.getElementById('input-json');
+  const outputTextarea = document.getElementById('output-json');
+  const errorMessage = document.getElementById('error-message');
+  const successMessage = document.getElementById('success-message');
+  const errorText = document.getElementById('error-text');
+  const successText = document.getElementById('success-text');
+  const inputStatus = document.getElementById('input-status');
+  const outputStatus = document.getElementById('output-status');
+  const convertOptions = document.getElementById('convert-options');
+  const treeViewContainer = document.getElementById('tree-view-container');
+  const dropZone = document.getElementById('drop-zone');
+  const dropOverlay = document.getElementById('drop-overlay');
+  const historyPanel = document.getElementById('history-panel');
 
   // 初始化
   document.addEventListener('DOMContentLoaded', function () {
@@ -534,11 +2254,186 @@ const translate = t(lang);
     initializeButtons();
     initializeTextarea();
     initializeTreeView();
+    initializeKeyboardShortcuts();
+    initializeDragDrop();
+    loadHistory();
   });
 
-  // 初始化选项卡
+  // ===== 键盘快捷键 =====
+  function initializeKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+      // Ctrl/Cmd + Shift + C: 清空
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        clearAll();
+      }
+
+      // Ctrl/Cmd + Shift + V: 粘贴
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'V') {
+        e.preventDefault();
+        pasteFromClipboard();
+      }
+
+      // Ctrl/Cmd + Shift + X: 复制
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'X') {
+        e.preventDefault();
+        copyResult();
+      }
+
+      // Ctrl/Cmd + O: 导入
+      if ((e.ctrlKey || e.metaKey) && e.key === 'o') {
+        e.preventDefault();
+        document.getElementById('file-input')?.click();
+      }
+
+      // Ctrl/Cmd + S: 导出
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        exportResult();
+      }
+
+      // Ctrl/Cmd + H: 历史记录
+      if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
+        e.preventDefault();
+        toggleHistory();
+      }
+
+      // ESC: 关闭面板
+      if (e.key === 'Escape') {
+        historyPanel?.classList.remove('open');
+      }
+    });
+  }
+
+  // ===== 拖拽上传 =====
+  function initializeDragDrop() {
+    if (!dropZone || !dropOverlay) return;
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, () => dropOverlay?.classList.add('active'), false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, () => dropOverlay?.classList.remove('active'), false);
+    });
+
+    dropZone.addEventListener('drop', handleDrop, false);
+  }
+
+  function handleDrop(e) {
+    const dt = e.dataTransfer;
+    const files = dt?.files;
+
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.type === 'application/json' || file.name.endsWith('.json') || file.name.endsWith('.txt')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const content = e.target?.result;
+          inputTextarea.value = content;
+          inputJson = content;
+          updateInputStatus();
+          processInput();
+          addToHistory(content);
+          showSuccess(translations.message.fileLoaded);
+        };
+        reader.readAsText(file);
+      } else {
+        showError(translations.message.invalidFile);
+      }
+    }
+  }
+
+  // ===== 历史记录 =====
+  function addToHistory(content) {
+    const now = new Date();
+    const timeStr = now.toLocaleString();
+
+    history.unshift({
+      time: timeStr,
+      content: content.substring(0, 100),
+      timestamp: now.getTime()
+    });
+
+    // 限制历史记录数量
+    if (history.length > 50) {
+      history = history.slice(0, 50);
+    }
+
+    saveHistory();
+    renderHistory();
+  }
+
+  function saveHistory() {
+    localStorage.setItem('formatter-history', JSON.stringify(history));
+  }
+
+  function loadHistory() {
+    const saved = localStorage.getItem('formatter-history');
+    if (saved) {
+      try {
+        history = JSON.parse(saved);
+        renderHistory();
+      } catch (e) {
+        console.error('Failed to load history:', e);
+      }
+    }
+  }
+
+  function renderHistory() {
+    const historyList = document.getElementById('history-list');
+    if (!historyList) return;
+
+    historyList.innerHTML = history.map((item, index) => `
+      <div class="history-item" data-index="${index}">
+        <div class="history-time">${item.time}</div>
+        <div class="history-preview">${escapeHtml(item.content)}</div>
+      </div>
+    `).join('');
+
+    // 添加点击事件
+    historyList.querySelectorAll('.history-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const index = parseInt(item.getAttribute('data-index') || '0');
+        const historyItem = history[index];
+        if (historyItem) {
+          // 从 localStorage 获取完整内容
+          const fullHistory = JSON.parse(localStorage.getItem('formatter-history-full') || '[]');
+          if (fullHistory[index]) {
+            inputTextarea.value = fullHistory[index];
+            inputJson = fullHistory[index];
+            updateInputStatus();
+            processInput();
+            historyPanel?.classList.remove('open');
+            showSuccess(translations.message.historyLoaded);
+          }
+        }
+      });
+    });
+  }
+
+  function toggleHistory() {
+    historyPanel?.classList.toggle('open');
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // ===== 初始化选项卡 =====
   function initializeTabs() {
-    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabButtons = document.querySelectorAll('.tab');
     tabButtons.forEach((button) => {
       button.addEventListener('click', function () {
         const tabName = this.getAttribute('data-tab');
@@ -547,59 +2442,40 @@ const translate = t(lang);
     });
   }
 
-  // 切换选项卡
-  function switchTab(tabName: string) {
+  // ===== 切换选项卡 =====
+  function switchTab(tabName) {
     currentTab = tabName;
 
-    // 更新选项卡样式
-    document.querySelectorAll('.tab-button').forEach((btn) => {
+    document.querySelectorAll('.tab').forEach((btn) => {
       btn.classList.remove('active');
     });
     document.getElementById(`${tabName}-tab`)?.classList.add('active');
 
-    // 显示/隐藏转换选项
     if (tabName === 'convert') {
       convertOptions.classList.remove('hidden');
     } else {
       convertOptions.classList.add('hidden');
     }
 
-    // 自动处理输入
     if (inputTextarea.value) {
       processInput();
     }
   }
 
-  // 初始化按钮
+  // ===== 初始化按钮 =====
   function initializeButtons() {
-    // 清空按钮
     document.getElementById('clear-btn')?.addEventListener('click', clearAll);
-
-    // 粘贴按钮
-    document
-      .getElementById('paste-btn')
-      ?.addEventListener('click', pasteFromClipboard);
-
-    // 复制按钮
+    document.getElementById('paste-btn')?.addEventListener('click', pasteFromClipboard);
     document.getElementById('copy-btn')?.addEventListener('click', copyResult);
-
-    // 导入按钮
     document.getElementById('import-btn')?.addEventListener('click', () => {
       document.getElementById('file-input')?.click();
     });
+    document.getElementById('file-input')?.addEventListener('change', handleFileImport);
+    document.getElementById('export-btn')?.addEventListener('click', exportResult);
+    document.getElementById('history-btn')?.addEventListener('click', toggleHistory);
+    document.getElementById('close-history')?.addEventListener('click', toggleHistory);
 
-    // 文件输入
-    document
-      .getElementById('file-input')
-      ?.addEventListener('change', handleFileImport);
-
-    // 导出按钮
-    document
-      .getElementById('export-btn')
-      ?.addEventListener('click', exportResult);
-
-    // 转换按钮
-    document.querySelectorAll('.convert-btn').forEach((btn) => {
+    document.querySelectorAll('.convert-card').forEach((btn) => {
       btn.addEventListener('click', function () {
         const format = this.getAttribute('data-format');
         convertToFormat(format);
@@ -607,15 +2483,17 @@ const translate = t(lang);
     });
   }
 
-  // 初始化文本区域
+  // ===== 初始化文本区域 =====
   function initializeTextarea() {
     inputTextarea.addEventListener('input', function () {
       inputJson = this.value;
       updateInputStatus();
       processInput();
+      if (inputJson.length > 50) {
+        addToHistory(inputJson);
+      }
     });
 
-    // 监听配置选项变化
     const configCheckboxes = [
       'allow-unquoted-keys',
       'allow-single-quotes',
@@ -638,7 +2516,7 @@ const translate = t(lang);
     });
   }
 
-  // 处理输入
+  // ===== 处理输入 =====
   function processInput() {
     hideMessages();
 
@@ -663,7 +2541,6 @@ const translate = t(lang);
           validateJson();
           break;
         case 'convert':
-          // 转换需要用户选择格式
           break;
       }
     } catch (error) {
@@ -671,7 +2548,7 @@ const translate = t(lang);
     }
   }
 
-  // 格式化 JSON
+  // ===== 格式化 JSON =====
   function formatJson() {
     const parsed = parseJsonLeniently(inputJson);
     currentParsedData = parsed;
@@ -679,10 +2556,10 @@ const translate = t(lang);
     outputTextarea.value = outputJson;
     updateOutputStatus();
     updateTreeView(parsed);
-    showSuccess('JSON 已格式化');
+    showSuccess(translations.message.formatted);
   }
 
-  // 压缩 JSON
+  // ===== 压缩 JSON =====
   function compressJson() {
     const parsed = parseJsonLeniently(inputJson);
     currentParsedData = parsed;
@@ -690,123 +2567,95 @@ const translate = t(lang);
     outputTextarea.value = outputJson;
     updateOutputStatus();
     updateTreeView(parsed);
-    showSuccess('JSON 已压缩');
+    showSuccess(translations.message.compressed);
   }
 
-  // 去转义 JSON
+  // ===== 去转义 JSON =====
   function unescapeJson() {
     try {
-      // 尝试解析为 JSON 字符串
       const unescaped = JSON.parse(`"${inputJson}"`);
       outputJson = unescaped;
       outputTextarea.value = outputJson;
       updateOutputStatus();
-      showSuccess('JSON 已去转义');
+      showSuccess(translations.message.unescaped);
     } catch (error) {
-      // 如果不是有效的转义字符串，直接显示
       outputJson = inputJson;
       outputTextarea.value = outputJson;
       updateOutputStatus();
-      showSuccess('内容已处理');
+      showSuccess(translations.message.processed);
     }
   }
 
-  // 验证 JSON
+  // ===== 验证 JSON =====
   function validateJson() {
     try {
       const parsed = parseJsonLeniently(inputJson);
       currentParsedData = parsed;
-      outputJson = '[Valid] JSON 格式正确';
+      outputJson = '[Valid] JSON format is correct';
       outputTextarea.value = outputJson;
       updateOutputStatus();
       updateTreeView(parsed);
-      showSuccess('JSON 验证通过');
+      showSuccess(translations.message.valid);
     } catch (error) {
-      outputJson = `[Error] JSON 格式错误: ${error.message}`;
+      outputJson = `[Error] JSON format error: ${error.message}`;
       outputTextarea.value = outputJson;
       updateOutputStatus();
       currentParsedData = null;
       if (treeViewer) {
         treeViewer.render(null);
       }
-      showError(`JSON 验证失败: ${error.message}`);
+      showError(translations.message.validationFailed + `: ${error.message}`);
     }
   }
 
-  // 宽松解析 JSON
-  function parseJsonLeniently(jsonString: string) {
-    const allowUnquotedKeys = (
-      document.getElementById('allow-unquoted-keys') as HTMLInputElement
-    ).checked;
-    const allowSingleQuotes = (
-      document.getElementById('allow-single-quotes') as HTMLInputElement
-    ).checked;
-    const allowTrailingCommas = (
-      document.getElementById('allow-trailing-commas') as HTMLInputElement
-    ).checked;
-    const removeSurroundingQuotes = (
-      document.getElementById('remove-surrounding-quotes') as HTMLInputElement
-    ).checked;
-    const autoUnescape = (
-      document.getElementById('auto-unescape') as HTMLInputElement
-    ).checked;
-    const allowTrailingSemicolon = (
-      document.getElementById('allow-trailing-semicolon') as HTMLInputElement
-    ).checked;
-    const removeComments = (
-      document.getElementById('remove-comments') as HTMLInputElement
-    ).checked;
+  // ===== 宽松解析 JSON =====
+  function parseJsonLeniently(jsonString) {
+    const allowUnquotedKeys = document.getElementById('allow-unquoted-keys').checked;
+    const allowSingleQuotes = document.getElementById('allow-single-quotes').checked;
+    const allowTrailingCommas = document.getElementById('allow-trailing-commas').checked;
+    const removeSurroundingQuotes = document.getElementById('remove-surrounding-quotes').checked;
+    const autoUnescape = document.getElementById('auto-unescape').checked;
+    const allowTrailingSemicolon = document.getElementById('allow-trailing-semicolon').checked;
+    const removeComments = document.getElementById('remove-comments').checked;
 
     let processedJson = jsonString.trim();
 
-    // 步骤0：移除代码注释（需在其他处理之前执行，避免注释内容干扰后续正则匹配）
     if (removeComments) {
-      // 移除多行注释 /* ... */
       processedJson = processedJson.replace(/\/\*[\s\S]*?\*\//g, '');
-      // 移除单行注释 // ...（需避免 URL 中的 //，使用负向后行断言）
       processedJson = processedJson.replace(/(?<![:\"\'])\/\/.*$/gm, '');
     }
 
-    // 步骤0.5：移除末尾分号
     if (allowTrailingSemicolon) {
       processedJson = processedJson.replace(/;\s*$/, '');
     }
 
-    // 步骤1：处理首尾引号删除
     if (removeSurroundingQuotes) {
-      // 检查是否以引号开头和结尾（单引号或双引号）
       if (
         (processedJson.startsWith('"') && processedJson.endsWith('"')) ||
         (processedJson.startsWith("'") && processedJson.endsWith("'"))
       ) {
-        // 删除首尾引号
         processedJson = processedJson.slice(1, -1);
       }
     }
 
-    // 步骤2：独立的自动去转义处理
     if (autoUnescape && processedJson.includes('\\"')) {
       try {
-        // 尝试作为 JSON 字符串解析（这会自动处理转义）
         processedJson = JSON.parse('"' + processedJson + '"');
       } catch (e) {
-        // 如果解析失败，尝试简单的字符串替换
         try {
           processedJson = processedJson
             .replace(/\\"/g, '"')
             .replace(/\\'/g, "'");
         } catch (replaceError) {
-          // 如果都失败了，保持原样
+          // Keep as is
         }
       }
     }
 
-    // 处理单引号
     if (allowSingleQuotes) {
       processedJson = processedJson.replace(/'/g, '"');
     }
 
-    // 处理不带引号的键名
     if (allowUnquotedKeys) {
       processedJson = processedJson.replace(
         /([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g,
@@ -814,7 +2663,6 @@ const translate = t(lang);
       );
     }
 
-    // 处理尾随逗号
     if (allowTrailingCommas) {
       processedJson = processedJson.replace(/,(\s*[}\]])/g, '$1');
     }
@@ -822,8 +2670,8 @@ const translate = t(lang);
     return JSON.parse(processedJson);
   }
 
-  // 转换为其他格式
-  function convertToFormat(format: string) {
+  // ===== 转换为其他格式 =====
+  function convertToFormat(format) {
     try {
       const parsed = parseJsonLeniently(inputJson);
       currentParsedData = parsed;
@@ -839,20 +2687,21 @@ const translate = t(lang);
           outputJson = jsonToCsv(parsed);
           break;
         default:
-          throw new Error(`不支持的格式: ${format}`);
+          throw new Error(`Unsupported format: ${format}`);
       }
 
       outputTextarea.value = outputJson;
       updateOutputStatus();
       updateTreeView(parsed);
-      showSuccess(`已转换为 ${format.toUpperCase()} 格式`);
+      const formatName = format.toUpperCase();
+      showSuccess(translations.message.converted.replace('{format}', formatName));
     } catch (error) {
-      showError(`转换失败: ${error.message}`);
+      showError(`Conversion failed: ${error.message}`);
     }
   }
 
-  // JSON 转 YAML（简单实现）
-  function jsonToYaml(obj: any, indent = 0): string {
+  // ===== JSON 转 YAML =====
+  function jsonToYaml(obj, indent = 0) {
     const spaces = '  '.repeat(indent);
 
     if (obj === null) return 'null';
@@ -877,9 +2726,9 @@ const translate = t(lang);
     return String(obj);
   }
 
-  // JSON 转 XML（简单实现）
-  function jsonToXml(obj: any, rootName = 'root'): string {
-    function objectToXml(obj: any, nodeName: string): string {
+  // ===== JSON 转 XML =====
+  function jsonToXml(obj, rootName = 'root') {
+    function objectToXml(obj, nodeName) {
       if (obj === null) return `<${nodeName}></${nodeName}>`;
       if (typeof obj === 'string')
         return `<${nodeName}>${escapeXml(obj)}</${nodeName}>`;
@@ -902,21 +2751,15 @@ const translate = t(lang);
       return `<${nodeName}>${obj}</${nodeName}>`;
     }
 
-    function escapeXml(str: string): string {
+    function escapeXml(str) {
       return str.replace(/[<>&'"]/g, function (char) {
         switch (char) {
-          case '<':
-            return '&lt;';
-          case '>':
-            return '&gt;';
-          case '&':
-            return '&amp;';
-          case '"':
-            return '&quot;';
-          case "'":
-            return '&#39;';
-          default:
-            return char;
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '&': return '&amp;';
+          case '"': return '&quot;';
+          case "'": return '&#39;';
+          default: return char;
         }
       });
     }
@@ -924,16 +2767,15 @@ const translate = t(lang);
     return `<?xml version="1.0" encoding="UTF-8"?>\n${objectToXml(obj, rootName)}`;
   }
 
-  // JSON 转 CSV（简单实现）
-  function jsonToCsv(obj: any): string {
+  // ===== JSON 转 CSV =====
+  function jsonToCsv(obj) {
     if (!Array.isArray(obj)) {
-      throw new Error('CSV 转换只支持数组格式的 JSON');
+      throw new Error('CSV conversion only supports array format JSON');
     }
 
     if (obj.length === 0) return '';
 
-    // 获取所有键名
-    const keys = new Set<string>();
+    const keys = new Set();
     obj.forEach((item) => {
       if (typeof item === 'object' && item !== null) {
         Object.keys(item).forEach((key) => keys.add(key));
@@ -941,11 +2783,8 @@ const translate = t(lang);
     });
 
     const keyArray = Array.from(keys);
-
-    // 生成 CSV 头部
     const header = keyArray.map((key) => `"${key}"`).join(',');
 
-    // 生成 CSV 数据行
     const rows = obj.map((item) => {
       return keyArray
         .map((key) => {
@@ -958,7 +2797,7 @@ const translate = t(lang);
     return [header, ...rows].join('\n');
   }
 
-  // 清空所有内容
+  // ===== 清空所有内容 =====
   function clearAll() {
     inputTextarea.value = '';
     outputTextarea.value = '';
@@ -967,34 +2806,33 @@ const translate = t(lang);
     updateInputStatus();
     updateOutputStatus();
     hideMessages();
+    showSuccess(translations.message.cleared);
   }
 
-  // 复制结果
+  // ===== 复制结果 =====
   async function copyResult() {
     if (!outputJson) {
-      showError('没有可复制的内容');
+      showError(translations.message.nothingCopy);
       return;
     }
 
     try {
       await navigator.clipboard.writeText(outputJson);
-      showSuccess('已复制到剪贴板');
+      showSuccess(translations.message.copied);
     } catch (error) {
-      // 降级方案
       const textArea = document.createElement('textarea');
       textArea.value = outputJson;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand('copy');
       document.body.removeChild(textArea);
-      showSuccess('已复制到剪贴板');
+      showSuccess(translations.message.copied);
     }
   }
 
-  // 从剪贴板粘贴
+  // ===== 从剪贴板粘贴 =====
   async function pasteFromClipboard() {
     try {
-      // 现代浏览器的剪贴板 API
       if (navigator.clipboard && navigator.clipboard.readText) {
         const text = await navigator.clipboard.readText();
         if (text) {
@@ -1002,46 +2840,47 @@ const translate = t(lang);
           inputJson = text;
           updateInputStatus();
           processInput();
-          showSuccess('已从剪贴板粘贴内容');
+          addToHistory(text);
+          showSuccess(translations.message.pasted);
         } else {
-          showError('剪贴板为空');
+          showError(translations.message.clipboardEmpty);
         }
       } else {
-        // 降级方案：提示用户手动粘贴
         inputTextarea.focus();
-        showError('请使用 Ctrl+V (或 Cmd+V) 手动粘贴内容');
+        showError(translations.message.manualPaste);
       }
     } catch (error) {
-      // 处理权限错误或其他错误
       if (error.name === 'NotAllowedError') {
-        showError('需要允许访问剪贴板权限');
+        showError(translations.message.clipboardPermission);
       } else {
         inputTextarea.focus();
-        showError('请使用 Ctrl+V (或 Cmd+V) 手动粘贴内容');
+        showError(translations.message.manualPaste);
       }
     }
   }
 
-  // 处理文件导入
-  function handleFileImport(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
+  // ===== 处理文件导入 =====
+  function handleFileImport(event) {
+    const file = event.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = function (e) {
-      const content = e.target?.result as string;
+      const content = e.target?.result;
       inputTextarea.value = content;
       inputJson = content;
       updateInputStatus();
       processInput();
+      addToHistory(content);
+      showSuccess(translations.message.imported);
     };
     reader.readAsText(file);
   }
 
-  // 导出结果
+  // ===== 导出结果 =====
   function exportResult() {
     if (!outputJson) {
-      showError('没有可导出的内容');
+      showError(translations.message.nothingExport);
       return;
     }
 
@@ -1054,63 +2893,58 @@ const translate = t(lang);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showSuccess('文件已导出');
+    showSuccess(translations.message.exported);
   }
 
-  // 更新输入状态
+  // ===== 更新输入状态 =====
   function updateInputStatus() {
     const length = inputJson.length;
     const lines = inputJson.split('\n').length;
-    inputStatus.textContent = `${length} 字符, ${lines} 行`;
+    inputStatus.textContent = `${length} chars, ${lines} lines`;
   }
 
-  // 更新输出状态
+  // ===== 更新输出状态 =====
   function updateOutputStatus() {
     const length = outputJson.length;
     const lines = outputJson.split('\n').length;
-    outputStatus.textContent = `${length} 字符, ${lines} 行`;
+    outputStatus.textContent = `${length} chars, ${lines} lines`;
   }
 
-  // 显示错误信息
-  function showError(message: string) {
+  // ===== 显示错误信息 =====
+  function showError(message) {
     hideMessages();
     errorText.textContent = message;
     errorMessage.classList.remove('hidden');
     setTimeout(hideMessages, 5000);
   }
 
-  // 显示成功信息
-  function showSuccess(message: string) {
+  // ===== 显示成功信息 =====
+  function showSuccess(message) {
     hideMessages();
     successText.textContent = message;
     successMessage.classList.remove('hidden');
     setTimeout(hideMessages, 3000);
   }
 
-  // 隐藏所有消息
+  // ===== 隐藏所有消息 =====
   function hideMessages() {
     errorMessage.classList.add('hidden');
     successMessage.classList.add('hidden');
   }
 
-  // 初始化树状视图
+  // ===== 初始化树状视图 =====
   function initializeTreeView() {
-    // 创建树状视图实例
     treeViewer = new TreeViewer('tree-view');
 
-    // 视图切换按钮
     const textViewBtn = document.getElementById('text-view-btn');
     const treeViewBtn = document.getElementById('tree-view-btn');
 
     textViewBtn?.addEventListener('click', () => switchView('text'));
     treeViewBtn?.addEventListener('click', () => switchView('tree'));
 
-    // 树状视图控制按钮
     const expandAllBtn = document.getElementById('tree-expand-all');
     const collapseAllBtn = document.getElementById('tree-collapse-all');
-    const searchInput = document.getElementById(
-      'tree-search'
-    ) as HTMLInputElement;
+    const searchInput = document.getElementById('tree-search');
 
     expandAllBtn?.addEventListener('click', () => {
       if (treeViewer) {
@@ -1124,19 +2958,17 @@ const translate = t(lang);
       }
     });
 
-    // 搜索输入
-    let searchTimeout: ReturnType<typeof setTimeout>;
+    let searchTimeout;
     searchInput?.addEventListener('input', (e) => {
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(() => {
         if (treeViewer) {
-          treeViewer.search((e.target as HTMLInputElement).value);
+          treeViewer.search(e.target.value);
         }
       }, 300);
     });
 
-    // 设置全局回调，当树视图数据更新时同步到文本视图
-    (window as any).onTreeDataUpdate = (data: any) => {
+    window.onTreeDataUpdate = (data) => {
       currentParsedData = data;
       if (currentTab === 'format') {
         outputJson = JSON.stringify(data, null, 2);
@@ -1148,8 +2980,8 @@ const translate = t(lang);
     };
   }
 
-  // 切换视图
-  function switchView(view: 'text' | 'tree') {
+  // ===== 切换视图 =====
+  function switchView(view) {
     currentView = view;
 
     const textViewBtn = document.getElementById('text-view-btn');
@@ -1166,22 +2998,20 @@ const translate = t(lang);
       textViewBtn?.classList.remove('active');
       treeViewBtn?.classList.add('active');
 
-      // 如果有数据，渲染树视图
       if (currentParsedData && treeViewer) {
         treeViewer.render(currentParsedData);
       }
     }
   }
 
-  // 更新树视图
-  function updateTreeView(data: any) {
+  // ===== 更新树视图 =====
+  function updateTreeView(data) {
     if (currentView === 'tree' && treeViewer) {
       treeViewer.render(data);
     }
   }
 
-  // 导出全局函数供树状视图使用
-  (window as any).showSuccess = showSuccess;
-  (window as any).showError = showError;
+  // ===== 导出全局函数 =====
+  window.showSuccess = showSuccess;
+  window.showError = showError;
 </script>
-

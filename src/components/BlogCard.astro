@@ -24,28 +24,102 @@ const formattedDate = pubDate.toLocaleDateString(lang === 'zh-cn' ? 'zh-CN' : la
 });
 ---
 
-<article class="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
-  <a href={blogUrl} class="block p-6 group">
-    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
-      <time datetime={pubDate.toISOString()}>
-        {formattedDate}
-      </time>
+<article class="blog-card">
+  <a href={blogUrl} class="card-link">
+    <div class="card-content">
+      <div class="card-meta">
+        <time datetime={pubDate.toISOString()}>
+          {formattedDate}
+        </time>
+      </div>
+
+      <h2 class="card-title">
+        {title}
+      </h2>
+
+      <p class="card-description">
+        {description}
+      </p>
+
+      <span class="card-link-text">
+        {translate('blog.readMore')}
+        <svg class="link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </span>
     </div>
-    
-    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-      {title}
-    </h2>
-    
-    <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
-      {description}
-    </p>
-    
-    <span class="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium group-hover:gap-2 transition-all">
-      {translate('blog.readMore')}
-      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-      </svg>
-    </span>
   </a>
 </article>
 
+<style>
+  .blog-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+  }
+
+  .blog-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .card-link {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .card-meta {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    transition: color 0.2s ease;
+  }
+
+  .blog-card:hover .card-title {
+    color: var(--accent);
+  }
+
+  .card-description {
+    color: var(--text-secondary);
+    line-clamp: 3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-link-text {
+    display: inline-flex;
+    align-items: center;
+    color: var(--accent);
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .blog-card:hover .card-link-text {
+    gap: 0.5rem;
+  }
+
+  .link-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 0.25rem;
+  }
+</style>

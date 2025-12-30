@@ -2,6 +2,7 @@
 import { t } from '../i18n/translations';
 import type { Language } from '../i18n/index';
 import Footer from '../components/Footer.astro';
+import '../styles/global-theme.css';
 
 export interface Props {
   title?: string;
@@ -45,7 +46,7 @@ const langMapping = {
       gtag('config', 'G-WG4ZKYY1L1');
     </script>
   </head>
-  <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200 min-h-screen flex flex-col">
+  <body class="transition-colors duration-200 min-h-screen flex flex-col">
     <main class="flex-1">
       <slot />
     </main>
@@ -56,19 +57,35 @@ const langMapping = {
         const theme = localStorage.getItem('theme') || 'light';
         document.documentElement.classList.toggle('dark', theme === 'dark');
       }
-      
+
       function toggleTheme() {
         const isDark = document.documentElement.classList.contains('dark');
         const newTheme = isDark ? 'light' : 'dark';
         document.documentElement.classList.toggle('dark', newTheme === 'dark');
         localStorage.setItem('theme', newTheme);
       }
-      
-      // 初始化主题
+
+      // 风格切换功能
+      function initStyle() {
+        const savedStyle = localStorage.getItem('formatter-style') || 'minimal';
+        document.body.setAttribute('data-style', savedStyle);
+      }
+
+      function switchStyle(style) {
+        document.body.setAttribute('data-style', style);
+        localStorage.setItem('formatter-style', style);
+
+        // 触发自定义事件，通知所有组件风格已改变
+        window.dispatchEvent(new CustomEvent('styleChanged', { detail: { style } }));
+      }
+
+      // 初始化
       initTheme();
-      
-      // 全局主题切换函数
-      (window as any).toggleTheme = toggleTheme;
+      initStyle();
+
+      // 全局函数
+      window.toggleTheme = toggleTheme;
+      window.switchGlobalStyle = switchStyle;
     </script>
   </body>
 </html> 

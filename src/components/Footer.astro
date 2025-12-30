@@ -10,33 +10,92 @@ const { lang = 'en' } = Astro.props;
 const translate = t(lang);
 ---
 
-<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
-  <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-content">
       <!-- Copyright -->
-      <div class="text-gray-600 dark:text-gray-400 text-sm">
-        © 2025 JSON Formatter. All rights reserved. <a 
-        href="https://www.lanxk.com" 
-        target="_blank" 
+      <div class="copyright">
+        © 2025 JSON Formatter. All rights reserved. <a
+        href="https://www.lanxk.com"
+        target="_blank"
         rel="noopener noreferrer"
-        class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm transition-colors duration-200"
+        class="footer-link"
       >
         www.lanxk.com
       </a>
       </div>
-      
+
       <!-- Links -->
-      <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6">
-        
-        <!-- <a 
-          href="https://cal.com/lanxk/json-formatter?overlayCalendar=true" 
-          target="_blank" 
+      <div class="footer-links">
+        <!-- <a
+          href="https://cal.com/lanxk/json-formatter?overlayCalendar=true"
+          target="_blank"
           rel="noopener noreferrer"
-          class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm transition-colors duration-200"
+          class="footer-link"
         >
           Schedule Consultation about JSON Formatter
         </a> -->
       </div>
     </div>
   </div>
-</footer> 
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-light);
+    margin-top: auto;
+    transition: all 0.3s ease;
+  }
+
+  .footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-content {
+      flex-direction: row;
+      gap: 0;
+    }
+  }
+
+  .copyright {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .footer-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s ease;
+  }
+
+  .footer-link:hover {
+    color: var(--accent-hover);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .footer-links {
+      flex-direction: row;
+      gap: 1.5rem;
+    }
+  }
+</style> 

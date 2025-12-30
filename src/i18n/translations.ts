@@ -117,6 +117,59 @@ export const translations = {
     'features.tech.compatible.desc': '不影响现有的标准JSON处理',
     'ui.input.label': '输入:',
     'ui.output.label': '输出:',
+
+    // 风格切换器
+    'style.switcher.title': '切换风格',
+    'style.switcher.label': '风格',
+    'style.panel.header': '选择界面风格',
+    'style.name.minimal': '优雅极简',
+    'style.name.editorial': '温暖编辑',
+    'style.name.brutalist': '新粗野主义',
+    'style.name.glass': '未来玻璃',
+    'style.name.terminal': '复古终端',
+    'style.switched': '已切换到 {style} 风格',
+
+    // 历史记录
+    'history.button': '历史记录',
+    'history.title': '历史记录',
+    'history.empty': '暂无历史记录',
+
+    // 拖拽上传
+    'drag.drop.text': '拖拽文件到这里',
+
+    // 键盘快捷键提示
+    'shortcut.clear': '清空',
+    'shortcut.paste': '粘贴',
+    'shortcut.copy': '复制',
+    'shortcut.import': '导入',
+    'shortcut.export': '导出',
+    'shortcut.history': '历史记录',
+
+    // 状态和消息
+    'status.chars.lines': '{chars} 字符, {lines} 行',
+    'message.cleared': '已清空所有内容',
+    'message.copied': '已复制到剪贴板',
+    'message.pasted': '已从剪贴板粘贴',
+    'message.imported': '文件导入成功',
+    'message.exported': '文件导出成功',
+    'message.formatted': 'JSON 已格式化',
+    'message.compressed': 'JSON 已压缩',
+    'message.unescaped': 'JSON 已去转义',
+    'message.valid': 'JSON 验证通过',
+    'message.invalid': 'JSON 验证失败',
+    'message.converted': '已转换为 {format} 格式',
+    'message.processed': '内容已处理',
+    'message.nothing.copy': '没有可复制的内容',
+    'message.nothing.export': '没有可导出的的内容',
+    'message.clipboard.empty': '剪贴板为空',
+    'message.clipboard.permission': '需要允许访问剪贴板权限',
+    'message.manual.paste': '请使用 Ctrl+V (或 Cmd+V) 手动粘贴',
+    'message.file.loaded': '文件加载成功',
+    'message.invalid.file': '请拖放 JSON 或 TXT 文件',
+    'message.history.loaded': '历史记录已加载',
+
+    // 树状视图新增
+    'ui.tree.empty': '暂无数据',
   },
   
   'en': {
@@ -235,6 +288,59 @@ export const translations = {
     'features.tech.compatible.desc': 'Does not affect existing standard JSON processing',
     'ui.input.label': 'Input:',
     'ui.output.label': 'Output:',
+
+    // Style switcher
+    'style.switcher.title': 'Switch Style',
+    'style.switcher.label': 'Style',
+    'style.panel.header': 'Choose Interface Style',
+    'style.name.minimal': 'Minimal',
+    'style.name.editorial': 'Editorial',
+    'style.name.brutalist': 'Brutalist',
+    'style.name.glass': 'Glass',
+    'style.name.terminal': 'Terminal',
+    'style.switched': 'Switched to {style} style',
+
+    // History
+    'history.button': 'History',
+    'history.title': 'History',
+    'history.empty': 'No history yet',
+
+    // Drag & drop
+    'drag.drop.text': 'Drop file here',
+
+    // Keyboard shortcuts
+    'shortcut.clear': 'Clear',
+    'shortcut.paste': 'Paste',
+    'shortcut.copy': 'Copy',
+    'shortcut.import': 'Import',
+    'shortcut.export': 'Export',
+    'shortcut.history': 'History',
+
+    // Status and messages
+    'status.chars.lines': '{chars} chars, {lines} lines',
+    'message.cleared': 'All content cleared',
+    'message.copied': 'Copied to clipboard',
+    'message.pasted': 'Pasted from clipboard',
+    'message.imported': 'File imported successfully',
+    'message.exported': 'File exported successfully',
+    'message.formatted': 'JSON formatted successfully',
+    'message.compressed': 'JSON compressed successfully',
+    'message.unescaped': 'JSON unescaped successfully',
+    'message.valid': 'JSON validation passed',
+    'message.invalid': 'JSON validation failed',
+    'message.converted': 'Converted to {format} format',
+    'message.processed': 'Content processed',
+    'message.nothing.copy': 'Nothing to copy',
+    'message.nothing.export': 'Nothing to export',
+    'message.clipboard.empty': 'Clipboard is empty',
+    'message.clipboard.permission': 'Clipboard access permission required',
+    'message.manual.paste': 'Please use Ctrl+V (or Cmd+V) to paste manually',
+    'message.file.loaded': 'File loaded successfully',
+    'message.invalid.file': 'Please drop a JSON or TXT file',
+    'message.history.loaded': 'History item loaded',
+
+    // Tree view additions
+    'ui.tree.empty': 'No data',
   },
   
   'ja': {
@@ -353,6 +459,59 @@ export const translations = {
     'features.tech.compatible.desc': '既存の標準JSON処理に影響しない',
     'ui.input.label': '入力:',
     'ui.output.label': '出力:',
+
+    // スタイル切り替え
+    'style.switcher.title': 'スタイル切り替え',
+    'style.switcher.label': 'スタイル',
+    'style.panel.header': 'インターフェーススタイルを選択',
+    'style.name.minimal': 'ミニマル',
+    'style.name.editorial': 'エディトリアル',
+    'style.name.brutalist': 'ブルータリスト',
+    'style.name.glass': 'グラス',
+    'style.name.terminal': 'ターミナル',
+    'style.switched': '{style}スタイルに切り替えました',
+
+    // 履歴
+    'history.button': '履歴',
+    'history.title': '履歴',
+    'history.empty': '履歴はまだありません',
+
+    // ドラッグ&ドロップ
+    'drag.drop.text': 'ファイルをここにドロップ',
+
+    // キーボードショートカット
+    'shortcut.clear': 'クリア',
+    'shortcut.paste': '貼り付け',
+    'shortcut.copy': 'コピー',
+    'shortcut.import': 'インポート',
+    'shortcut.export': 'エクスポート',
+    'shortcut.history': '履歴',
+
+    // ステータスとメッセージ
+    'status.chars.lines': '{chars}文字, {lines}行',
+    'message.cleared': 'すべての内容をクリアしました',
+    'message.copied': 'クリップボードにコピーしました',
+    'message.pasted': 'クリップボードから貼り付けました',
+    'message.imported': 'ファイルをインポートしました',
+    'message.exported': 'ファイルをエクスポートしました',
+    'message.formatted': 'JSONを整形しました',
+    'message.compressed': 'JSONを圧縮しました',
+    'message.unescaped': 'JSONのエスケープを解除しました',
+    'message.valid': 'JSON検証に合格しました',
+    'message.invalid': 'JSON検証に失敗しました',
+    'message.converted': '{format}形式に変換しました',
+    'message.processed': 'コンテンツを処理しました',
+    'message.nothing.copy': 'コピーするものがありません',
+    'message.nothing.export': 'エクスポートするものがありません',
+    'message.clipboard.empty': 'クリップボードが空です',
+    'message.clipboard.permission': 'クリップボードアクセス許可が必要です',
+    'message.manual.paste': 'Ctrl+V（またはCmd+V）を使用して手動で貼り付けてください',
+    'message.file.loaded': 'ファイルをロードしました',
+    'message.invalid.file': 'JSONまたはTXTファイルをドロップしてください',
+    'message.history.loaded': '履歴アイテムをロードしました',
+
+    // ツリービュー追加
+    'ui.tree.empty': 'データがありません',
   },
   
   'zh-tw': {
@@ -471,6 +630,59 @@ export const translations = {
     'features.tech.compatible.desc': '不影響現有的標準JSON處理',
     'ui.input.label': '輸入:',
     'ui.output.label': '輸出:',
+
+    // 風格切換器
+    'style.switcher.title': '切換風格',
+    'style.switcher.label': '風格',
+    'style.panel.header': '選擇介面風格',
+    'style.name.minimal': '優雅極簡',
+    'style.name.editorial': '溫暖編輯',
+    'style.name.brutalist': '新粗野主義',
+    'style.name.glass': '未來玻璃',
+    'style.name.terminal': '復古終端',
+    'style.switched': '已切換到 {style} 風格',
+
+    // 歷史記錄
+    'history.button': '歷史記錄',
+    'history.title': '歷史記錄',
+    'history.empty': '暫無歷史記錄',
+
+    // 拖放上傳
+    'drag.drop.text': '拖曳檔案到這裡',
+
+    // 鍵盤快捷鍵
+    'shortcut.clear': '清空',
+    'shortcut.paste': '貼上',
+    'shortcut.copy': '複製',
+    'shortcut.import': '匯入',
+    'shortcut.export': '匯出',
+    'shortcut.history': '歷史記錄',
+
+    // 狀態和訊息
+    'status.chars.lines': '{chars} 字元, {lines} 行',
+    'message.cleared': '已清空所有內容',
+    'message.copied': '已複製到剪貼簿',
+    'message.pasted': '已從剪貼簿貼上',
+    'message.imported': '檔案匯入成功',
+    'message.exported': '檔案匯出成功',
+    'message.formatted': 'JSON 已格式化',
+    'message.compressed': 'JSON 已壓縮',
+    'message.unescaped': 'JSON 已去轉義',
+    'message.valid': 'JSON 驗證通過',
+    'message.invalid': 'JSON 驗證失敗',
+    'message.converted': '已轉換為 {format} 格式',
+    'message.processed': '內容已處理',
+    'message.nothing.copy': '沒有可複製的內容',
+    'message.nothing.export': '沒有可匯出的內容',
+    'message.clipboard.empty': '剪貼簿為空',
+    'message.clipboard.permission': '需要允許訪問剪貼簿權限',
+    'message.manual.paste': '請使用 Ctrl+V (或 Cmd+V) 手動貼上',
+    'message.file.loaded': '檔案載入成功',
+    'message.invalid.file': '請拖放 JSON 或 TXT 檔案',
+    'message.history.loaded': '歷史記錄已載入',
+
+    // 樹狀視圖新增
+    'ui.tree.empty': '暫無資料',
   }
 } as const;
 
