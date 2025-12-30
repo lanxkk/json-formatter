@@ -39,6 +39,7 @@ const translations = {
 ---
 
 <div class="formatter-wrapper">
+  <div class="formatter-container">
   <!-- 头部 -->
   <header class="formatter-header">
     <h1 class="page-title">JSON Formatter</h1>
@@ -213,6 +214,7 @@ const translations = {
   <div id="success-message" class="message-toast success hidden">
     <CheckCircle class="toast-icon" />
     <p id="success-text" class="toast-text"></p>
+  </div>
   </div>
 </div>
 
@@ -429,12 +431,17 @@ const translations = {
     font-family: var(--font-sans, sans-serif);
     background: var(--bg-primary);
     color: var(--text-primary);
+    position: relative;
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+    width: 100%;
+  }
+
+  .formatter-container {
     padding: 3rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
     position: relative;
-    min-height: 100vh;
-    transition: background 0.3s ease, color 0.3s ease;
   }
 
   /* ===== 风格切换器 ===== */
