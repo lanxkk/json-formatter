@@ -38,7 +38,7 @@ const translate = t(lang);
           </div>
           <div class="code-label">{translate('ui.output.label')}</div>
           <div class="code-content">
-            <span>{'{\\"'}name{'\\"'}: "John", \\"age\\"}: 30{'}'}</span>
+            <span>{`{"name": "John", "age": 30}`}</span>
           </div>
         </div>
       </div>
@@ -54,11 +54,11 @@ const translate = t(lang);
         <div class="code-example">
           <div class="code-label">{translate('ui.input.label')}</div>
           <div class="code-content">
-            <span>{`{\\"name\\": 'Alice'}`}</span>
+            <span>{`{"name": 'Alice'}`}</span>
           </div>
           <div class="code-label">{translate('ui.output.label')}</div>
           <div class="code-content">
-            <span>{'{\\"'}name{'\\"'}: \\"Alice\\"{'}'}</span>
+            <span>{`{"name": "Alice"}`}</span>
           </div>
         </div>
       </div>
@@ -74,11 +74,11 @@ const translate = t(lang);
         <div class="code-example">
           <div class="code-label">{translate('ui.input.label')}</div>
           <div class="code-content">
-            <span>{'{\\"'}name{'\\"'}: \\"Bob\\",{'}'}</span>
+            <span>{`{"name": "Bob",}`}</span>
           </div>
           <div class="code-label">{translate('ui.output.label')}</div>
           <div class="code-content">
-            <span>{'{\\"'}name{'\\"'}: \\"Bob\\"{'}'}</span>
+            <span>{`{"name": "Bob"}`}</span>
           </div>
         </div>
       </div>
@@ -112,18 +112,18 @@ const translate = t(lang);
           <h4 class="column-title">{translate('features.example.output')}</h4>
           <div class="code-block">
             <pre class="code-pre"><code>&#123;
-  \\"name\\": \\"JSON Formatter\\",
-  \\"age\\}: 30,
-  \\"profile\\": &#123;
-    \\"job\\": \\"Developer\\",
-    \\"skills\\": [\\"JavaScript\\", \\"Python\\", \\"Go\\"],
-    \\"experience\\": &#123;
-      \\"years\\": 5,
-      \\"companies\\": [\\"A\\", \\"B\\"]
+  "name": "JSON Formatter",
+  "age": 30,
+  "profile": &#123;
+    "job": "Developer",
+    "skills": ["JavaScript", "Python", "Go"],
+    "experience": &#123;
+      "years": 5,
+      "companies": ["A", "B"]
     &#125;
   &#125;,
-  \\"hobbies\\": [\\"Programming\\", \\"Reading\\", \\"Traveling\\"],
-  \\"active\\": true
+  "hobbies": ["Programming", "Reading", "Traveling"],
+  "active": true
 &#125;</code></pre>
           </div>
         </div>

@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import JsonFormatter from '../../components/JsonFormatter.astro';
+import AdBanner from '../../components/AdBanner.astro';
+import FeatureDocumentation from '../../components/FeatureDocumentation.astro';
+import { languages, defaultLang } from '../../i18n/index';
+import type { Language } from '../../i18n/index';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang: lang === defaultLang ? undefined : lang },
+    props: { lang: lang as Language },
+  }));
+}
+
+const { lang } = Astro.props;
+const canonical = lang === defaultLang
+  ? 'https://jsonformatter.lanxk.com/'
+  : `https://jsonformatter.lanxk.com/${lang}/`;
+---
+
+<Layout lang={lang} canonical={canonical}>
+  <Header lang={lang} />
+  <main>
+    <JsonFormatter lang={lang} />
+  </main>
+  <AdBanner />
+  <FeatureDocumentation lang={lang} />
+</Layout>

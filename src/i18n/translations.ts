@@ -170,6 +170,16 @@ export const translations = {
 
     // 树状视图新增
     'ui.tree.empty': '暂无数据',
+
+    // 验证与转换消息
+    'validate.result.valid': '[Valid] JSON 验证通过',
+    'validate.result.error': '[Error] JSON 格式错误',
+    'convert.error.csv': 'CSV 转换仅支持数组格式的 JSON',
+    'convert.error.unsupported': '不支持的格式: {format}',
+    'convert.error.failed': '转换失败: {error}',
+    'status.format': '{chars} 字符, {lines} 行',
+    'ui.tree.expandAll': '全部展开',
+    'ui.tree.collapseAll': '全部折叠',
   },
   
   'en': {
@@ -341,6 +351,16 @@ export const translations = {
 
     // Tree view additions
     'ui.tree.empty': 'No data',
+
+    // Validation & conversion messages
+    'validate.result.valid': '[Valid] JSON format is correct',
+    'validate.result.error': '[Error] JSON format error',
+    'convert.error.csv': 'CSV conversion only supports array format JSON',
+    'convert.error.unsupported': 'Unsupported format: {format}',
+    'convert.error.failed': 'Conversion failed: {error}',
+    'status.format': '{chars} chars, {lines} lines',
+    'ui.tree.expandAll': 'Expand All',
+    'ui.tree.collapseAll': 'Collapse All',
   },
   
   'ja': {
@@ -512,6 +532,16 @@ export const translations = {
 
     // ツリービュー追加
     'ui.tree.empty': 'データがありません',
+
+    // 検証・変換メッセージ
+    'validate.result.valid': '[Valid] JSONフォーマットは正しいです',
+    'validate.result.error': '[Error] JSONフォーマットエラー',
+    'convert.error.csv': 'CSV変換は配列形式のJSONのみサポートしています',
+    'convert.error.unsupported': 'サポートされていないフォーマット: {format}',
+    'convert.error.failed': '変換に失敗しました: {error}',
+    'status.format': '{chars}文字, {lines}行',
+    'ui.tree.expandAll': 'すべて展開',
+    'ui.tree.collapseAll': 'すべて折りたたむ',
   },
   
   'zh-tw': {
@@ -683,6 +713,16 @@ export const translations = {
 
     // 樹狀視圖新增
     'ui.tree.empty': '暫無資料',
+
+    // 驗證與轉換訊息
+    'validate.result.valid': '[Valid] JSON 驗證通過',
+    'validate.result.error': '[Error] JSON 格式錯誤',
+    'convert.error.csv': 'CSV 轉換僅支援陣列格式的 JSON',
+    'convert.error.unsupported': '不支援的格式: {format}',
+    'convert.error.failed': '轉換失敗: {error}',
+    'status.format': '{chars} 字元, {lines} 行',
+    'ui.tree.expandAll': '全部展開',
+    'ui.tree.collapseAll': '全部摺疊',
   }
 } as const;
 

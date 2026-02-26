@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import { t } from '../../../i18n/translations';
+import { languages, defaultLang } from '../../../i18n/index';
+import type { Language } from '../../../i18n/index';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+
+  return Object.keys(languages).map((lang) => {
+    const posts = allPosts
+      .filter(({ id }) => id.startsWith(`${lang}/`))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+    return {
+      params: { lang: lang === defaultLang ? undefined : lang },
+      props: { lang: lang as Language, posts },
+    };
+  });
+}
+
+const { lang, posts } = Astro.props;
+const translate = t(lang);
+---
+
+<Layout lang={lang}>
+  <Header lang={lang} />
+  
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">
+      {translate('blog.title')}
+    </h1>
+    
+    <div class="space-y-6">
+      {posts.map((post) => {
+        const slug = post.id.replace(`${lang}/`, '').replace('.md', '');
+        return (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={slug}
+            lang={lang}
+          />
+        );
+      })}
+    </div>
+    
+    {posts.length === 0 && (
+      <p class="text-gray-500 dark:text-gray-400 text-center py-12">
+        {translate('blog.noPosts')}
+      </p>
+    )}
+  </main>
+</Layout>
