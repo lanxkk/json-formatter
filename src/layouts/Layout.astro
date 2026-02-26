@@ -14,8 +14,8 @@ const { title, lang = 'en', canonical } = Astro.props;
 const currentLang = lang;
 const translate = t(currentLang);
 
-// 如果没有传入title，使用默认的翻译标题
 const pageTitle = title || translate('page.title');
+const gaId = import.meta.env.PUBLIC_GA_ID || 'G-WG4ZKYY1L1';
 
 // 语言到HTML lang属性的映射
 const langMapping = {
@@ -34,17 +34,22 @@ const langMapping = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
     <title>{pageTitle}</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WG4ZKYY1L1"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-WG4ZKYY1L1');
-    </script>
+    {gaId && (
+      <Fragment>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </Fragment>
+    )}
   </head>
   <body class="transition-colors duration-200 min-h-screen flex flex-col">
     <main class="flex-1">
@@ -65,21 +70,37 @@ const langMapping = {
         localStorage.setItem('theme', newTheme);
       }
 
-      // 风格切换功能
+      // 风格切换 + 字体按需加载
+      const styleFonts: Record<string, string> = {
+        minimal: 'family=Cormorant+Garamond:wght@400;500;600;700',
+        neon: 'family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700',
+        glassmorphism: 'family=Outfit:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700',
+        retro: 'family=VT323',
+      };
+      const loadedFonts = new Set<string>();
+
+      function loadStyleFonts(style: string) {
+        if (loadedFonts.has(style) || !styleFonts[style]) return;
+        loadedFonts.add(style);
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `https://fonts.googleapis.com/css2?${styleFonts[style]}&display=swap`;
+        document.head.appendChild(link);
+      }
+
       function initStyle() {
         const savedStyle = localStorage.getItem('formatter-style') || 'minimal';
         document.body.setAttribute('data-style', savedStyle);
+        loadStyleFonts(savedStyle);
       }
 
-      function switchStyle(style) {
+      function switchStyle(style: string) {
         document.body.setAttribute('data-style', style);
         localStorage.setItem('formatter-style', style);
-
-        // 触发自定义事件，通知所有组件风格已改变
+        loadStyleFonts(style);
         window.dispatchEvent(new CustomEvent('styleChanged', { detail: { style } }));
       }
 
-      // 初始化
       initTheme();
       initStyle();
 
